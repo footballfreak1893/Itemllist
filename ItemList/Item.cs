@@ -19,8 +19,9 @@ namespace ItemList
 
 
         List<Item> itemlist = new List<Item>();
-      
 
+        Dictionary<int, Item> dict = new Dictionary <int, Item>();
+      
 
         //Attributes
         public int id { get; set; }
@@ -42,21 +43,6 @@ namespace ItemList
             {
                 Item item = new Item();
 
-
-
-                //File.WriteAllText(pathId, currentidStr);
-                //currentidStr = File.ReadAllText(pathId);
-
-                //currentid = Convert.ToInt32(currentidStr);
-
-                //item.id = currentid;
-
-                //currentid =  CountId(currentid);
-                //currentidStr = Convert.ToString(currentid);
-
-                //File.WriteAllText(pathId, currentidStr);
-               
-
                 item.id = currentid;
                 currentid = item.id;
                 currentid = CountId(currentid);
@@ -67,10 +53,9 @@ namespace ItemList
                 item.category = 'd';
                 item.priority = "defaultPriority";
                 itemlist.Add(item);
+                dict.Add(item.id, item);
             }
         }
-
-        
 
         public void Start()
         {
@@ -88,6 +73,12 @@ namespace ItemList
                 Console.WriteLine();
                 Console.WriteLine("Display List");
                 Console.WriteLine("Enter 3");
+                Console.WriteLine();
+                Console.WriteLine("Display overview of entries");
+                Console.WriteLine("Enter 4");
+                Console.WriteLine();
+                Console.WriteLine("Display dict");
+                Console.WriteLine("Enter 5");
                 Console.WriteLine();
 
                 string inputmenu = Console.ReadLine();
@@ -108,6 +99,18 @@ namespace ItemList
                 else if (inputmenu == "3")
                 {
                     displayList();
+                    Console.Clear();
+                }
+
+                else if (inputmenu == "4")
+                {
+                    DisplayEntries(itemlist);
+                    Console.Clear();
+                }
+
+                else if (inputmenu == "5")
+                {
+                    DisplayDict(dict);
                     Console.Clear();
                 }
 
@@ -168,7 +171,6 @@ namespace ItemList
 
         public void Create()
         {
-
             Item item = new Item();
 
             item.id = ReadId();
@@ -192,6 +194,7 @@ namespace ItemList
             item.createdate = DateTime.Now;
 
             itemlist.Add(item);
+            dict.Add(item.id, item);
 
         }
 
@@ -216,8 +219,41 @@ namespace ItemList
             File.WriteAllText(pathId, currentidStr);
         }
 
-       
+        public void DisplayEntries(List<Item> itemlist)
+        {
+            foreach(Item i in itemlist)
+            {
 
+                Console.WriteLine(i.id + ".) " + i.title);
+                
+            }
+            Console.WriteLine("Enter ID to display full entry");
+            string testid = Console.ReadLine();
+
+            int inputid = Convert.ToInt32(testid);
+            Details(inputid);
+        }
+
+        public void Details(int inputid)
+        {
+            Item item = dict[inputid];
+            Console.WriteLine("ID " + item.id);
+            Console.WriteLine("Titel " + item.title);
+            Console.WriteLine("Beschreibuung " + item.description);
+            Console.WriteLine("Kategorie " + item.category);
+            Console.WriteLine("Priorität " + item.priority);
+            Console.WriteLine();
+            Console.ReadKey();
+        }
+
+        public void DisplayDict(Dictionary<int, Item> dict)
+        {
+            foreach(KeyValuePair<int, Item> pair in dict)
+            {
+                Console.WriteLine("{0}, {1}", pair.Key, pair.Value);
+            }
+            Console.ReadKey();
+        }
     }
 }
 
