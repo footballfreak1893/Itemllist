@@ -38,7 +38,7 @@ namespace ItemList
 
             if (File.Exists(path))
             {
-                Deserialize(path);
+                DeserializeItem(path);
                 DeserializeDict(pathDict);
             }
             else
@@ -63,7 +63,7 @@ namespace ItemList
         {
             while (true)
             {
-                Console.WriteLine("List");
+                Console.WriteLine("<--->List<--->");
                 Console.WriteLine();
                 Console.WriteLine("Enter a menu");
                 Console.WriteLine();
@@ -73,14 +73,14 @@ namespace ItemList
                 Console.WriteLine("Serialize");
                 Console.WriteLine("Enter 2");
                 Console.WriteLine();
-                Console.WriteLine("Display List");
+                //Console.WriteLine("Display List");
+                //Console.WriteLine("Enter 3");
+                //Console.WriteLine();
+                Console.WriteLine("Display overview of entries");
                 Console.WriteLine("Enter 3");
                 Console.WriteLine();
-                Console.WriteLine("Display overview of entries");
-                Console.WriteLine("Enter 4");
-                Console.WriteLine();
                 Console.WriteLine("Save Dict");
-                Console.WriteLine("Enter 5");
+                Console.WriteLine("Enter 4");
                 Console.WriteLine();
 
                 string inputmenu = Console.ReadLine();
@@ -93,24 +93,24 @@ namespace ItemList
 
                 else if (inputmenu == "2")
                 {
-                    itemlist = Serialize(path);
-                    Deserialize(path, itemlist);
+                    itemlist = SerializeItem(path);
+                    DeserializeItem(path, itemlist);
                     Console.Clear();
                 }
+
+                //else if (inputmenu == "3")
+                //{
+                //    displayList();
+                //    Console.Clear();
+                //}
 
                 else if (inputmenu == "3")
-                {
-                    displayList();
-                    Console.Clear();
-                }
-
-                else if (inputmenu == "4")
                 {
                     DisplayEntries(itemlist);
                     Console.Clear();
                 }
 
-                else if (inputmenu == "5")
+                else if (inputmenu == "4")
                 {
                     SerializeDict(pathDict);
                     Console.Clear();
@@ -123,7 +123,7 @@ namespace ItemList
             }
         }
 
-        public List<Item> Serialize(string path)
+        public List<Item> SerializeItem(string path)
         {
             System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Create, System.IO.FileAccess.Write);
             IFormatter bf = new BinaryFormatter();
@@ -147,7 +147,7 @@ namespace ItemList
             return dict;
         }
 
-        public List<Item> Deserialize(string path, List<Item> itemlist)
+        public List<Item> DeserializeItem(string path, List<Item> itemlist)
         {
             System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
             IFormatter bf = new BinaryFormatter();
@@ -157,7 +157,7 @@ namespace ItemList
             return itemlist;
         }
 
-        public List<Item> Deserialize(string path)
+        public List<Item> DeserializeItem(string path)
         {
             System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
             IFormatter bf = new BinaryFormatter();
@@ -166,16 +166,6 @@ namespace ItemList
 
             return itemlist;
         }
-
-        //public Dictionary<int, Item> DeserializeDict(string pathDict, Dictionary <int, Item>)
-        //{
-        //    System.IO.FileStream fs = new System.IO.FileStream(pathDict, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-        //    IFormatter bf = new BinaryFormatter();
-        //    dict = (Dictionary<int, Item>)bf.Deserialize(fs);
-        //    fs.Close();
-
-        //    return dict;
-        //}
 
         public Dictionary<int, Item> DeserializeDict(string pathDict)
         {
@@ -187,24 +177,19 @@ namespace ItemList
             return dict;
         }
 
-
-
-        public void displayList()
-        {
-            foreach (Item i in itemlist)
-            {
-                Console.WriteLine("ID " + i.id);
-                Console.WriteLine("Titel " + i.title);
-                Console.WriteLine("Beschreibuung " + i.description);
-                Console.WriteLine("Kategorie " + i.category);
-                Console.WriteLine("Priorität " + i.priority);
-                Console.WriteLine();
-                Console.ReadKey();
-            }
-        }
-
-
-       
+        //public void displayList()
+        //{
+        //    foreach (Item i in itemlist)
+        //    {
+        //        Console.WriteLine("ID " + i.id);
+        //        Console.WriteLine("Titel " + i.title);
+        //        Console.WriteLine("Beschreibuung " + i.description);
+        //        Console.WriteLine("Kategorie " + i.category);
+        //        Console.WriteLine("Priorität " + i.priority);
+        //        Console.WriteLine();
+        //        Console.ReadKey();
+        //    }
+        //}
 
         public void Create()
         {
@@ -237,14 +222,6 @@ namespace ItemList
 
         public void Update(Item item)
         {
-            
-
-            //item.id = ReadId();
-
-            //int currentid = CountId(item.id);
-
-            //SaveId(pathId, currentid);
-
             Console.WriteLine("Update tile");
             string ptitle = Console.ReadLine();
             if (ptitle != "")
@@ -314,14 +291,22 @@ namespace ItemList
             Item item = dict[inputid];
             Console.WriteLine("ID " + item.id);
             Console.WriteLine("Titel " + item.title);
-            Console.WriteLine("Beschreibuung " + item.description);
+            Console.WriteLine("Beschreibung " + item.description);
             Console.WriteLine("Kategorie " + item.category);
             Console.WriteLine("Priorität " + item.priority);
             Console.WriteLine();
-            Console.ReadKey();
-            Console.WriteLine("Update:");
-            Update(item);
-            
+            Console.WriteLine("Update item:");
+            Console.WriteLine("Enter 1");
+            Console.WriteLine();
+            Console.WriteLine("Delete item:");
+            Console.WriteLine("Enter 2");
+            Console.WriteLine();
+            string inputvalue = Console.ReadLine();
+
+            if (inputvalue == "1")
+            {
+                Update(item);
+            }
         }
 
         public void DisplayDict(Dictionary<int, Item> dict)
