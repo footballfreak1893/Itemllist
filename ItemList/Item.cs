@@ -28,7 +28,7 @@ namespace ItemList
         public int id { get; set; }
         public string title { get; set; }
         string description { get; set; }
-        char category { get; set; }
+        string category { get; set; }
         string priority { get; set; }
         DateTime createdate { get; set; }
         DateTime enddate { get; set; }
@@ -52,7 +52,7 @@ namespace ItemList
 
                 item.title = "defaultTitle";
                 item.description = "defaultDescription";
-                item.category = 'd';
+                item.category = "d";
                 item.priority = "defaultPriority";
                 item.createdate = DateTime.Now;
                 itemlist.Add(item);
@@ -191,11 +191,11 @@ namespace ItemList
         {
             foreach (Item i in itemlist)
             {
-                Console.WriteLine("ID " + i.id);
-                Console.WriteLine("Titel " + i.title);
-                Console.WriteLine("Beschreibuung " + i.description);
-                Console.WriteLine("Kategorie " + i.category);
-                Console.WriteLine("Priorität " + i.priority);
+                Console.WriteLine("ID: " + i.id);
+                Console.WriteLine("Titel: " + i.title);
+                Console.WriteLine("Beschreibung: " + i.description);
+                Console.WriteLine("Kategorie: " + i.category);
+                Console.WriteLine("Priorität: " + i.priority);
                 Console.WriteLine();
                 Console.ReadKey();
             }
@@ -213,15 +213,29 @@ namespace ItemList
 
             Console.WriteLine("Enter title");
             item.title = Console.ReadLine();
+            if (item.title == "")
+            {
+                item.title = NotDefind(); 
+            }
 
             Console.WriteLine("Enter description");
             item.description = Console.ReadLine();
+            if (item.description == "")
+            {
+                item.description = NotDefind();
+            }
 
-            Console.WriteLine("Enter category");
-            item.category = Convert.ToChar(Console.ReadLine());
+            item.category = SetCategory();
+            if (item.category == "")
+            {
+                item.category = NotDefind();
+            }
 
-            Console.WriteLine("Enter priority");
-            item.priority = Console.ReadLine();
+            item.priority = SetPriority();
+            if (item.priority == "")
+            {
+                item.priority = NotDefind();
+            }
 
             Console.WriteLine("Enter endddate");
             item.enddate = SetDateValue();
@@ -230,6 +244,12 @@ namespace ItemList
 
             itemlist.Add(item);
             dict.Add(item.id, item);
+        }
+
+        public string NotDefind()
+        {
+           string notDefind = "Not Defind";
+            return notDefind;
         }
 
         public Item Update(Item item)
@@ -265,12 +285,10 @@ namespace ItemList
 
         public void Delete(Item item)
         {
-            
             itemlist = SerializeItem(path);
             DeserializeItem(path, itemlist);
             SerializeDict(pathDict);
             displayList();
-
         }
 
         public int CountId(int currentid)
@@ -311,13 +329,13 @@ namespace ItemList
         public void Details(int inputid)
         {
             Item item = dict[inputid];
-            Console.WriteLine("ID " + item.id);
-            Console.WriteLine("Titel " + item.title);
-            Console.WriteLine("Beschreibung " + item.description);
-            Console.WriteLine("Kategorie " + item.category);
-            Console.WriteLine("Priorität " + item.priority);
-            Console.WriteLine("Erstellt am " + item.createdate);
-            Console.WriteLine("Fällig am " + item.enddate);
+            Console.WriteLine("ID: " + item.id);
+            Console.WriteLine("Titel: " + item.title);
+            Console.WriteLine("Beschreibung: " + item.description);
+            Console.WriteLine("Kategorie: " + item.category);
+            Console.WriteLine("Priorität: " + item.priority);
+            Console.WriteLine("Erstellt am: " + item.createdate);
+            Console.WriteLine("Fällig am: " + item.enddate);
             Console.WriteLine();
             Console.ReadKey();
             //Console.WriteLine("Update item:");
@@ -357,7 +375,55 @@ namespace ItemList
             return date;
         }
 
-            public void DisplayDict(Dictionary<int, Item> dict)
+        public string SetCategory()
+        {
+            Console.WriteLine("Enter Category");
+            Console.WriteLine("Enter 1: --> Business");
+            Console.WriteLine("Enter 2: --> Private");
+            Console.WriteLine("Enter 3: --> Future plan");
+            var inputvalue = Console.ReadLine();
+            string category ="";
+
+            if (inputvalue == "1")
+            {
+                category = "Business";
+            }
+            else if (inputvalue == "2")
+            {
+                category = "Private";
+            }
+            else if (inputvalue == "3")
+            {
+                category = "Future Plan";
+            }
+            return category;
+        }
+
+        public string SetPriority()
+        {
+            Console.WriteLine("Enter Priority");
+            Console.WriteLine("Enter 1: --> high");
+            Console.WriteLine("Enter 2: --> medium");
+            Console.WriteLine("Enter 3: --> low");
+            var inputvalue = Console.ReadLine();
+            string priority = "";
+
+            if (inputvalue == "1")
+            {
+                priority = "high";
+            }
+            else if (inputvalue == "2")
+            {
+                priority = "medium";
+            }
+            else if (inputvalue == "3")
+            {
+                priority = "low";
+            }
+            return priority;
+        }
+
+        public void DisplayDict(Dictionary<int, Item> dict)
         {
             foreach (KeyValuePair<int, Item> pair in dict)
             {
