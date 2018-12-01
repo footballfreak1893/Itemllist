@@ -21,8 +21,8 @@ namespace ItemList
 
         List<Item> itemlist = new List<Item>();
 
-        Dictionary<int, Item> dict = new Dictionary <int, Item>();
-      
+        Dictionary<int, Item> dict = new Dictionary<int, Item>();
+
 
         //Attributes
         public int id { get; set; }
@@ -30,8 +30,8 @@ namespace ItemList
         string description { get; set; }
         char category { get; set; }
         string priority { get; set; }
-        DateTime createdate;
-        DateTime enddate;
+        DateTime createdate { get; set; }
+        DateTime enddate { get; set; }
 
         public void FileExists()
         {
@@ -54,8 +54,14 @@ namespace ItemList
                 item.description = "defaultDescription";
                 item.category = 'd';
                 item.priority = "defaultPriority";
+                item.createdate = DateTime.Now;
                 itemlist.Add(item);
                 dict.Add(item.id, item);
+
+                itemlist = SerializeItem(path);
+                DeserializeItem(path, itemlist);
+                SerializeDict(pathDict);
+                Console.Clear();
             }
         }
 
@@ -70,33 +76,36 @@ namespace ItemList
                 Console.WriteLine("Create Item");
                 Console.WriteLine("Enter 1");
                 Console.WriteLine();
-                Console.WriteLine("Serialize");
-                Console.WriteLine("Enter 2");
-                Console.WriteLine();
+                //Console.WriteLine("Serialize");
+                //Console.WriteLine("Enter 2");
+                //Console.WriteLine();
                 //Console.WriteLine("Display List");
                 //Console.WriteLine("Enter 3");
                 //Console.WriteLine();
                 Console.WriteLine("Display overview of entries");
-                Console.WriteLine("Enter 3");
+                Console.WriteLine("Enter 2");
                 Console.WriteLine();
-                Console.WriteLine("Save Dict");
-                Console.WriteLine("Enter 4");
-                Console.WriteLine();
+                //Console.WriteLine("Save Dict");
+                //Console.WriteLine("Enter 4");
+                //Console.WriteLine();
 
                 string inputmenu = Console.ReadLine();
 
                 if (inputmenu == "1")
                 {
                     Create();
+                    itemlist = SerializeItem(path);
+                    DeserializeItem(path, itemlist);
+                    SerializeDict(pathDict);
                     Console.Clear();
                 }
 
-                else if (inputmenu == "2")
-                {
-                    itemlist = SerializeItem(path);
-                    DeserializeItem(path, itemlist);
-                    Console.Clear();
-                }
+                //else if (inputmenu == "2")
+                //{
+                //    itemlist = SerializeItem(path);
+                //    DeserializeItem(path, itemlist);
+                //    Console.Clear();
+                //}
 
                 //else if (inputmenu == "3")
                 //{
@@ -104,20 +113,21 @@ namespace ItemList
                 //    Console.Clear();
                 //}
 
-                else if (inputmenu == "3")
+                else if (inputmenu == "2")
                 {
                     DisplayEntries(itemlist);
                     Console.Clear();
                 }
 
-                else if (inputmenu == "4")
-                {
-                    SerializeDict(pathDict);
-                    Console.Clear();
-                }
+                //else if (inputmenu == "4")
+                //{
+                //    SerializeDict(pathDict);
+                //    Console.Clear();
+                //}
 
                 else
                 {
+                    Console.Clear();
                     continue;
                 }
             }
@@ -177,19 +187,19 @@ namespace ItemList
             return dict;
         }
 
-        //public void displayList()
-        //{
-        //    foreach (Item i in itemlist)
-        //    {
-        //        Console.WriteLine("ID " + i.id);
-        //        Console.WriteLine("Titel " + i.title);
-        //        Console.WriteLine("Beschreibuung " + i.description);
-        //        Console.WriteLine("Kategorie " + i.category);
-        //        Console.WriteLine("Priorität " + i.priority);
-        //        Console.WriteLine();
-        //        Console.ReadKey();
-        //    }
-        //}
+        public void displayList()
+        {
+            foreach (Item i in itemlist)
+            {
+                Console.WriteLine("ID " + i.id);
+                Console.WriteLine("Titel " + i.title);
+                Console.WriteLine("Beschreibuung " + i.description);
+                Console.WriteLine("Kategorie " + i.category);
+                Console.WriteLine("Priorität " + i.priority);
+                Console.WriteLine();
+                Console.ReadKey();
+            }
+        }
 
         public void Create()
         {
@@ -197,11 +207,11 @@ namespace ItemList
 
             item.id = ReadId();
 
-          int currentid =  CountId(item.id);
+            int currentid = CountId(item.id);
 
             SaveId(pathId, currentid);
 
-            Console.WriteLine("Enter tile");
+            Console.WriteLine("Enter title");
             item.title = Console.ReadLine();
 
             Console.WriteLine("Enter description");
@@ -213,14 +223,16 @@ namespace ItemList
             Console.WriteLine("Enter priority");
             item.priority = Console.ReadLine();
 
+            Console.WriteLine("Enter endddate");
+            item.enddate = SetDateValue();
+
             item.createdate = DateTime.Now;
 
             itemlist.Add(item);
             dict.Add(item.id, item);
-
         }
 
-        public void Update(Item item)
+        public Item Update(Item item)
         {
             Console.WriteLine("Update tile");
             string ptitle = Console.ReadLine();
@@ -248,20 +260,29 @@ namespace ItemList
             {
                 item.priority = ppriority;
             }
+            return item;
+        }
+
+        public void Delete(Item item)
+        {
+            
+            itemlist = SerializeItem(path);
+            DeserializeItem(path, itemlist);
+            SerializeDict(pathDict);
+            displayList();
+
         }
 
         public int CountId(int currentid)
         {
-            currentid = currentid+1;
-            Console.WriteLine("C" +currentid);
-            Console.ReadKey();
+            currentid = currentid + 1;
             return currentid;
         }
 
         public int ReadId()
         {
-           currentidStr = File.ReadAllText(pathId);
-           int  currentid = Convert.ToInt32(currentidStr);
+            currentidStr = File.ReadAllText(pathId);
+            int currentid = Convert.ToInt32(currentidStr);
             return currentid;
         }
 
@@ -273,16 +294,17 @@ namespace ItemList
 
         public void DisplayEntries(List<Item> itemlist)
         {
-            foreach(Item i in itemlist)
+            foreach (Item i in itemlist)
             {
 
                 Console.WriteLine(i.id + ".) " + i.title);
-                
+
             }
             Console.WriteLine("Enter ID to display full entry");
             string inputidStr = Console.ReadLine();
 
             int inputid = Convert.ToInt32(inputidStr);
+            Console.Clear();
             Details(inputid);
         }
 
@@ -294,24 +316,50 @@ namespace ItemList
             Console.WriteLine("Beschreibung " + item.description);
             Console.WriteLine("Kategorie " + item.category);
             Console.WriteLine("Priorität " + item.priority);
+            Console.WriteLine("Erstellt am " + item.createdate);
+            Console.WriteLine("Fällig am " + item.enddate);
             Console.WriteLine();
-            Console.WriteLine("Update item:");
-            Console.WriteLine("Enter 1");
-            Console.WriteLine();
-            Console.WriteLine("Delete item:");
-            Console.WriteLine("Enter 2");
-            Console.WriteLine();
-            string inputvalue = Console.ReadLine();
+            Console.ReadKey();
+            //Console.WriteLine("Update item:");
+            //Console.WriteLine("Enter 1");
+            //Console.WriteLine();
+            //Console.WriteLine("Delete item:");
+            //Console.WriteLine("Enter 2");
+            //Console.WriteLine();
+            //string inputvalue = Console.ReadLine();
 
-            if (inputvalue == "1")
-            {
-                Update(item);
-            }
+            //if (inputvalue == "1")
+            //{
+            //    item = Update(item);
+            //    item = dict[inputid];
+            //}
+            //else if (inputvalue == "2")
+            //{
+            //    item.Delete(item);
+            //}
         }
 
-        public void DisplayDict(Dictionary<int, Item> dict)
+        public DateTime SetDateValue()
         {
-            foreach(KeyValuePair<int, Item> pair in dict)
+            Console.WriteLine("Enter Day");
+            var pday = Console.ReadLine();
+            int day = Convert.ToInt32(pday);
+
+            Console.WriteLine("Enter Month");
+            var pmonth = Console.ReadLine();
+            int month = Convert.ToInt32(pmonth);
+
+            Console.WriteLine("Enter Year");
+            var pyear = Console.ReadLine();
+            int year = Convert.ToInt32(pyear);
+
+            var date = new DateTime(year, month, day);
+            return date;
+        }
+
+            public void DisplayDict(Dictionary<int, Item> dict)
+        {
+            foreach (KeyValuePair<int, Item> pair in dict)
             {
                 Console.WriteLine("{0}, {1}", pair.Key, pair.Value);
             }
