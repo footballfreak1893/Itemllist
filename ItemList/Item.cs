@@ -14,6 +14,7 @@ namespace ItemList
     {
         string path = "data.txt";
         string pathId = "idfile.txt";
+        string pathDict = "dictfile.txt";
         string currentidStr = "1";
         int currentid = 1;
 
@@ -38,6 +39,7 @@ namespace ItemList
             if (File.Exists(path))
             {
                 Deserialize(path);
+                DeserializeDict(pathDict);
             }
             else
             {
@@ -77,7 +79,7 @@ namespace ItemList
                 Console.WriteLine("Display overview of entries");
                 Console.WriteLine("Enter 4");
                 Console.WriteLine();
-                Console.WriteLine("Display dict");
+                Console.WriteLine("Save Dict");
                 Console.WriteLine("Enter 5");
                 Console.WriteLine();
 
@@ -110,7 +112,7 @@ namespace ItemList
 
                 else if (inputmenu == "5")
                 {
-                    DisplayDict(dict);
+                    SerializeDict(pathDict);
                     Console.Clear();
                 }
 
@@ -133,6 +135,60 @@ namespace ItemList
             return itemlist;
         }
 
+        public Dictionary<int, Item> SerializeDict(string pathDict)
+        {
+            System.IO.FileStream fs = new System.IO.FileStream(pathDict, System.IO.FileMode.Create, System.IO.FileAccess.Write);
+            IFormatter bf = new BinaryFormatter();
+
+            bf.Serialize(fs, dict);
+
+            fs.Close();
+
+            return dict;
+        }
+
+        public List<Item> Deserialize(string path, List<Item> itemlist)
+        {
+            System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+            IFormatter bf = new BinaryFormatter();
+            itemlist = (List<Item>)bf.Deserialize(fs);
+            fs.Close();
+
+            return itemlist;
+        }
+
+        public List<Item> Deserialize(string path)
+        {
+            System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+            IFormatter bf = new BinaryFormatter();
+            itemlist = (List<Item>)bf.Deserialize(fs);
+            fs.Close();
+
+            return itemlist;
+        }
+
+        //public Dictionary<int, Item> DeserializeDict(string pathDict, Dictionary <int, Item>)
+        //{
+        //    System.IO.FileStream fs = new System.IO.FileStream(pathDict, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+        //    IFormatter bf = new BinaryFormatter();
+        //    dict = (Dictionary<int, Item>)bf.Deserialize(fs);
+        //    fs.Close();
+
+        //    return dict;
+        //}
+
+        public Dictionary<int, Item> DeserializeDict(string pathDict)
+        {
+            System.IO.FileStream fs = new System.IO.FileStream(pathDict, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+            IFormatter bf = new BinaryFormatter();
+            dict = (Dictionary<int, Item>)bf.Deserialize(fs);
+            fs.Close();
+
+            return dict;
+        }
+
+
+
         public void displayList()
         {
             foreach (Item i in itemlist)
@@ -148,26 +204,7 @@ namespace ItemList
         }
 
 
-        public List<Item> Deserialize(string path, List<Item> itemlist)
-        {
-            System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-            IFormatter bf = new BinaryFormatter();
-            itemlist = (List<Item>)bf.Deserialize(fs);
-            fs.Close();
-
-            return itemlist;
-        }
-
-
-        public List<Item> Deserialize(string path)
-        {
-            System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-            IFormatter bf = new BinaryFormatter();
-            itemlist = (List<Item>)bf.Deserialize(fs);
-            fs.Close();
-
-            return itemlist;
-        }
+       
 
         public void Create()
         {
@@ -196,6 +233,44 @@ namespace ItemList
             itemlist.Add(item);
             dict.Add(item.id, item);
 
+        }
+
+        public void Update(Item item)
+        {
+            
+
+            //item.id = ReadId();
+
+            //int currentid = CountId(item.id);
+
+            //SaveId(pathId, currentid);
+
+            Console.WriteLine("Update tile");
+            string ptitle = Console.ReadLine();
+            if (ptitle != "")
+            {
+                item.title = ptitle;
+            }
+
+            Console.WriteLine("Update description");
+            string pdescription = Console.ReadLine();
+            if (pdescription != "")
+            {
+                item.description = pdescription;
+            }
+            //Console.WriteLine("Update category");
+            //char pcategory = Convert.ToChar(Console.ReadLine());
+            //if (pcategory != 'a')
+            //{
+            //    item.category = pcategory;
+            //}
+
+            Console.WriteLine("Update priority");
+            string ppriority = Console.ReadLine();
+            if (ppriority != "")
+            {
+                item.priority = ppriority;
+            }
         }
 
         public int CountId(int currentid)
@@ -228,9 +303,9 @@ namespace ItemList
                 
             }
             Console.WriteLine("Enter ID to display full entry");
-            string testid = Console.ReadLine();
+            string inputidStr = Console.ReadLine();
 
-            int inputid = Convert.ToInt32(testid);
+            int inputid = Convert.ToInt32(inputidStr);
             Details(inputid);
         }
 
@@ -244,6 +319,9 @@ namespace ItemList
             Console.WriteLine("Priorität " + item.priority);
             Console.WriteLine();
             Console.ReadKey();
+            Console.WriteLine("Update:");
+            Update(item);
+            
         }
 
         public void DisplayDict(Dictionary<int, Item> dict)
