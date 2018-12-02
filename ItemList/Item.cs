@@ -76,18 +76,9 @@ namespace ItemList
                 Console.WriteLine("Create Item");
                 Console.WriteLine("Enter 1");
                 Console.WriteLine();
-                //Console.WriteLine("Serialize");
-                //Console.WriteLine("Enter 2");
-                //Console.WriteLine();
-                //Console.WriteLine("Display List");
-                //Console.WriteLine("Enter 3");
-                //Console.WriteLine();
                 Console.WriteLine("Display overview of entries");
                 Console.WriteLine("Enter 2");
                 Console.WriteLine();
-                //Console.WriteLine("Save Dict");
-                //Console.WriteLine("Enter 4");
-                //Console.WriteLine();
 
                 string inputmenu = Console.ReadLine();
 
@@ -99,31 +90,12 @@ namespace ItemList
                     SerializeDict(pathDict);
                     Console.Clear();
                 }
-
-                //else if (inputmenu == "2")
-                //{
-                //    itemlist = SerializeItem(path);
-                //    DeserializeItem(path, itemlist);
-                //    Console.Clear();
-                //}
-
-                //else if (inputmenu == "3")
-                //{
-                //    displayList();
-                //    Console.Clear();
-                //}
-
+                
                 else if (inputmenu == "2")
                 {
                     DisplayEntries(itemlist);
                     Console.Clear();
                 }
-
-                //else if (inputmenu == "4")
-                //{
-                //    SerializeDict(pathDict);
-                //    Console.Clear();
-                //}
 
                 else
                 {
@@ -187,19 +159,19 @@ namespace ItemList
             return dict;
         }
 
-        public void displayList()
-        {
-            foreach (Item i in itemlist)
-            {
-                Console.WriteLine("ID: " + i.id);
-                Console.WriteLine("Titel: " + i.title);
-                Console.WriteLine("Beschreibung: " + i.description);
-                Console.WriteLine("Kategorie: " + i.category);
-                Console.WriteLine("Priorität: " + i.priority);
-                Console.WriteLine();
-                Console.ReadKey();
-            }
-        }
+        //public void displayList()
+        //{
+        //    foreach (Item i in itemlist)
+        //    {
+        //        Console.WriteLine("ID: " + i.id);
+        //        Console.WriteLine("Titel: " + i.title);
+        //        Console.WriteLine("Beschreibung: " + i.description);
+        //        Console.WriteLine("Kategorie: " + i.category);
+        //        Console.WriteLine("Priorität: " + i.priority);
+        //        Console.WriteLine();
+        //        Console.ReadKey();
+        //    }
+        //}
 
         public void Create()
         {
@@ -283,13 +255,13 @@ namespace ItemList
             return item;
         }
 
-        public void Delete(Item item)
-        {
-            itemlist = SerializeItem(path);
-            DeserializeItem(path, itemlist);
-            SerializeDict(pathDict);
-            displayList();
-        }
+        //public void Delete(Item item)
+        //{
+        //    itemlist = SerializeItem(path);
+        //    DeserializeItem(path, itemlist);
+        //    SerializeDict(pathDict);
+        //    displayList();
+        //}
 
         public int CountId(int currentid)
         {
