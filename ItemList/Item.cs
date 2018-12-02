@@ -18,11 +18,9 @@ namespace ItemList
         string currentidStr = "1";
         int currentid = 1;
 
-
         List<Item> itemlist = new List<Item>();
 
         Dictionary<int, Item> dict = new Dictionary<int, Item>();
-
 
         //Attributes
         public int id { get; set; }
@@ -33,9 +31,10 @@ namespace ItemList
         DateTime createdate { get; set; }
         DateTime enddate { get; set; }
 
+
+        //File Existiert
         public void FileExists()
         {
-
             if (File.Exists(path))
             {
                 DeserializeItem(path);
@@ -218,11 +217,7 @@ namespace ItemList
             dict.Add(item.id, item);
         }
 
-        public string NotDefind()
-        {
-           string notDefind = "Not Defind";
-            return notDefind;
-        }
+        
 
         public Item Update(Item item)
         {
@@ -282,6 +277,7 @@ namespace ItemList
             File.WriteAllText(pathId, currentidStr);
         }
 
+
         public void DisplayEntries(List<Item> itemlist)
         {
             foreach (Item i in itemlist)
@@ -310,19 +306,26 @@ namespace ItemList
             Console.WriteLine("Fällig am: " + item.enddate);
             Console.WriteLine();
             Console.ReadKey();
-            //Console.WriteLine("Update item:");
-            //Console.WriteLine("Enter 1");
-            //Console.WriteLine();
-            //Console.WriteLine("Delete item:");
-            //Console.WriteLine("Enter 2");
-            //Console.WriteLine();
-            //string inputvalue = Console.ReadLine();
+            Console.WriteLine("Update item:");
+            Console.WriteLine("Enter 1");
+            Console.WriteLine();
+            Console.WriteLine("Delete item:");
+            Console.WriteLine("Enter 2");
+            Console.WriteLine();
+            string inputvalue = Console.ReadLine();
 
-            //if (inputvalue == "1")
-            //{
-            //    item = Update(item);
-            //    item = dict[inputid];
-            //}
+            if (inputvalue == "1")
+            {
+                item = Update(item);
+               
+                itemlist.Remove(item);
+                itemlist.Add(item);
+                item = dict[inputid];
+                SerializeItem(path);
+                DeserializeItem(path);
+                SerializeDict(pathDict);
+                DeserializeDict(pathDict);
+            }
             //else if (inputvalue == "2")
             //{
             //    item.Delete(item);
@@ -393,6 +396,12 @@ namespace ItemList
                 priority = "low";
             }
             return priority;
+        }
+
+        public string NotDefind()
+        {
+            string notDefind = "Not Defind";
+            return notDefind;
         }
 
         public void DisplayDict(Dictionary<int, Item> dict)
