@@ -158,20 +158,6 @@ namespace ItemList
             return dict;
         }
 
-        //public void displayList()
-        //{
-        //    foreach (Item i in itemlist)
-        //    {
-        //        Console.WriteLine("ID: " + i.id);
-        //        Console.WriteLine("Titel: " + i.title);
-        //        Console.WriteLine("Beschreibung: " + i.description);
-        //        Console.WriteLine("Kategorie: " + i.category);
-        //        Console.WriteLine("Priorität: " + i.priority);
-        //        Console.WriteLine();
-        //        Console.ReadKey();
-        //    }
-        //}
-
         public void Create()
         {
             Item item = new Item();
@@ -186,26 +172,26 @@ namespace ItemList
             item.title = Console.ReadLine();
             if (item.title == "")
             {
-                item.title = NotDefind(); 
+                item.title = DefaultFunctions.NotDefind(); 
             }
 
             Console.WriteLine("Enter description");
             item.description = Console.ReadLine();
             if (item.description == "")
             {
-                item.description = NotDefind();
+                item.description = DefaultFunctions.NotDefind();
             }
 
-            item.category = SetCategory();
+            item.category = DefaultFunctions.SetCategory();
             if (item.category == "")
             {
-                item.category = NotDefind();
+                item.category = DefaultFunctions.NotDefind();
             }
 
-            item.priority = SetPriority();
+            item.priority = DefaultFunctions.SetPriority();
             if (item.priority == "")
             {
-                item.priority = NotDefind();
+                item.priority = DefaultFunctions.NotDefind();
             }
 
             Console.WriteLine("Enter endddate");
@@ -350,60 +336,7 @@ namespace ItemList
             return date;
         }
 
-        public string SetCategory()
-        {
-            Console.WriteLine("Enter Category");
-            Console.WriteLine("Enter 1: --> Business");
-            Console.WriteLine("Enter 2: --> Private");
-            Console.WriteLine("Enter 3: --> Future plan");
-            var inputvalue = Console.ReadLine();
-            string category ="";
-
-            if (inputvalue == "1")
-            {
-                category = "Business";
-            }
-            else if (inputvalue == "2")
-            {
-                category = "Private";
-            }
-            else if (inputvalue == "3")
-            {
-                category = "Future Plan";
-            }
-            return category;
-        }
-
-        public string SetPriority()
-        {
-            Console.WriteLine("Enter Priority");
-            Console.WriteLine("Enter 1: --> high");
-            Console.WriteLine("Enter 2: --> medium");
-            Console.WriteLine("Enter 3: --> low");
-            var inputvalue = Console.ReadLine();
-            string priority = "";
-
-            if (inputvalue == "1")
-            {
-                priority = "high";
-            }
-            else if (inputvalue == "2")
-            {
-                priority = "medium";
-            }
-            else if (inputvalue == "3")
-            {
-                priority = "low";
-            }
-            return priority;
-        }
-
-        public string NotDefind()
-        {
-            string notDefind = "Not Defind";
-            return notDefind;
-        }
-
+        
         public void DisplayDict(Dictionary<int, Item> dict)
         {
             foreach (KeyValuePair<int, Item> pair in dict)
