@@ -62,6 +62,24 @@ namespace ItemList
             return notDefind;
         }
 
+        public static DateTime SetDateValue()
+        {
+            Console.WriteLine("Enter Day");
+            var pday = Console.ReadLine();
+            int day = Convert.ToInt32(pday);
+
+            Console.WriteLine("Enter Month");
+            var pmonth = Console.ReadLine();
+            int month = Convert.ToInt32(pmonth);
+
+            Console.WriteLine("Enter Year");
+            var pyear = Console.ReadLine();
+            int year = Convert.ToInt32(pyear);
+
+            var date = new DateTime(year, month, day);
+            return date;
+        }
+
         //public void displayList()
         //{
         //    foreach (Item i in itemlist)

@@ -205,14 +205,16 @@ namespace ItemList
 
         
 
-        public Item Update(Item item)
+        public Item Update(Item item, int inputid)
         {
+            item.id = inputid;
             Console.WriteLine("Update tile");
             string ptitle = Console.ReadLine();
             if (ptitle != "")
             {
                 item.title = ptitle;
             }
+            
 
             Console.WriteLine("Update description");
             string pdescription = Console.ReadLine();
@@ -278,6 +280,7 @@ namespace ItemList
             int inputid = Convert.ToInt32(inputidStr);
             Console.Clear();
             Details(inputid);
+            //DisplayEntries(itemlist);
         }
 
         public void Details(int inputid)
@@ -302,15 +305,10 @@ namespace ItemList
 
             if (inputvalue == "1")
             {
-                item = Update(item);
-               
-                itemlist.Remove(item);
-                itemlist.Add(item);
-                item = dict[inputid];
-                SerializeItem(path);
-                DeserializeItem(path);
-                SerializeDict(pathDict);
-                DeserializeDict(pathDict);
+                Update(item, inputid);
+                itemlist = SerializeItem(path);
+                DeserializeItem(path, itemlist);
+                //DisplayEntries(itemlist);
             }
             //else if (inputvalue == "2")
             //{
