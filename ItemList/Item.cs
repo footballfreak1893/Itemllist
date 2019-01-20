@@ -12,6 +12,7 @@ namespace ItemList
     [Serializable]
     class Item
     {
+        // General class variables
         string path = "data.txt";
         string pathId = "idfile.txt";
         string pathDict = "dictfile.txt";
@@ -127,7 +128,7 @@ namespace ItemList
 
             return dict;
         }
-
+        //Deserialize (List does exists)
         public List<Item> DeserializeItem(string path, List<Item> itemlist)
         {
             System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
@@ -138,6 +139,7 @@ namespace ItemList
             return itemlist;
         }
 
+        //Deserialize (List does not exists)
         public List<Item> DeserializeItem(string path)
         {
             System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
@@ -195,7 +197,7 @@ namespace ItemList
             }
 
             Console.WriteLine("Enter endddate");
-            item.enddate = SetDateValue();
+            item.enddate = DefaultFunctions.SetDateValue();
 
             item.createdate = DateTime.Now;
 
@@ -204,7 +206,7 @@ namespace ItemList
         }
 
         
-
+        //-->Checking
         public Item Update(Item item, int inputid)
         {
             item.id = inputid;
@@ -265,7 +267,7 @@ namespace ItemList
             File.WriteAllText(pathId, currentidStr);
         }
 
-
+        //Overview of all entries of the list
         public void DisplayEntries(List<Item> itemlist)
         {
             foreach (Item i in itemlist)
@@ -277,12 +279,14 @@ namespace ItemList
             Console.WriteLine("Enter ID to display full entry");
             string inputidStr = Console.ReadLine();
 
+            //-->Checking
             int inputid = Convert.ToInt32(inputidStr);
             Console.Clear();
             Details(inputid);
             //DisplayEntries(itemlist);
         }
 
+        //Details of a entry
         public void Details(int inputid)
         {
             Item item = dict[inputid];
@@ -303,6 +307,7 @@ namespace ItemList
             Console.WriteLine();
             string inputvalue = Console.ReadLine();
 
+            //-->Checking
             if (inputvalue == "1")
             {
                 Update(item, inputid);
@@ -310,31 +315,14 @@ namespace ItemList
                 DeserializeItem(path, itemlist);
                 //DisplayEntries(itemlist);
             }
+            //-->Checking
             //else if (inputvalue == "2")
             //{
             //    item.Delete(item);
             //}
         }
 
-        public DateTime SetDateValue()
-        {
-            Console.WriteLine("Enter Day");
-            var pday = Console.ReadLine();
-            int day = Convert.ToInt32(pday);
-
-            Console.WriteLine("Enter Month");
-            var pmonth = Console.ReadLine();
-            int month = Convert.ToInt32(pmonth);
-
-            Console.WriteLine("Enter Year");
-            var pyear = Console.ReadLine();
-            int year = Convert.ToInt32(pyear);
-
-            var date = new DateTime(year, month, day);
-            return date;
-        }
-
-        
+        //Displays the entries of dictionary
         public void DisplayDict(Dictionary<int, Item> dict)
         {
             foreach (KeyValuePair<int, Item> pair in dict)

@@ -8,6 +8,7 @@ namespace ItemList
 {
     public static class DefaultFunctions
     {
+        // --> Checking
         public static string SetCategory()
         {
             Console.WriteLine("Enter Category");
@@ -32,6 +33,7 @@ namespace ItemList
             return category;
         }
 
+        // --> Checking
         public static string SetPriority()
         {
             Console.WriteLine("Enter Priority");
