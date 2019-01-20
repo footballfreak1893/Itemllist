@@ -30,6 +30,10 @@ namespace ItemList
             {
                 category = "Future Plan";
             }
+            else
+            {
+                category = "";
+            }
             return category;
         }
 
@@ -55,6 +59,10 @@ namespace ItemList
             {
                 priority = "low";
             }
+            else
+            {
+                priority = "";
+            }
             return priority;
         }
 
@@ -65,21 +73,28 @@ namespace ItemList
         }
 
         public static DateTime SetDateValue()
-        {
+        { //Checking here
             Console.WriteLine("Enter Day");
             var pday = Console.ReadLine();
-            int day = Convert.ToInt32(pday);
 
-            Console.WriteLine("Enter Month");
-            var pmonth = Console.ReadLine();
-            int month = Convert.ToInt32(pmonth);
+            if (pday != "")
+            { //Format 
+                int day = Convert.ToInt32(pday);
+                Console.WriteLine("Enter Month");
+                var pmonth = Console.ReadLine();
+                int month = Convert.ToInt32(pmonth);
 
-            Console.WriteLine("Enter Year");
-            var pyear = Console.ReadLine();
-            int year = Convert.ToInt32(pyear);
+                Console.WriteLine("Enter Year");
+                var pyear = Console.ReadLine();
+                int year = Convert.ToInt32(pyear);
 
-            var date = new DateTime(year, month, day);
-            return date;
+                var date = new DateTime(year, month, day);
+                return date;
+            }
+            else
+            {
+                return  new DateTime (2000, 1, 1);
+            }
         }
 
         //public void displayList()
