@@ -13,324 +13,62 @@ namespace ItemList
     class Item
     {
         // General class variables
-        string path = "data.txt";
-        string pathId = "idfile.txt";
-        string pathDict = "dictfile.txt";
-        string currentidStr = "1";
-        int currentid = 1;
+        //string path = "data.txt";
+        //string pathId = "idfile.txt";
+        //string pathDict = "dictfile.txt";
+        //string currentidStr = "1";
+        //int currentid = 1;
 
-        List<Item> itemlist = new List<Item>();
-
-        Dictionary<int, Item> dict = new Dictionary<int, Item>();
+       
 
         //Attributes
         public int id { get; set; }
         public string title { get; set; }
         string description { get; set; }
-        string category { get; set; }
-        string priority { get; set; }
-        DateTime createdate { get; set; }
-        DateTime enddate { get; set; }
+        //string category { get; set; }
+        //string priority { get; set; }
+        //DateTime createdate { get; set; }
+        //DateTime enddate { get; set; }
 
-
-        //File Existiert
-        public void FileExists()
+        public Item( string title)
         {
-            if (File.Exists(path))
-            {
-                DeserializeItem(path);
-                DeserializeDict(pathDict);
-            }
-            else
-            {
-                Item item = new Item();
-
-                item.id = currentid;
-                currentid = item.id;
-                currentid = CountId(currentid);
-                SaveId(pathId, currentid);
-
-                item.title = "defaultTitle";
-                item.description = "defaultDescription";
-                item.category = "d";
-                item.priority = "defaultPriority";
-                item.createdate = DateTime.Now;
-                itemlist.Add(item);
-                dict.Add(item.id, item);
-
-                itemlist = SerializeItem(path);
-                DeserializeItem(path, itemlist);
-                SerializeDict(pathDict);
-                Console.Clear();
-            }
+            //this.id = id;
+            this.title = title;
         }
 
-        public void Start()
+        public Item()
         {
-            while (true)
-            {
-                Console.WriteLine("<--->List<--->");
-                Console.WriteLine();
-                Console.WriteLine("Enter a menu");
-                Console.WriteLine();
-                Console.WriteLine("Create Item");
-                Console.WriteLine("Enter 1");
-                Console.WriteLine();
-                Console.WriteLine("Display overview of entries");
-                Console.WriteLine("Enter 2");
-                Console.WriteLine();
-
-                string inputmenu = Console.ReadLine();
-
-                if (inputmenu == "1")
-                {
-                    Create();
-                    itemlist = SerializeItem(path);
-                    DeserializeItem(path, itemlist);
-                    SerializeDict(pathDict);
-                    Console.Clear();
-                }
-                
-                else if (inputmenu == "2")
-                {
-                    DisplayEntries(itemlist);
-                    Console.Clear();
-                }
-
-                else
-                {
-                    Console.Clear();
-                    continue;
-                }
-            }
-        }
-
-        public List<Item> SerializeItem(string path)
-        {
-            System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Create, System.IO.FileAccess.Write);
-            IFormatter bf = new BinaryFormatter();
-
-            bf.Serialize(fs, itemlist);
-
-            fs.Close();
-
-            return itemlist;
-        }
-
-        public Dictionary<int, Item> SerializeDict(string pathDict)
-        {
-            System.IO.FileStream fs = new System.IO.FileStream(pathDict, System.IO.FileMode.Create, System.IO.FileAccess.Write);
-            IFormatter bf = new BinaryFormatter();
-
-            bf.Serialize(fs, dict);
-
-            fs.Close();
-
-            return dict;
-        }
-        //Deserialize (List does exists)
-        public List<Item> DeserializeItem(string path, List<Item> itemlist)
-        {
-            System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-            IFormatter bf = new BinaryFormatter();
-            itemlist = (List<Item>)bf.Deserialize(fs);
-            fs.Close();
-
-            return itemlist;
-        }
-
-        //Deserialize (List does not exists)
-        public List<Item> DeserializeItem(string path)
-        {
-            System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-            IFormatter bf = new BinaryFormatter();
-            itemlist = (List<Item>)bf.Deserialize(fs);
-            fs.Close();
-
-            return itemlist;
-        }
-
-        public Dictionary<int, Item> DeserializeDict(string pathDict)
-        {
-            System.IO.FileStream fs = new System.IO.FileStream(pathDict, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-            IFormatter bf = new BinaryFormatter();
-            dict = (Dictionary<int, Item>)bf.Deserialize(fs);
-            fs.Close();
-
-            return dict;
-        }
-
-        public void Create()
-        {
-            Item item = new Item();
-
-            item.id = ReadId();
-
-            int currentid = CountId(item.id);
-
-            SaveId(pathId, currentid);
-
-            Console.WriteLine("Enter title");
-            item.title = Console.ReadLine();
-            if (item.title == "")
-            {
-                item.title = DefaultFunctions.NotDefind(); 
-            }
-
-            Console.WriteLine("Enter description");
-            item.description = Console.ReadLine();
-            if (item.description == "")
-            {
-                item.description = DefaultFunctions.NotDefind();
-            }
-
-            item.category = DefaultFunctions.SetCategory();
-            if (item.category == "")
-            {
-                item.category = DefaultFunctions.NotDefind();
-            }
-
-            item.priority = DefaultFunctions.SetPriority();
-            if (item.priority == "")
-            {
-                item.priority = DefaultFunctions.NotDefind();
-            }
-
-            Console.WriteLine("Enter endddate");
-            item.enddate = DefaultFunctions.SetDateValue();
-
-            item.createdate = DateTime.Now;
-
-            itemlist.Add(item);
-            dict.Add(item.id, item);
-        }
-
-        
-        //-->Checking
-        public Item Update(Item item, int inputid)
-        {
-            item.id = inputid;
-            Console.WriteLine("Update tile");
-            string ptitle = Console.ReadLine();
-            if (ptitle != "")
-            {
-                item.title = ptitle;
-            }
             
+        }
 
-            Console.WriteLine("Update description");
-            string pdescription = Console.ReadLine();
-            if (pdescription != "")
+        List<Item> itemlist = new List<Item>();
+        Dictionary<int, Item> dict = new Dictionary<int, Item>();
+
+        public void AddItem()
+        {
+            Console.WriteLine("Add Entry");
+            Console.WriteLine("Enter Title:");
+            string userTitle = Console.ReadLine();
+
+            Console.WriteLine("Add Entry");
+            Console.WriteLine("Enter Description:");
+            string userDescription = Console.ReadLine();
+           
+            Item item = new Item(userTitle);
+            item.description = userDescription;
+            itemlist.Add(item);
+        }
+
+        public void DisplayAllItems()
+        {
+            foreach (Item entries in itemlist)
             {
-                item.description = pdescription;
+                Console.WriteLine("Title " + entries.title);
+                Console.WriteLine("Description " + entries.description);
+               
             }
-            //Console.WriteLine("Update category");
-            //char pcategory = Convert.ToChar(Console.ReadLine());
-            //if (pcategory != 'a')
-            //{
-            //    item.category = pcategory;
-            //}
-
-            Console.WriteLine("Update priority");
-            string ppriority = Console.ReadLine();
-            if (ppriority != "")
-            {
-                item.priority = ppriority;
-            }
-            return item;
         }
-
-        //public void Delete(Item item)
-        //{
-        //    itemlist = SerializeItem(path);
-        //    DeserializeItem(path, itemlist);
-        //    SerializeDict(pathDict);
-        //    displayList();
-        //}
-
-        public int CountId(int currentid)
-        {
-            currentid = currentid + 1;
-            return currentid;
-        }
-
-        public int ReadId()
-        {
-            currentidStr = File.ReadAllText(pathId);
-            int currentid = Convert.ToInt32(currentidStr);
-            return currentid;
-        }
-
-        public void SaveId(string pathId, int currentid)
-        {
-            currentidStr = Convert.ToString(currentid);
-            File.WriteAllText(pathId, currentidStr);
-        }
-
-        //Overview of all entries of the list
-        public void DisplayEntries(List<Item> itemlist)
-        {
-            foreach (Item i in itemlist)
-            {
-
-                Console.WriteLine(i.id + ".) " + i.title);
-
-            }
-            Console.WriteLine("Enter ID to display full entry");
-            string inputidStr = Console.ReadLine();
-
-            //-->Checking
-            int inputid = Convert.ToInt32(inputidStr);
-            Console.Clear();
-            Details(inputid);
-            //DisplayEntries(itemlist);
-        }
-
-        //Details of a entry
-        public void Details(int inputid)
-        {
-            Item item = dict[inputid];
-            Console.WriteLine("ID: " + item.id);
-            Console.WriteLine("Titel: " + item.title);
-            Console.WriteLine("Beschreibung: " + item.description);
-            Console.WriteLine("Kategorie: " + item.category);
-            Console.WriteLine("Priorität: " + item.priority);
-            Console.WriteLine("Erstellt am: " + item.createdate);
-            Console.WriteLine("Fällig am: " + item.enddate);
-            Console.WriteLine();
-            Console.ReadKey();
-            Console.WriteLine("Update item:");
-            Console.WriteLine("Enter 1");
-            Console.WriteLine();
-            Console.WriteLine("Delete item:");
-            Console.WriteLine("Enter 2");
-            Console.WriteLine();
-            string inputvalue = Console.ReadLine();
-
-            //-->Checking
-            if (inputvalue == "1")
-            {
-                Update(item, inputid);
-                itemlist = SerializeItem(path);
-                DeserializeItem(path, itemlist);
-                //DisplayEntries(itemlist);
-            }
-            //-->Checking
-            //else if (inputvalue == "2")
-            //{
-            //    item.Delete(item);
-            //}
-        }
-
-        //Displays the entries of dictionary
-        public void DisplayDict(Dictionary<int, Item> dict)
-        {
-            foreach (KeyValuePair<int, Item> pair in dict)
-            {
-                Console.WriteLine("{0}, {1}", pair.Key, pair.Value);
-            }
-            Console.ReadKey();
-        }
+        
     }
 }
 
