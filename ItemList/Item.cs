@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace ItemList
 {
     [Serializable]
-    class Item
+   public class Item
     {
         // General class variables
         string path = "data.txt";
@@ -30,6 +30,8 @@ namespace ItemList
         //DateTime createdate { get; set; }
         //DateTime enddate { get; set; }
 
+        Data data = new Data(List <Item> ItemList);
+        
         public Item( string title)
         {
             //this.id = id;
@@ -41,8 +43,7 @@ namespace ItemList
             
         }
 
-        List<Item> itemlist = new List<Item>();
-        Dictionary<int, Item> dict = new Dictionary<int, Item>();
+        
 
         public void AddItem()
         {
@@ -66,7 +67,7 @@ namespace ItemList
             }
             else
             {
-                itemlist.Add(item);
+                data.itemlist.Add(item);
             }
             
         }
@@ -96,7 +97,7 @@ namespace ItemList
             fs.Close();
         }
 
-        public List<Item> LoadList(string path, List<Item> itemlist)
+        public List<Item> LoadList(string path)
         {
             System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
             IFormatter bf = new BinaryFormatter();
