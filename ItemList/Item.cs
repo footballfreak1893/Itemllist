@@ -13,13 +13,13 @@ namespace ItemList
     class Item
     {
         // General class variables
-        //string path = "data.txt";
+        string path = "data.txt";
         //string pathId = "idfile.txt";
         //string pathDict = "dictfile.txt";
         //string currentidStr = "1";
         //int currentid = 1;
 
-       
+
 
         //Attributes
         public int id { get; set; }
@@ -56,7 +56,19 @@ namespace ItemList
            
             Item item = new Item(userTitle);
             item.description = userDescription;
-            itemlist.Add(item);
+
+            Console.WriteLine("Save this entry [y/n]");
+            string inputuser = Console.ReadLine();
+
+            if (inputuser == "n")
+            {
+                return;
+            }
+            else
+            {
+                itemlist.Add(item);
+            }
+            
         }
 
         public void DisplayAllItems()
@@ -68,7 +80,34 @@ namespace ItemList
                
             }
         }
-        
+        public void Exit()
+        {
+            SaveList(path);
+            Environment.Exit(1);
+        }
+
+        public void SaveList(string path)
+        {
+            System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Create, System.IO.FileAccess.Write);
+            IFormatter bf = new BinaryFormatter();
+
+            bf.Serialize(fs, itemlist);
+
+            fs.Close();
+        }
+
+        public List<Item> LoadList(string path, List<Item> itemlist)
+        {
+            System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+            IFormatter bf = new BinaryFormatter();
+            itemlist = (List<Item>)bf.Deserialize(fs);
+            fs.Close();
+
+            return itemlist;
+        }
+
+
+
     }
 }
 
