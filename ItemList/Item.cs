@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace ItemList
 {
     [Serializable]
-   public class Item
+    public class Item
     {
         // General class variables
         string path = "data.txt";
@@ -30,9 +30,10 @@ namespace ItemList
         //DateTime createdate { get; set; }
         //DateTime enddate { get; set; }
 
-        Data data = new Data(List <Item> ItemList);
-        
-        public Item( string title)
+        List<Item> itemlist = new List<Item>();
+        Dictionary<int, Item> dict = new Dictionary<int, Item>();
+
+        public Item(string title)
         {
             //this.id = id;
             this.title = title;
@@ -40,10 +41,24 @@ namespace ItemList
 
         public Item()
         {
-            
+
         }
 
-        
+        public void FileExists()
+        {
+            if (File.Exists(path))
+            {
+                itemlist = LoadList(path);
+
+            }
+            else
+            {
+                //FirstMenu
+            }
+
+        }
+
+
 
         public void AddItem()
         {
@@ -54,7 +69,7 @@ namespace ItemList
             Console.WriteLine("Add Entry");
             Console.WriteLine("Enter Description:");
             string userDescription = Console.ReadLine();
-           
+
             Item item = new Item(userTitle);
             item.description = userDescription;
 
@@ -67,9 +82,9 @@ namespace ItemList
             }
             else
             {
-                data.itemlist.Add(item);
+                itemlist.Add(item);
             }
-            
+
         }
 
         public void DisplayAllItems()
@@ -78,8 +93,19 @@ namespace ItemList
             {
                 Console.WriteLine("Title " + entries.title);
                 Console.WriteLine("Description " + entries.description);
-               
+
             }
+        }
+
+        public void DeleteItem()
+        {
+            itemlist.Remove(itemlist[0]);
+        }
+
+        public void UpdateItem()
+        {
+            Console.WriteLine("Update Title");
+            itemlist[0].title =Console.ReadLine();
         }
         public void Exit()
         {
@@ -106,9 +132,6 @@ namespace ItemList
 
             return itemlist;
         }
-
-
-
     }
 }
 
