@@ -103,11 +103,31 @@ namespace ItemList
         {
             foreach (Item entries in itemlist)
             {
-                Console.WriteLine("ID: " + entries.id);
-                Console.WriteLine("Title " + entries.title);
-                Console.WriteLine("Description " + entries.description);
+                Console.WriteLine(entries.id+".) " +"Title " + entries.title);
+                //Console.WriteLine("Title " + entries.title);
+                //Console.WriteLine("Description " + entries.description);
 
             }
+        }
+
+        public void ShowDetails()
+        {
+            DisplayAllItems();
+            Console.WriteLine("Enter ID to display details [number]");
+            string inputid = Console.ReadLine();
+            int index = Convert.ToInt16(inputid);
+            Console.WriteLine(itemlist.ElementAt(index-1).id);
+            Console.WriteLine(itemlist.ElementAt(index-1).title);
+            Console.WriteLine(itemlist.ElementAt(index-1).description);
+
+            Console.WriteLine("Update Item [u]");
+            string inputvalue = Console.ReadLine();
+
+            if(inputvalue == "u")
+            {
+                UpdateItem(index);
+            }
+
         }
 
         public void DeleteItem()
@@ -119,8 +139,21 @@ namespace ItemList
         {
             Console.WriteLine("Update Title");
             itemlist[0].title = Console.ReadLine();
-           
+            Console.WriteLine(itemlist.ElementAt(1).title);
+
+
         }
+
+        public void UpdateItem(int index)
+        {
+            Console.WriteLine("Update Title");
+            itemlist.ElementAt(index-1).title = Console.ReadLine();
+            
+
+
+        }
+
+
         public void Exit()
         {
             SaveList(path);

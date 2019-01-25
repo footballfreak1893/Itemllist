@@ -31,6 +31,7 @@ namespace ItemList
                 Console.WriteLine("Exit Programm [e]");
                 Console.WriteLine("Delete Item [d]");
                 Console.WriteLine("Update Item [u]");
+                Console.WriteLine("Show Deatils [x]");
 
 
                 string userinput = Console.ReadLine();
@@ -52,6 +53,9 @@ namespace ItemList
                         break;
                     case "u":
                         startitem.UpdateItem();
+                        break;
+                    case "x":
+                        startitem.ShowDetails();
                         break;
                     default:
                         startitem.DisplayAllItems();
