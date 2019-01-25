@@ -14,10 +14,10 @@ namespace ItemList
     {
         // General class variables
         string path = "data.txt";
-        //string pathId = "idfile.txt";
+        string pathId = "idfile.txt";
         //string pathDict = "dictfile.txt";
-        //string currentidStr = "1";
-        //int currentid = 1;
+        string currentidStr = "1";
+        int currentid = 1;
 
 
 
@@ -33,9 +33,9 @@ namespace ItemList
         List<Item> itemlist = new List<Item>();
         Dictionary<int, Item> dict = new Dictionary<int, Item>();
 
-        public Item(string title)
+        public Item(string title, int id)
         {
-            //this.id = id;
+            this.id = id;
             this.title = title;
         }
 
@@ -51,9 +51,15 @@ namespace ItemList
                 itemlist = LoadList(path);
 
             }
+            if (File.Exists(pathId))
+            {
+                currentid = ReadId();
+            }
+
             else
             {
-                //FirstMenu
+                currentid = 0;
+                SaveId(pathId, currentid);
             }
 
         }
@@ -62,6 +68,10 @@ namespace ItemList
 
         public void AddItem()
         {
+            currentid = ReadId();
+             currentid = CountId(currentid);
+            SaveId(pathId, currentid);
+
             Console.WriteLine("Add Entry");
             Console.WriteLine("Enter Title:");
             string userTitle = Console.ReadLine();
@@ -70,7 +80,7 @@ namespace ItemList
             Console.WriteLine("Enter Description:");
             string userDescription = Console.ReadLine();
 
-            Item item = new Item(userTitle);
+            Item item = new Item(userTitle, currentid);
             item.description = userDescription;
 
             Console.WriteLine("Save this entry [y/n]");
@@ -91,6 +101,7 @@ namespace ItemList
         {
             foreach (Item entries in itemlist)
             {
+                Console.Write("ID: " + entries.id);
                 Console.WriteLine("Title " + entries.title);
                 Console.WriteLine("Description " + entries.description);
 
@@ -105,11 +116,13 @@ namespace ItemList
         public void UpdateItem()
         {
             Console.WriteLine("Update Title");
-            itemlist[0].title =Console.ReadLine();
+            itemlist[0].title = Console.ReadLine();
+           
         }
         public void Exit()
         {
             SaveList(path);
+            SaveId(pathId, currentid);
             Environment.Exit(1);
         }
 
@@ -131,6 +144,25 @@ namespace ItemList
             fs.Close();
 
             return itemlist;
+        }
+
+        public int ReadId()
+        {
+            currentidStr = File.ReadAllText(pathId);
+            int currentid = Convert.ToInt32(currentidStr);
+            return currentid;
+        }
+
+        public void SaveId(string pathId, int currentid)
+        {
+            currentidStr = Convert.ToString(currentid);
+            File.WriteAllText(pathId, currentidStr);
+        }
+
+        public int CountId(int currentid)
+        {
+            currentid = currentid + 1;
+            return currentid;
         }
     }
 }
