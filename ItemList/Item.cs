@@ -88,6 +88,8 @@ namespace ItemList
 
             if (inputuser == "n")
             {
+                currentid--;
+                SaveId(pathId, currentid);
                 return;
             }
             else
@@ -101,7 +103,7 @@ namespace ItemList
         {
             foreach (Item entries in itemlist)
             {
-                Console.Write("ID: " + entries.id);
+                Console.WriteLine("ID: " + entries.id);
                 Console.WriteLine("Title " + entries.title);
                 Console.WriteLine("Description " + entries.description);
 
