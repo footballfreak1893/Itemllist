@@ -29,9 +29,9 @@ namespace ItemList
                 Console.WriteLine("New Entry [n]");
                 Console.WriteLine("Display entries [s]");
                 Console.WriteLine("Exit Programm [e]");
-                Console.WriteLine("Delete Item [d]");
                 Console.WriteLine("Update Item [u]");
                 Console.WriteLine("Show Deatils [x]");
+                Console.WriteLine("Count Items [c]");
 
 
                 string userinput = Console.ReadLine();
@@ -48,14 +48,16 @@ namespace ItemList
                     case "e":
                         startitem.Exit();
                         break;
-                    case "d":
-                        startitem.DeleteItem();
-                        break;
+                    
                     case "u":
                         startitem.UpdateItem();
                         break;
                     case "x":
                         startitem.ShowDetails();
+                        break;
+
+                    case "c":
+                        startitem.CountItems();
                         break;
                     default:
                         startitem.DisplayAllItems();

@@ -116,11 +116,13 @@ namespace ItemList
             Console.WriteLine("Enter ID to display details [number]");
             string inputid = Console.ReadLine();
             int index = Convert.ToInt16(inputid);
-            Console.WriteLine(itemlist.ElementAt(index-1).id);
-            Console.WriteLine(itemlist.ElementAt(index-1).title);
-            Console.WriteLine(itemlist.ElementAt(index-1).description);
+            index = index - 1;
+            Console.WriteLine(itemlist.ElementAt(index).id);
+            Console.WriteLine(itemlist.ElementAt(index).title);
+            Console.WriteLine(itemlist.ElementAt(index).description);
 
             Console.WriteLine("Update Item [u]");
+            Console.WriteLine("Delete Item [d]");
             string inputvalue = Console.ReadLine();
 
             if(inputvalue == "u")
@@ -128,11 +130,28 @@ namespace ItemList
                 UpdateItem(index);
             }
 
+            else if (inputvalue == "d")
+            {
+                DeleteItem(index);
+            }
+            else
+            {
+                return;
+            }
+
         }
 
-        public void DeleteItem()
+        public void DeleteItem(int index)
         {
-            itemlist.Remove(itemlist[0]);
+            itemlist.Remove(itemlist.ElementAt(index));
+            foreach(Item items in itemlist)
+            {
+                items.id = items.id --;
+            }
+            SaveId(pathId, currentid - 1);
+             currentid = ReadId();
+            SaveList(path);
+             itemlist = LoadList(path);
         }
 
         public void UpdateItem()
@@ -147,10 +166,16 @@ namespace ItemList
         public void UpdateItem(int index)
         {
             Console.WriteLine("Update Title");
-            itemlist.ElementAt(index-1).title = Console.ReadLine();
+            itemlist.ElementAt(index).title = Console.ReadLine();
             
 
 
+        }
+        public int CountItems()
+        {
+            var itemscount = itemlist.Count();
+            Console.WriteLine("Number of items " + itemscount);
+            return itemscount;
         }
 
 
