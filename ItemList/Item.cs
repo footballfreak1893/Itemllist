@@ -15,7 +15,7 @@ namespace ItemList
         // General class variables
         string path = "data.txt";
         string pathId = "idfile.txt";
-        //string pathDict = "dictfile.txt";
+        string pathDict = "dictfile.txt";
         string currentidStr = "1";
         int currentid = 1;
 
@@ -49,6 +49,7 @@ namespace ItemList
             if (File.Exists(path))
             {
                 itemlist = LoadList(path);
+                dict = DeserializeDict(pathDict);
 
             }
             if (File.Exists(pathId))
@@ -95,6 +96,7 @@ namespace ItemList
             else
             {
                 itemlist.Add(item);
+                dict.Add(item.id, item);
             }
 
         }
@@ -104,22 +106,31 @@ namespace ItemList
             foreach (Item entries in itemlist)
             {
                 Console.WriteLine(entries.id+".) " +"Title " + entries.title);
+                
                 //Console.WriteLine("Title " + entries.title);
                 //Console.WriteLine("Description " + entries.description);
 
             }
         }
+      
 
         public void ShowDetails()
         {
             DisplayAllItems();
             Console.WriteLine("Enter ID to display details [number]");
             string inputid = Console.ReadLine();
-            int index = Convert.ToInt16(inputid);
-            index = index - 1;
-            Console.WriteLine(itemlist.ElementAt(index).id);
-            Console.WriteLine(itemlist.ElementAt(index).title);
-            Console.WriteLine(itemlist.ElementAt(index).description);
+            int id = Convert.ToInt16(inputid);
+            Item item = dict[id];
+            Console.WriteLine("ID: " + item.id);
+            Console.WriteLine("Titel: " + item.title);
+            Console.WriteLine("Beschreibung: " + item.description);
+
+            //int index = Convert.ToInt16(inputid);
+            //index = index - 1;
+            //Console.WriteLine(itemlist.ElementAt(index).id);
+            //Console.WriteLine(itemlist.ElementAt(index).title);
+            //Console.WriteLine(itemlist.ElementAt(index).description);
+
 
             Console.WriteLine("Update Item [u]");
             Console.WriteLine("Delete Item [d]");
@@ -127,12 +138,12 @@ namespace ItemList
 
             if(inputvalue == "u")
             {
-                UpdateItem(index);
+                UpdateItem(id);
             }
 
             else if (inputvalue == "d")
             {
-                DeleteItem(index);
+                DeleteItem(id,item);
             }
             else
             {
@@ -141,17 +152,22 @@ namespace ItemList
 
         }
 
-        public void DeleteItem(int index)
+        public void DeleteItem(int id, Item item)
         {
-            itemlist.Remove(itemlist.ElementAt(index));
-            foreach(Item items in itemlist)
-            {
-                items.id = items.id --;
-            }
-            SaveId(pathId, currentid - 1);
-             currentid = ReadId();
-            SaveList(path);
-             itemlist = LoadList(path);
+            itemlist.RemoveAt(id-1);
+           // Console.WriteLine(isdeleted);
+            dict.Remove(id);
+            //foreach(Item items in itemlist)
+            //{
+            //    items.id = items.id --;
+            //}
+            //SaveId(pathId, currentid - 1);
+            // currentid = ReadId();
+            //SaveList(path);
+            // itemlist = LoadList(path);
+
+
+            //Elemente ausblenden, Attribut erstellen in fe überprüfen mit Attribut ISObsolete
         }
 
         public void UpdateItem()
@@ -183,7 +199,9 @@ namespace ItemList
         {
             SaveList(path);
             SaveId(pathId, currentid);
+            SerializeDict(pathDict);
             Environment.Exit(1);
+            
         }
 
         public void SaveList(string path)
@@ -204,6 +222,28 @@ namespace ItemList
             fs.Close();
 
             return itemlist;
+        }
+
+        public Dictionary<int, Item> SerializeDict(string pathDict)
+        {
+            System.IO.FileStream fs = new System.IO.FileStream(pathDict, System.IO.FileMode.Create, System.IO.FileAccess.Write);
+            IFormatter bf = new BinaryFormatter();
+
+            bf.Serialize(fs, dict);
+
+            fs.Close();
+
+            return dict;
+        }
+
+        public Dictionary<int, Item> DeserializeDict(string pathDict)
+        {
+            System.IO.FileStream fs = new System.IO.FileStream(pathDict, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+            IFormatter bf = new BinaryFormatter();
+            dict = (Dictionary<int, Item>)bf.Deserialize(fs);
+            fs.Close();
+
+            return dict;
         }
 
         public int ReadId()
