@@ -25,6 +25,7 @@ namespace ItemList
         public int id { get; set; }
         public string title { get; set; }
         string description { get; set; }
+        bool isobsolete { get; set; }
         //string category { get; set; }
         //string priority { get; set; }
         //DateTime createdate { get; set; }
@@ -105,7 +106,14 @@ namespace ItemList
         {
             foreach (Item entries in itemlist)
             {
-                Console.WriteLine(entries.id+".) " +"Title " + entries.title);
+                if (entries.isobsolete == false)
+                {
+                    Console.WriteLine(entries.id + ".) " + "Title " + entries.title);
+                }
+                else
+                {
+                    continue;
+                }
                 
                 //Console.WriteLine("Title " + entries.title);
                 //Console.WriteLine("Description " + entries.description);
@@ -138,7 +146,7 @@ namespace ItemList
 
             if(inputvalue == "u")
             {
-                UpdateItem(id);
+                UpdateItem(id, item);
             }
 
             else if (inputvalue == "d")
@@ -154,17 +162,9 @@ namespace ItemList
 
         public void DeleteItem(int id, Item item)
         {
-            itemlist.RemoveAt(id-1);
-           // Console.WriteLine(isdeleted);
-            dict.Remove(id);
-            //foreach(Item items in itemlist)
-            //{
-            //    items.id = items.id --;
-            //}
-            //SaveId(pathId, currentid - 1);
-            // currentid = ReadId();
-            //SaveList(path);
-            // itemlist = LoadList(path);
+
+            itemlist.ElementAt(id-1).isobsolete = true;
+            
 
 
             //Elemente ausblenden, Attribut erstellen in fe überprüfen mit Attribut ISObsolete
@@ -179,11 +179,11 @@ namespace ItemList
 
         }
 
-        public void UpdateItem(int index)
+        public void UpdateItem(int index, Item item)
         {
             Console.WriteLine("Update Title");
-            itemlist.ElementAt(index).title = Console.ReadLine();
-            
+            itemlist[index-1].title = Console.ReadLine();
+
 
 
         }
