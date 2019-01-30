@@ -15,7 +15,7 @@ namespace ItemList
 
         public static void StartProgramm(Data data)
         {
-           string path = "data";
+            string path = "data";
             data.FileExists();
 
             while (true)
@@ -79,32 +79,47 @@ namespace ItemList
             DisplayAllItems(data);
             Console.WriteLine("Enter ID to display details [number]");
             string inputid = Console.ReadLine();
-            int id = Convert.ToInt16(inputid);
-            Item item = data.dict[id];
-            Console.WriteLine("ID: " + item.id);
-            Console.WriteLine("Titel: " + item.title);
-            Console.WriteLine("Beschreibung: " + item.description);
+            int id =  CheckingValuesINT(data, inputid);
+            
+            
+            //int id = Convert.ToInt16(inputid);
 
+            while (!data.dict.ContainsKey(id))
+            {
+                Console.WriteLine("ID does not exist, try again");
+                DisplayAllItems(data);
+
+                Console.WriteLine("Enter ID to display details [number]");
+                inputid = Console.ReadLine();
+                id = Convert.ToInt16(inputid);
+                Console.Clear();
+            }
+
+            Item item = data.dict[id];
+            Console.Clear();
+            Console.WriteLine("ID: " + item.id);
+            Console.WriteLine("Title: " + item.title);
+            Console.WriteLine("Description: " + item.description);
+            Console.WriteLine();
             Console.WriteLine("Update Item [u]");
             Console.WriteLine("Delete Item [d]");
             string inputvalue = Console.ReadLine();
 
-            if (inputvalue == "u")
+            switch (inputvalue)
             {
-               
-                data.UpdateItem(id, item);
-                Console.Clear();
-            }
+                case "u":
+                    data.UpdateItem(id, item);
+                    Console.Clear();
+                    break;
 
-            else if (inputvalue == "d")
-            {
-                Console.Clear();
-                data.DeleteItem(id, item);
-            }
-            else
-            {
-                Console.Clear();
-                return;
+                case "d":
+                    Console.Clear();
+                    data.DeleteItem(id, item);
+                    break;
+
+                default:
+                    Console.Clear();
+                    return;
             }
 
         }
@@ -125,6 +140,35 @@ namespace ItemList
             }
         }
 
+        public static int CheckingValuesINT(Data data, string input)
+        {
+            bool canconvert = false;
+            Int16 integer = 0;
+
+            while (canconvert == false)
+            {
+                canconvert = Int16.TryParse(input, out integer);
+                if (canconvert == false)
+                {
+                    Console.WriteLine("Incorrect data type, enter a whole number");
+                    input = Console.ReadLine();
+                }
+                else
+                {
+                    break;
+                }
+
+            }
+
+            return integer;
+        }
+
+        public double CheckingValues(string input, double doublee)
+        {
+            
+            doublee = Convert.ToDouble(input);
+            return doublee;
+        }
 
 
 
