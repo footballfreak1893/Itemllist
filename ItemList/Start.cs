@@ -49,9 +49,9 @@ namespace ItemList
                         startitem.Exit();
                         break;
                     
-                    case "u":
-                        startitem.UpdateItem();
-                        break;
+                    //case "u":
+                    //    startitem.UpdateItem();
+                    //    break;
                     case "x":
                         startitem.ShowDetails();
                         break;

@@ -31,7 +31,7 @@ namespace ItemList
         //DateTime createdate { get; set; }
         //DateTime enddate { get; set; }
 
-        List<Item> itemlist = new List<Item>();
+        
         Dictionary<int, Item> dict = new Dictionary<int, Item>();
 
         public Item(string title, int id)
@@ -49,8 +49,8 @@ namespace ItemList
         {
             if (File.Exists(path))
             {
-                itemlist = LoadList(path);
-                dict = DeserializeDict(pathDict);
+                dict = LoadList(path);
+               
 
             }
             if (File.Exists(pathId))
@@ -96,7 +96,6 @@ namespace ItemList
             }
             else
             {
-                itemlist.Add(item);
                 dict.Add(item.id, item);
             }
 
@@ -104,11 +103,12 @@ namespace ItemList
 
         public void DisplayAllItems()
         {
-            foreach (Item entries in itemlist)
+            
+            foreach (KeyValuePair <int, Item> entries in dict)
             {
-                if (entries.isobsolete == false)
+                if (entries.Value.isobsolete == false)
                 {
-                    Console.WriteLine(entries.id + ".) " + "Title " + entries.title);
+                    Console.WriteLine(entries.Value.id + ".) " + "Title " + entries.Value.title);
                 }
                 else
                 {
@@ -163,33 +163,35 @@ namespace ItemList
         public void DeleteItem(int id, Item item)
         {
 
-            itemlist.ElementAt(id-1).isobsolete = true;
-            
+            dict.Remove(id);
+            SaveList(path);
+
 
 
             //Elemente ausblenden, Attribut erstellen in fe überprüfen mit Attribut ISObsolete
         }
 
-        public void UpdateItem()
-        {
-            Console.WriteLine("Update Title");
-            itemlist[0].title = Console.ReadLine();
-            Console.WriteLine(itemlist.ElementAt(1).title);
+        //public void UpdateItem()
+        //{
+        //    Console.WriteLine("Update Title");
+        //    dict[0].title = Console.ReadLine();
+        //    Console.WriteLine(dict.ElementAt(1).title);
 
 
-        }
+        //}
 
         public void UpdateItem(int index, Item item)
         {
             Console.WriteLine("Update Title");
-            itemlist[index-1].title = Console.ReadLine();
+            item.title = Console.ReadLine();
+            SaveList(path);
 
 
 
         }
         public int CountItems()
         {
-            var itemscount = itemlist.Count();
+            var itemscount = dict.Count();
             Console.WriteLine("Number of items " + itemscount);
             return itemscount;
         }
@@ -209,19 +211,19 @@ namespace ItemList
             System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Create, System.IO.FileAccess.Write);
             IFormatter bf = new BinaryFormatter();
 
-            bf.Serialize(fs, itemlist);
+            bf.Serialize(fs, dict);
 
             fs.Close();
         }
 
-        public List<Item> LoadList(string path)
+        public Dictionary<int, Item> LoadList(string path)
         {
             System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
             IFormatter bf = new BinaryFormatter();
-            itemlist = (List<Item>)bf.Deserialize(fs);
+            dict = (Dictionary<int, Item>)bf.Deserialize(fs);
             fs.Close();
 
-            return itemlist;
+            return dict;
         }
 
         public Dictionary<int, Item> SerializeDict(string pathDict)
