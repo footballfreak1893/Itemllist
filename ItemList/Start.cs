@@ -15,8 +15,6 @@ namespace ItemList
 
         public static void StartProgramm(Data data)
         {
-            
-
            string path = "data";
             data.FileExists();
 
@@ -28,7 +26,6 @@ namespace ItemList
                 Console.WriteLine("New Entry [n]");
                 Console.WriteLine("Display entries [s]");
                 Console.WriteLine("Exit Programm [e]");
-                Console.WriteLine("Update Item [u]");
                 Console.WriteLine("Show Deatils [x]");
                 Console.WriteLine("Count Items [c]");
 
@@ -38,17 +35,22 @@ namespace ItemList
                 switch (userinput)
                 {
                     case "n":
+                        Console.Clear();
                         data.AddItem();
                         break;
 
                     case "s":
+                        Console.Clear();
                         DisplayAllItems(data);
                         break;
+
                     case "e":
+                        Console.Clear();
                         Exit(data);
                         break;
 
                     case "x":
+                        Console.Clear();
                         ShowDetails(data);
                         break;
 
@@ -56,6 +58,7 @@ namespace ItemList
                         data.CountItems();
                         break;
                     default:
+                        Console.Clear();
                         DisplayAllItems(data);
                         break;
                 }
@@ -88,15 +91,19 @@ namespace ItemList
 
             if (inputvalue == "u")
             {
+               
                 data.UpdateItem(id, item);
+                Console.Clear();
             }
 
             else if (inputvalue == "d")
             {
+                Console.Clear();
                 data.DeleteItem(id, item);
             }
             else
             {
+                Console.Clear();
                 return;
             }
 

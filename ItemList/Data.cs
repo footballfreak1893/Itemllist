@@ -73,12 +73,10 @@ namespace ItemList
 
         public void UpdateItem(int index, Item item)
         {
+            Console.WriteLine("Update entry: ");
             Console.WriteLine("Update Title");
             item.title = Console.ReadLine();
             SaveList(path);
-
-
-
         }
 
 
@@ -132,11 +130,14 @@ namespace ItemList
             {
                 currentid--;
                 SaveId(pathId, currentid);
+                Console.Clear();
                 return;
             }
             else
             {
+                Console.Clear();
                 dict.Add(item.id, item);
+                SaveList(path);
             }
 
         }
