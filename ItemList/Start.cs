@@ -91,7 +91,7 @@ namespace ItemList
 
                 Console.WriteLine("Enter ID to display details [number]");
                 inputid = Console.ReadLine();
-                id = Convert.ToInt16(inputid);
+                id = CheckingValuesINT(data, inputid);
                 Console.Clear();
             }
 

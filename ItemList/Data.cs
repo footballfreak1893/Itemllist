@@ -142,5 +142,13 @@ namespace ItemList
 
         }
 
+        public void ClearList()
+        {
+            dict.Clear();
+            currentid = 0;
+            SaveId(pathId, currentid);
+            SaveList(path);
+        }
+
     }
 }
