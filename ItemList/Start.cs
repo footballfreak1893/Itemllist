@@ -55,7 +55,10 @@ namespace ItemList
                         break;
 
                     case "c":
-                        data.CountItems();
+                        Console.Clear();
+                        data.ClearList();
+                        data.LoadList(path);
+
                         break;
                     default:
                         Console.Clear();
@@ -208,21 +211,6 @@ namespace ItemList
             }
             return charvalue;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 

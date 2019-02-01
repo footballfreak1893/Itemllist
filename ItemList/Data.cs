@@ -148,6 +148,7 @@ namespace ItemList
             currentid = 0;
             SaveId(pathId, currentid);
             SaveList(path);
+            Console.WriteLine("List has been reseted");
         }
 
     }
