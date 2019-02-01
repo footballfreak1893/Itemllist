@@ -163,11 +163,50 @@ namespace ItemList
             return integer;
         }
 
-        public double CheckingValues(string input, double doublee)
+        public static double CheckingValuesDouble(Data data, string input)
         {
-            
-            doublee = Convert.ToDouble(input);
-            return doublee;
+
+            bool canconvert = false;
+            double doublevalue = 0;
+
+            while (canconvert == false)
+            {
+                canconvert = double.TryParse(input, out doublevalue);
+                if (canconvert == false)
+                {
+                    Console.WriteLine("Incorrect data type, enter a numeric value");
+                    input = Console.ReadLine();
+                }
+                else
+                {
+                    break;
+                }
+
+            }
+            return doublevalue;
+        }
+
+        public static double CheckingValuesChar(Data data, string input)
+        {
+
+            bool canconvert = false;
+            char charvalue = '0';
+
+            while (canconvert == false)
+            {
+                canconvert = char.TryParse(input, out charvalue);
+                if (canconvert == false)
+                {
+                    Console.WriteLine("Incorrect data type, enter a char value [example a or 1]");
+                    input = Console.ReadLine();
+                }
+                else
+                {
+                    break;
+                }
+
+            }
+            return charvalue;
         }
 
 
