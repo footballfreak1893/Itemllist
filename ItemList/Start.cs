@@ -57,7 +57,7 @@ namespace ItemList
                     case "c":
                         Console.Clear();
                         data.ClearList();
-                        data.LoadList(path);
+                        
 
                         break;
                     default:
@@ -129,16 +129,54 @@ namespace ItemList
 
         public static void DisplayAllItems(Data data)
         {
-
+            ListContainsEntries(data);
+            
             foreach (KeyValuePair<int, Item> entries in data.dict)
             {
                 if (entries.Value.isobsolete == false)
                 {
                     Console.WriteLine(entries.Value.id + ".) " + "Title " + entries.Value.title);
                 }
+
                 else
                 {
                     continue;
+                }
+            }
+        }
+
+        public static void ListContainsEntries(Data data)
+        {
+            var counterentries = data.dict.Count;
+
+            if (counterentries != 0)
+            {
+                return;
+            }
+
+            else
+            {
+                Console.WriteLine("The list does not contain any entries");
+                Console.WriteLine("Exit Programm [n]");
+                Console.WriteLine("Exit Programm [e]");
+
+                string inputvalue = Console.ReadLine();
+
+                switch (inputvalue)
+                {
+                    case "n":
+                        data.AddItem();
+                        Console.Clear();
+                        break;
+
+                    case "e":
+                        Console.Clear();
+                        Exit(data);
+                        break;
+
+                    default:
+                        Console.Clear();
+                        return;
                 }
             }
         }
