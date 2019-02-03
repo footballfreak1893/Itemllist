@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ItemList
 {
-    public static class DefaultFunctions
+    public class DefaultFunctions
     {
+        Data data = new Data();
         // --> Checking
         public static string SetCategory()
         {
@@ -72,21 +73,22 @@ namespace ItemList
             return notDefind;
         }
 
-        public static DateTime SetDateValue()
+        public static DateTime SetDateValue(Data data)
         { //Checking here
             Console.WriteLine("Enter Day");
             var pday = Console.ReadLine();
 
             if (pday != "")
-            { //Format 
-                int day = Convert.ToInt32(pday);
+            {
+                int day = Start.CheckingValuesINT(data, pday);
+
                 Console.WriteLine("Enter Month");
                 var pmonth = Console.ReadLine();
                 int month = Convert.ToInt32(pmonth);
 
                 Console.WriteLine("Enter Year");
                 var pyear = Console.ReadLine();
-                int year = Convert.ToInt32(pyear);
+                int year = Start.CheckingValuesINT(data, pyear);
 
                 var date = new DateTime(year, month, day);
                 return date;
