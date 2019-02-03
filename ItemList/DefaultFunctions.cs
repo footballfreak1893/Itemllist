@@ -73,14 +73,14 @@ namespace ItemList
             return notDefind;
         }
 
-        public static DateTime SetDateValue(Data data)
+        public static DateTime SetDateValue()
         { //Checking here
             Console.WriteLine("Enter Day");
             var pday = Console.ReadLine();
 
             if (pday != "")
             {
-                int day = Start.CheckingValuesINT(data, pday);
+                int day = Start.CheckingValuesINT(pday);
 
                 Console.WriteLine("Enter Month");
                 var pmonth = Console.ReadLine();
@@ -88,14 +88,14 @@ namespace ItemList
 
                 Console.WriteLine("Enter Year");
                 var pyear = Console.ReadLine();
-                int year = Start.CheckingValuesINT(data, pyear);
+                int year = Start.CheckingValuesINT(pyear);
 
                 var date = new DateTime(year, month, day);
                 return date;
             }
             else
             {
-                return  new DateTime (2000, 1, 1);
+                return new DateTime(2000, 1, 1);
             }
         }
 

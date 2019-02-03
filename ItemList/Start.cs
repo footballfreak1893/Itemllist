@@ -89,7 +89,7 @@ namespace ItemList
                 Console.Clear();
                 return;
             }
-            int id =  CheckingValuesINT(data, inputid);
+            int id =  CheckingValuesINT(inputid);
             
             
             //int id = Convert.ToInt16(inputid);
@@ -101,7 +101,7 @@ namespace ItemList
 
                 Console.WriteLine("Enter ID to display details [number]");
                 inputid = Console.ReadLine();
-                id = CheckingValuesINT(data, inputid);
+                id = CheckingValuesINT(inputid);
                 Console.Clear();
             }
 
@@ -110,6 +110,16 @@ namespace ItemList
             Console.WriteLine("ID: " + item.id);
             Console.WriteLine("Title: " + item.title);
             Console.WriteLine("Description: " + item.description);
+            Console.WriteLine("Createdate: " + item.createdate);
+            if (item.enddate.Equals("2000, 01, 01")) //--> Checking Date Value
+            {
+                Console.WriteLine("Enddate: ");
+            }
+
+            else
+            {
+                Console.WriteLine("Enddate: " + item.enddate);
+            }
             Console.WriteLine();
             Console.WriteLine("Update Item [u]");
             Console.WriteLine("Delete Item [d]");
@@ -156,12 +166,12 @@ namespace ItemList
             {
                 if (entries.Value.isfinished == true)
                 {
-                    Console.WriteLine(entries.Value.id + ".) -FINISHED-" + " Title " + entries.Value.title);
+                    Console.WriteLine(entries.Value.id + ".) " +entries.Value.title +" ->FINISHED<-");
                 }
                
                 else
                 {
-                    Console.WriteLine(entries.Value.id + ".) Title " + entries.Value.title);
+                    Console.WriteLine(entries.Value.id + ".) " +entries.Value.title);
                 }
             }
         }
@@ -202,7 +212,7 @@ namespace ItemList
             }
         }
 
-        public static int CheckingValuesINT(Data data, string input)
+        public static int CheckingValuesINT( string input)
         {
             bool canconvert = false;
             Int16 integer = 0;

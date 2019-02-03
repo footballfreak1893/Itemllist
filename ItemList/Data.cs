@@ -11,6 +11,7 @@ namespace ItemList
 {
     public class Data
     {
+        
 
         // General class variables
         public string path = "data.txt";
@@ -128,13 +129,24 @@ namespace ItemList
             Console.WriteLine("Add Entry");
             Console.WriteLine("Enter Title:");
             string userTitle = Console.ReadLine();
+            while (userTitle == "")
+            {
+                Console.WriteLine("Title must have a value");
+                userTitle = Console.ReadLine();
 
-            Console.WriteLine("Add Entry");
+            }
+
             Console.WriteLine("Enter Description:");
             string userDescription = Console.ReadLine();
 
+            Console.WriteLine("Enter Enddate:");
+            var userEnddate = DefaultFunctions.SetDateValue();
+           
+
             Item item = new Item(userTitle, currentid);
             item.description = userDescription;
+            item.enddate = userEnddate;
+            item.createdate = DateTime.Now;
 
             Console.WriteLine("Save this entry [y/n]");
             string inputuser = Console.ReadLine();

@@ -28,8 +28,8 @@ namespace ItemList
         public bool isfinished { get; set; }
         //string category { get; set; }
         //string priority { get; set; }
-        //DateTime createdate { get; set; }
-        //DateTime enddate { get; set; }
+       public DateTime createdate { get; set; }
+        public DateTime enddate { get; set; }
 
 
 
