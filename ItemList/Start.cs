@@ -27,12 +27,12 @@ namespace ItemList
                 Console.WriteLine("Display entries [s]");
                 Console.WriteLine("Exit Programm [e]");
                 Console.WriteLine("Show Deatils [x]");
-                Console.WriteLine("Count Items [c]");
+                Console.WriteLine("Reset List [r]");
 
 
                 string userinput = Console.ReadLine();
 
-                switch (userinput)
+                switch (userinput.ToLower())
                 {
                     case "n":
                         Console.Clear();
@@ -54,7 +54,7 @@ namespace ItemList
                         ShowDetails(data);
                         break;
 
-                    case "c":
+                    case "r":
                         Console.Clear();
                         data.ClearList();
                         
@@ -81,7 +81,13 @@ namespace ItemList
         {
             DisplayAllItems(data);
             Console.WriteLine("Enter ID to display details [number]");
-            string inputid = Console.ReadLine();
+            string inputid;
+            inputid = Console.ReadLine();
+            if (inputid == "")
+            {
+                Console.Clear();
+                return;
+            }
             int id =  CheckingValuesINT(data, inputid);
             
             
@@ -106,11 +112,14 @@ namespace ItemList
             Console.WriteLine();
             Console.WriteLine("Update Item [u]");
             Console.WriteLine("Delete Item [d]");
+            Console.WriteLine("Set entry finish [f]");
+            Console.WriteLine("Exit Programm [e]");
             string inputvalue = Console.ReadLine();
 
             switch (inputvalue)
             {
                 case "u":
+                    Console.Clear();
                     data.UpdateItem(id, item);
                     Console.Clear();
                     break;
@@ -120,11 +129,22 @@ namespace ItemList
                     data.DeleteItem(id, item);
                     break;
 
+                case "f":
+                    Console.Clear();
+                    item.isfinished = true;
+                    Console.WriteLine("Set is finsihed"); //--> Evtl eigene Methode
+                    data.SaveList(data.path);
+                    break;
+
+                case "e":
+                    Console.Clear();
+                    Exit(data);
+                    break;
+
                 default:
                     Console.Clear();
                     return;
             }
-
         }
 
         public static void DisplayAllItems(Data data)
@@ -133,14 +153,15 @@ namespace ItemList
             
             foreach (KeyValuePair<int, Item> entries in data.dict)
             {
-                if (entries.Value.isobsolete == false)
+                if (entries.Value.isfinished == true)
                 {
-                    Console.WriteLine(entries.Value.id + ".) " + "Title " + entries.Value.title);
+                    Console.WriteLine(entries.Value.id + ".) -FINISHED-" + " Title " + entries.Value.title);
                 }
+               
 
                 else
                 {
-                    continue;
+                    Console.WriteLine(entries.Value.id + ".) Title " + entries.Value.title);
                 }
             }
         }
@@ -157,7 +178,7 @@ namespace ItemList
             else
             {
                 Console.WriteLine("The list does not contain any entries");
-                Console.WriteLine("Exit Programm [n]");
+                Console.WriteLine("New entry [n]");
                 Console.WriteLine("Exit Programm [e]");
 
                 string inputvalue = Console.ReadLine();

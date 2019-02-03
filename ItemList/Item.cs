@@ -25,12 +25,13 @@ namespace ItemList
         public string title { get; set; }
         public string description { get; set; }
         public bool isobsolete { get; set; }
+        public bool isfinished { get; set; }
         //string category { get; set; }
         //string priority { get; set; }
         //DateTime createdate { get; set; }
         //DateTime enddate { get; set; }
 
-       
+
 
         public Item(string title, int id)
         {

@@ -74,11 +74,24 @@ namespace ItemList
         public void UpdateItem(int index, Item item)
         {
             Console.WriteLine("Update entry: ");
+            Console.WriteLine();
             Console.WriteLine("Update Title");
-            item.title = Console.ReadLine();
-            SaveList(path);
-        }
+            var inputtitle = Console.ReadLine();
+            if (inputtitle != "")
+            {
+                item.title = inputtitle;
+            }
 
+            Console.WriteLine("Update description");
+            var inputdescription = Console.ReadLine();
+            if (inputdescription != "")
+            {
+                item.description = inputdescription;
+            }
+
+            SaveList(path);
+            //Console.WriteLine("entry: " + item.id + ".)");
+        }
 
         public int CountItems()
         {
