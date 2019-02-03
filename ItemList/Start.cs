@@ -21,7 +21,7 @@ namespace ItemList
             while (true)
             {
 
-                Console.WriteLine("Checkliste");
+                Console.WriteLine("Checkliste (v 1.0)");
                 Console.WriteLine();
                 Console.WriteLine("New Entry [n]");
                 Console.WriteLine("Display entries [s]");
@@ -63,6 +63,7 @@ namespace ItemList
                     default:
                         Console.Clear();
                         DisplayAllItems(data);
+                        Console.Clear();
                         break;
                 }
             }
@@ -158,7 +159,6 @@ namespace ItemList
                     Console.WriteLine(entries.Value.id + ".) -FINISHED-" + " Title " + entries.Value.title);
                 }
                
-
                 else
                 {
                     Console.WriteLine(entries.Value.id + ".) Title " + entries.Value.title);

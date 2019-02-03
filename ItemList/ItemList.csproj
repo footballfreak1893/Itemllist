@@ -7,7 +7,7 @@
     <ProjectGuid>{C4C747EF-939D-4188-9EF6-F989DF87BF2D}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>ItemList</RootNamespace>
-    <AssemblyName>ItemList</AssemblyName>
+    <AssemblyName>ItemList1.0</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
