@@ -135,14 +135,15 @@ namespace ItemList
                 userTitle = Console.ReadLine();
 
             }
-
+            Console.WriteLine();
             Console.WriteLine("Enter Description:");
             string userDescription = Console.ReadLine();
 
+            Console.WriteLine();
             Console.WriteLine("Enter Enddate:");
             var userEnddate = DefaultFunctions.SetDateValue();
-           
 
+            Console.WriteLine();
             Item item = new Item(userTitle, currentid);
             item.description = userDescription;
             item.enddate = userEnddate;

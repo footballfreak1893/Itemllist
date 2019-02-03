@@ -17,11 +17,12 @@ namespace ItemList
         {
             string path = "data";
             data.FileExists();
+            string version = "v 1.0";
 
             while (true)
             {
 
-                Console.WriteLine("Checkliste (v 1.0)");
+                Console.WriteLine("Checkliste ("+version+")");
                 Console.WriteLine();
                 Console.WriteLine("New Entry [n]");
                 Console.WriteLine("Display entries [s]");
