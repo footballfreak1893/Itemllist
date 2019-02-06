@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ItemList.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -77,34 +78,26 @@ namespace ItemList
         { //Checking here
             Console.WriteLine("Enter Day");
             var pday = Console.ReadLine();
-            int day = Start.CheckingValuesINT(pday);
-           day = CheckingRangeINT(1, 31, day);
+            int day = CheckingNumbers.CheckingValuesINT(pday);
+           day = CheckingNumbers.CheckingRangeINT(1, 31, day);
             
             Console.WriteLine("Enter Month");
             var pmonth = Console.ReadLine();
-            int month = Start.CheckingValuesINT(pmonth);
-            month = CheckingRangeINT(1, 12, month);
+            int month = CheckingNumbers.CheckingValuesINT(pmonth);
+            month = CheckingNumbers.CheckingRangeINT(1, 12, month);
 
             Console.WriteLine("Enter Year");
             var pyear = Console.ReadLine();
-            int year = Start.CheckingValuesINT(pyear);
-            year = CheckingRangeINT(2019, 3000, year);
+            int year = CheckingNumbers.CheckingValuesINT(pyear);
+            year = CheckingNumbers.CheckingRangeINT(2019, 3000, year);
 
             var date = new DateTime(year, month, day);
             return date;
         }
 
-        public static int CheckingRangeINT(int x, int y, int inputvalINT)
-        {
-            while(inputvalINT < x || inputvalINT > y)
-            {
-                Console.WriteLine("Invalid Range");
-                Console.WriteLine("Input a value between " + x + " and " + y);
-                string inputvalue = Console.ReadLine();
-                inputvalINT = Start.CheckingValuesINT(inputvalue);
-            }
-            return inputvalINT;
-        }
+        
+
+       
 
         //public void displayList()
         //{

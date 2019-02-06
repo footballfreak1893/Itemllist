@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ItemList.Classes;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -90,7 +91,7 @@ namespace ItemList
                 Console.Clear();
                 return;
             }
-            int id =  CheckingValuesINT(inputid);
+            int id =   CheckingNumbers.CheckingValuesINT(inputid);
             
             
             //int id = Convert.ToInt16(inputid);
@@ -102,7 +103,7 @@ namespace ItemList
 
                 Console.WriteLine("Enter ID to display details [number]");
                 inputid = Console.ReadLine();
-                id = CheckingValuesINT(inputid);
+                id = CheckingNumbers.CheckingValuesINT(inputid);
                 Console.Clear();
             }
 
@@ -213,74 +214,7 @@ namespace ItemList
             }
         }
 
-        public static int CheckingValuesINT( string input)
-        {
-            bool canconvert = false;
-            Int16 integer = 0;
-
-            while (canconvert == false)
-            {
-                canconvert = Int16.TryParse(input, out integer);
-                if (canconvert == false)
-                {
-                    Console.WriteLine("Incorrect data type, enter a whole number");
-                    input = Console.ReadLine();
-                }
-                else
-                {
-                    break;
-                }
-
-            }
-
-            return integer;
-        }
-
-        public static double CheckingValuesDouble(Data data, string input)
-        {
-
-            bool canconvert = false;
-            double doublevalue = 0;
-
-            while (canconvert == false)
-            {
-                canconvert = double.TryParse(input, out doublevalue);
-                if (canconvert == false)
-                {
-                    Console.WriteLine("Incorrect data type, enter a numeric value");
-                    input = Console.ReadLine();
-                }
-                else
-                {
-                    break;
-                }
-
-            }
-            return doublevalue;
-        }
-
-        public static double CheckingValuesChar(Data data, string input)
-        {
-
-            bool canconvert = false;
-            char charvalue = '0';
-
-            while (canconvert == false)
-            {
-                canconvert = char.TryParse(input, out charvalue);
-                if (canconvert == false)
-                {
-                    Console.WriteLine("Incorrect data type, enter a char value [example a or 1]");
-                    input = Console.ReadLine();
-                }
-                else
-                {
-                    break;
-                }
-
-            }
-            return charvalue;
-        }
+        
 
     }
 
