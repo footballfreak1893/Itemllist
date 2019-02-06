@@ -139,14 +139,20 @@ namespace ItemList
             Console.WriteLine("Enter Description:");
             string userDescription = Console.ReadLine();
 
-            Console.WriteLine();
-            Console.WriteLine("Enter Enddate:");
-            var userEnddate = DefaultFunctions.SetDateValue();
+            Item item = new Item(userTitle, currentid);
 
             Console.WriteLine();
-            Item item = new Item(userTitle, currentid);
+            Console.WriteLine(" Want to enter a Enddate? [y/n]");
+            string userEndddate = Console.ReadLine();
+
+            if (userEndddate == "y")
+            {
+                var userEnddate = DefaultFunctions.SetDateValue();
+                item.enddate = userEnddate;
+            }
+
+            Console.WriteLine();
             item.description = userDescription;
-            item.enddate = userEnddate;
             item.createdate = DateTime.Now;
 
             Console.WriteLine("Save this entry [y/n]");

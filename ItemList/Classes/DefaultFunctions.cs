@@ -77,26 +77,18 @@ namespace ItemList
         { //Checking here
             Console.WriteLine("Enter Day");
             var pday = Console.ReadLine();
+            int day = Start.CheckingValuesINT(pday);
 
-            if (pday != "")
-            {
-                int day = Start.CheckingValuesINT(pday);
+            Console.WriteLine("Enter Month");
+            var pmonth = Console.ReadLine();
+            int month = Start.CheckingValuesINT(pmonth);
 
-                Console.WriteLine("Enter Month");
-                var pmonth = Console.ReadLine();
-                int month = Convert.ToInt32(pmonth);
+            Console.WriteLine("Enter Year");
+            var pyear = Console.ReadLine();
+            int year = Start.CheckingValuesINT(pyear);
 
-                Console.WriteLine("Enter Year");
-                var pyear = Console.ReadLine();
-                int year = Start.CheckingValuesINT(pyear);
-
-                var date = new DateTime(year, month, day);
-                return date;
-            }
-            else
-            {
-                return new DateTime(2000, 1, 1);
-            }
+            var date = new DateTime(year, month, day);
+            return date;
         }
 
         //public void displayList()
