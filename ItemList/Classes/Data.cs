@@ -150,6 +150,7 @@ namespace ItemList
                 var userEnddate = DefaultFunctions.SetDateValue();
                 item.enddate = userEnddate;
             }
+            
 
             Console.WriteLine();
             item.description = userDescription;
