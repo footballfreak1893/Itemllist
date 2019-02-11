@@ -10,9 +10,9 @@ namespace ItemList.Classes
     {
         Start start = new Start();
 
-        public void AllItems(Data data)
+        public void DisplayAllItems(Data data)
         {
-           Start.ListContainsEntries(data);
+            Start.ListContainsEntries(data);
 
             foreach (KeyValuePair<int, Item> entries in data.dict)
             {
@@ -28,9 +28,13 @@ namespace ItemList.Classes
             }
         }
 
-        public void ShowDetails(Data data)
+        public void ShowDetails(Data data, bool deactivateDisplayAllItem )
         {
-            AllItems(data);
+            if (deactivateDisplayAllItem == false)
+            {
+                DisplayAllItems(data);
+            }
+
             Console.WriteLine("Enter ID to display details [number]");
             string inputid;
             inputid = Console.ReadLine();
@@ -47,7 +51,7 @@ namespace ItemList.Classes
             while (!data.dict.ContainsKey(id))
             {
                 Console.WriteLine("ID does not exist, try again");
-                AllItems(data);
+                DisplayAllItems(data);
 
                 Console.WriteLine("Enter ID to display details [number]");
                 inputid = Console.ReadLine();
@@ -106,6 +110,25 @@ namespace ItemList.Classes
                     Console.Clear();
                     return;
             }
+        }
+
+        //Eine Methode mit Switch, mit Attributen
+        public void EntriesSetFinished(Data data)
+        {
+            foreach (KeyValuePair<int, Item> entries in data.dict)
+            {
+                if (entries.Value.isfinished == true)
+                {
+                    Console.WriteLine(entries.Value.id + ".) " + entries.Value.title);
+                }
+                else
+                {
+                    continue;
+                }
+
+            }
+            ShowDetails(data, true);
+            Console.Clear();
         }
     }
 }

@@ -33,6 +33,7 @@ namespace ItemList
                 Console.WriteLine("Exit Programm [e]");
                 Console.WriteLine("Show Deatils [x]");
                 Console.WriteLine("Reset List [r]");
+                Console.WriteLine("Show finished entries [f]");
 
 
                 string userinput = Console.ReadLine();
@@ -46,7 +47,7 @@ namespace ItemList
 
                     case "s":
                         Console.Clear();
-                        display.AllItems(data);
+                        display.DisplayAllItems(data);
                         break;
 
                     case "e":
@@ -56,18 +57,22 @@ namespace ItemList
 
                     case "x":
                         Console.Clear();
-                        display.ShowDetails(data);
+                        display.ShowDetails(data, false);
                         break;
 
                     case "r":
                         Console.Clear();
                         data.ClearList();
-                        
-
                         break;
+
+                    case "f":
+                        Console.Clear();
+                        display.EntriesSetFinished(data);
+                        break;
+
                     default:
                         Console.Clear();
-                        display.AllItems(data);
+                        display.DisplayAllItems(data);
                         Console.Clear();
                         break;
                 }
@@ -82,6 +87,8 @@ namespace ItemList
             Environment.Exit(1);
 
         }
+
+       
 
         public static void ListContainsEntries(Data data)
         {
