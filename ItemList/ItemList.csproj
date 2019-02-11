@@ -64,6 +64,7 @@
     <Compile Include="Classes\CheckingNumbers.cs" />
     <Compile Include="Classes\Data.cs" />
     <Compile Include="Classes\DefaultFunctions.cs" />
+    <Compile Include="Classes\Display.cs" />
     <Compile Include="Classes\Item.cs" />
     <Compile Include="Classes\Start.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
