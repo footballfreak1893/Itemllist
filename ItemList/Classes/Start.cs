@@ -112,15 +112,15 @@ namespace ItemList
             Console.WriteLine("ID: " + item.id);
             Console.WriteLine("Title: " + item.title);
             Console.WriteLine("Description: " + item.description);
-            Console.WriteLine("Createdate: " + item.createdate);
-            if (item.enddate.Equals("2000, 01, 01")) //--> Checking Date Value
+            Console.WriteLine("Createdate: " + item.createdate.ToShortDateString());
+            if (item.enddate.Equals("0001, 01, 01")) //--> Checking Date Value
             {
                 Console.WriteLine("Enddate: ");
             }
 
             else
             {
-                Console.WriteLine("Enddate: " + item.enddate);
+                Console.WriteLine("Enddate: " + item.enddate.ToShortDateString());
             }
             Console.WriteLine();
             Console.WriteLine("Update Item [u]");

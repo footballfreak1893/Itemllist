@@ -154,7 +154,9 @@ namespace ItemList
 
             Console.WriteLine();
             item.description = userDescription;
+
             item.createdate = DateTime.Now;
+
 
             Console.WriteLine("Save this entry [y/n]");
             string inputuser = Console.ReadLine();
