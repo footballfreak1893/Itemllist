@@ -28,7 +28,7 @@ namespace ItemList.Classes
             }
         }
 
-        public void ShowDetails(Data data, bool deactivateDisplayAllItem )
+        public void ShowDetails(Data data, bool deactivateDisplayAllItem)
         {
             if (deactivateDisplayAllItem == false)
             {
@@ -112,7 +112,94 @@ namespace ItemList.Classes
             }
         }
 
+        public void FilterMenu(Data data)
+        {
+            while (true)
+            {
+                Console.WriteLine("Filter attributes");
+                Console.WriteLine();
+                Console.WriteLine("Show entries which are finished [f]");
+                Console.WriteLine("enddate < today [e<]");
+                Console.WriteLine("enddate > today [e>]");
+                Console.WriteLine("enddate eaquals today [e=]");
+                string inputvalue = Console.ReadLine();
+
+                if (inputvalue == "")
+                {
+                    Console.Clear();
+                    return;
+                }
+                Console.Clear();
+                Filtering(data, inputvalue);
+            }
+        }
+
         //Eine Methode mit Switch, mit Attributen
+        public void Filtering(Data data, string inputfiltervalue)
+        {
+            Console.WriteLine("Current filter");
+            Console.WriteLine();
+
+            foreach (KeyValuePair<int, Item> entries in data.dict)
+            {
+                var finsihed = entries.Value.isfinished;
+                var enddate = entries.Value.enddate;
+
+                switch (inputfiltervalue) //!!If in eigene Methoden 
+                {
+                    case "f":
+                        if (finsihed == true)
+                        {
+                            Console.WriteLine(entries.Value.id + ".) " + entries.Value.title);
+                        }
+                        else
+                        {
+                            continue;
+                        }
+
+                        break;
+
+                    case "e=":
+                        if (enddate.Date == DateTime.Now.Date)
+                        {
+                            Console.WriteLine(entries.Value.id + ".) " + entries.Value.title);
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                        break;
+
+                    case "e>":
+                        if (enddate > DateTime.Now.Date)
+                        {
+                            Console.WriteLine(entries.Value.id + ".) " + entries.Value.title);
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                        break;
+
+                    case "e<":
+                        if (enddate < DateTime.Now.Date)
+                        {
+                            Console.WriteLine(entries.Value.id + ".) " + entries.Value.title);
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                        break;
+
+                    default:
+                        return;
+                }
+            }
+            ShowDetails(data, true);
+            Console.Clear();
+        }
+
         public void EntriesSetFinished(Data data)
         {
             foreach (KeyValuePair<int, Item> entries in data.dict)
