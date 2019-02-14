@@ -35,6 +35,7 @@ namespace ItemList
                 Console.WriteLine("Reset List [r]");
                 Console.WriteLine("Filter [f]");
                 Console.WriteLine("Finished entries [fi]");
+                Console.WriteLine("sort dict [so]");
 
 
                 string userinput = Console.ReadLine();
@@ -74,6 +75,11 @@ namespace ItemList
                     case "fi":
                         Console.Clear();
                         display.EntriesSetFinished(data);
+                        break;
+
+                    case "so":
+                        Console.Clear();
+                        display.shortDict(data);
                         break;
 
                     default:

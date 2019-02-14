@@ -217,5 +217,18 @@ namespace ItemList.Classes
             ShowDetails(data, true);
             Console.Clear();
         }
+
+        public void shortDict(Data data )
+        {
+            data.dict = data.dict.Where(x => x.Value.id > 100).ToDictionary(x => x.Key, i => i.Value);
+            foreach (KeyValuePair<int, Item> entries in data.dict)
+            {
+                    Console.WriteLine(entries.Value.id + ".) " + entries.Value.title);
+               
+            }
+            ShowDetails(data, false);
+            Console.ReadKey();
+
+        }
     }
 }
