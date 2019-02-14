@@ -79,7 +79,7 @@ namespace ItemList
 
                     case "so":
                         Console.Clear();
-                        display.shortDict(data);
+                        display.shortDict(data, "isfinished");
                         break;
 
                     default:

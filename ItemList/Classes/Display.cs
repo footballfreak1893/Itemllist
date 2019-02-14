@@ -130,107 +130,89 @@ namespace ItemList.Classes
                     return;
                 }
                 Console.Clear();
-                Filtering(data, inputvalue);
+                shortDict(data, inputvalue);
             }
         }
 
-        //Eine Methode mit Switch, mit Attributen
-        public void Filtering(Data data, string inputfiltervalue)
+        public Dictionary<int, Item> EntriesSetFinished(Data data)
         {
-            Console.WriteLine("Current filter");
-            Console.WriteLine();
+            data.dict = data.dict.Where(x => (x.Value.isfinished == true)).ToDictionary(x => x.Key, i => i.Value);
+            return data.dict;
+        }
 
-            foreach (KeyValuePair<int, Item> entries in data.dict)
+        //Hier weiter
+        public void shortDict(Data data, string sortattribute)
+        {
+            bool endate = false;
+            bool isfinished = false;
+            var array = sortattribute.ToCharArray();
+
+
+            if (array[0] == 'e')
             {
-                var finsihed = entries.Value.isfinished;
-                var enddate = entries.Value.enddate;
+                endate = true;
 
-                switch (inputfiltervalue) //!!If in eigene Methoden 
+                if (array[1] == '<')
                 {
-                    case "f":
-                        if (finsihed == true)
-                        {
-                            Console.WriteLine(entries.Value.id + ".) " + entries.Value.title);
-                        }
-                        else
-                        {
-                            continue;
-                        }
-
-                        break;
-
-                    case "e=":
-                        if (enddate.Date == DateTime.Now.Date)
-                        {
-                            Console.WriteLine(entries.Value.id + ".) " + entries.Value.title);
-                        }
-                        else
-                        {
-                            continue;
-                        }
-                        break;
-
-                    case "e>":
-                        if (enddate > DateTime.Now.Date)
-                        {
-                            Console.WriteLine(entries.Value.id + ".) " + entries.Value.title);
-                        }
-                        else
-                        {
-                            continue;
-                        }
-                        break;
-
-                    case "e<":
-                        if (enddate < DateTime.Now.Date)
-                        {
-                            Console.WriteLine(entries.Value.id + ".) " + entries.Value.title);
-                        }
-                        else
-                        {
-                            continue;
-                        }
-                        break;
-
-                    default:
-                        return;
+                    data.dict = ShortEnddate(data, '<');
                 }
-            }
-            ShowDetails(data, true);
-            Console.Clear();
-        }
-
-        public void EntriesSetFinished(Data data)
-        {
-            foreach (KeyValuePair<int, Item> entries in data.dict)
-            {
-                if (entries.Value.isfinished == true)
+                else if (array[1] == '>')
                 {
-                    Console.WriteLine(entries.Value.id + ".) " + entries.Value.title);
+                    data.dict = ShortEnddate(data, '>');
                 }
                 else
                 {
-                    continue;
+                    data.dict = ShortEnddate(data, '=');
                 }
 
             }
-            ShowDetails(data, true);
-            Console.Clear();
-        }
+            if (array[0] == 'f')
+            {
+                isfinished = true;
+                data.dict = EntriesSetFinished(data);
+            } 
 
-        public void shortDict(Data data )
-        {
-            data.dict = data.dict.Where(x => (x.Value.enddate.Date >= DateTime.Now.Date)).ToDictionary(x => x.Key, i => i.Value);
-            data.dict = data.dict.OrderBy(x => (x.Value.enddate.Date)).ToDictionary(x => x.Key, i => i.Value);
+            
+           
             foreach (KeyValuePair<int, Item> entries in data.dict)
             {
-                    Console.WriteLine(entries.Value.id + ".) " +entries.Value.title+": --> " +entries.Value.enddate.Date);
+                if (endate == true)
+                {
+                    Console.WriteLine(entries.Value.id + ".) " + entries.Value.title + ": --> " + entries.Value.enddate.Date);
+                }
+
+                if (isfinished == true)
+                {
+                    Console.WriteLine(entries.Value.id + ".) " + entries.Value.title);
+                }
                
             }
             //ShowDetails(data, false);
             Console.ReadKey();
             Console.Clear();
-            //OrderBy(x => (x.Value.enddate))
+          
+        }
+
+        public Dictionary<int, Item> ShortEnddate(Data data, char sorter)
+        {
+            if (sorter == '>')
+            {
+                data.dict = data.dict.Where(x => (x.Value.enddate.Date >= DateTime.Now.Date)).ToDictionary(x => x.Key, i => i.Value);
+            }
+
+            if (sorter == '<')
+            {
+                data.dict = data.dict.Where(x => (x.Value.enddate.Date < DateTime.Now.Date)).ToDictionary(x => x.Key, i => i.Value);
+            }
+
+            if (sorter == '=')
+            {
+                data.dict = data.dict.Where(x => (x.Value.enddate.Date == DateTime.Now.Date)).ToDictionary(x => x.Key, i => i.Value);
+            }
+            data.dict = data.dict.OrderBy(x => (x.Value.enddate.Date)).ToDictionary(x => x.Key, i => i.Value);
+            return data.dict;
         }
     }
+
+
 }
