@@ -220,11 +220,11 @@ namespace ItemList.Classes
 
         public void shortDict(Data data )
         {
-            data.dict = data.dict.Where(x => (x.Value.enddate >= DateTime.Now.Date)).ToDictionary(x => x.Key, i => i.Value);
-            data.dict = data.dict.OrderBy(x => (x.Value.enddate)).ToDictionary(x => x.Key, i => i.Value);
+            data.dict = data.dict.Where(x => (x.Value.enddate.Date >= DateTime.Now.Date)).ToDictionary(x => x.Key, i => i.Value);
+            data.dict = data.dict.OrderBy(x => (x.Value.enddate.Date)).ToDictionary(x => x.Key, i => i.Value);
             foreach (KeyValuePair<int, Item> entries in data.dict)
             {
-                    Console.WriteLine(entries.Value.id + ".) " + entries.Value.enddate.Date);
+                    Console.WriteLine(entries.Value.id + ".) " +entries.Value.title+": --> " +entries.Value.enddate.Date);
                
             }
             //ShowDetails(data, false);
