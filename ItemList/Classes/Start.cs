@@ -29,12 +29,12 @@ namespace ItemList
                 Console.WriteLine("Checkliste ("+version+")");
                 Console.WriteLine();
                 Console.WriteLine("New Entry [n]");
-                Console.WriteLine("Display entries [s]");
+                //Console.WriteLine("Display entries [s]");
                 Console.WriteLine("Exit Programm [e]");
                 Console.WriteLine("Show Deatils [x]");
                 Console.WriteLine("Reset List [r]");
                 Console.WriteLine("Filter [f]");
-                Console.WriteLine("Finished entries [fi]");
+                //Console.WriteLine("Finished entries [fi]");
                 //Console.WriteLine("sort dict [so]");
 
 
@@ -47,10 +47,10 @@ namespace ItemList
                         data.AddItem();
                         break;
 
-                    case "s":
-                        Console.Clear();
-                        display.DisplayAllItems(data);
-                        break;
+                    //case "s":
+                    //    Console.Clear();
+                    //    display.DisplayAllItems(data);
+                    //    break;
 
                     case "e":
                         Console.Clear();
@@ -59,7 +59,7 @@ namespace ItemList
 
                     case "x":
                         Console.Clear();
-                        display.ShowDetails(data, false);
+                        display.ShowDetails(data, false, data.dict);
                         break;
 
                     case "r":
@@ -72,10 +72,10 @@ namespace ItemList
                         display.FilterMenu(data);
                         break;
 
-                    case "fi":
-                        Console.Clear();
-                        display.EntriesSetFinished(data);
-                        break;
+                    //case "fi":
+                    //    Console.Clear();
+                    //    display.EntriesSetFinished(data);
+                    //    break;
 
                     //case "so":
                     //    Console.Clear();

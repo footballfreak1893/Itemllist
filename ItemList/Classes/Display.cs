@@ -28,7 +28,7 @@ namespace ItemList.Classes
             }
         }
 
-        public void ShowDetails(Data data, bool deactivateDisplayAllItem)
+        public void ShowDetails(Data data, bool deactivateDisplayAllItem, Dictionary<int, Item> dict)
         {
             if (deactivateDisplayAllItem == false)
             {
@@ -112,6 +112,46 @@ namespace ItemList.Classes
             }
         }
 
+        //public void EditEntry(Data data, int id, Item item)
+        //{
+        //    Console.WriteLine();
+        //    Console.WriteLine("Update Item [u]");
+        //    Console.WriteLine("Delete Item [d]");
+        //    Console.WriteLine("Set entry finish [f]");
+        //    Console.WriteLine("Exit Programm [e]");
+        //    string inputvalue = Console.ReadLine();
+
+        //    switch (inputvalue)
+        //    {
+        //        case "u":
+        //            Console.Clear();
+        //            data.UpdateItem(id, item);
+        //            Console.Clear();
+        //            break;
+
+        //        case "d":
+        //            Console.Clear();
+        //            data.DeleteItem(id, item);
+        //            break;
+
+        //        case "f":
+        //            Console.Clear();
+        //            item.isfinished = true;
+        //            Console.WriteLine("Set is finsihed"); //--> Evtl eigene Methode
+        //            data.SaveList(data.path);
+        //            break;
+
+        //        case "e":
+        //            Console.Clear();
+        //            Start.Exit(data);
+        //            break;
+
+        //        default:
+        //            Console.Clear();
+        //            return;
+        //    }
+        //}
+
         public void FilterMenu(Data data)
         {
                 Console.WriteLine("Filter attributes");
@@ -119,7 +159,7 @@ namespace ItemList.Classes
                 Console.WriteLine("Show entries which are finished [f]");
                 Console.WriteLine("enddate < today [e<]");
                 Console.WriteLine("enddate > today [e>]");
-                Console.WriteLine("enddate eaquals today [e=]");
+                Console.WriteLine("enddate equals today [e=]");
                 string inputvalue = Console.ReadLine();
 
                 if (inputvalue == "")
@@ -167,10 +207,10 @@ namespace ItemList.Classes
             {
                 isfinished = true;
                 data.dict = EntriesSetFinished(data);
-            } 
+            }
 
-            
-           
+            //ShowDetails(data, false, data.dict);
+
             foreach (KeyValuePair<int, Item> entries in data.dict)
             {
                 if (endate == true)
@@ -182,10 +222,10 @@ namespace ItemList.Classes
                 {
                     Console.WriteLine(entries.Value.id + ".) " + entries.Value.title);
                 }
-               
-            }
-            //ShowDetails(data, false);
 
+            }
+
+           // ShowDetails(data, false, data.dict);
             Console.ReadKey();
             Console.Clear();
           
