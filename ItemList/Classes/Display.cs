@@ -65,6 +65,7 @@ namespace ItemList.Classes
             Console.WriteLine("Title: " + item.title);
             Console.WriteLine("Description: " + item.description);
             Console.WriteLine("Createdate: " + item.createdate.ToShortDateString());
+            Console.WriteLine("Priority: " + item.priority);
             if (item.enddate.Equals("0001, 01, 01")) //--> Checking Date Value
             {
                 Console.WriteLine("Enddate: ");

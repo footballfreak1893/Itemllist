@@ -27,8 +27,8 @@ namespace ItemList
         public bool isobsolete { get; set; }
         public bool isfinished { get; set; }
         //string category { get; set; }
-        //string priority { get; set; }
-       public DateTime createdate { get; set; }
+        public char priority { get; set; }
+        public DateTime createdate { get; set; }
         public DateTime enddate { get; set; }
 
 

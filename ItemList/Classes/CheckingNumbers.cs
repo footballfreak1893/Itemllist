@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ItemList.Classes
 {
-    public static class CheckingNumbers
+    public class CheckingNumbers
     {
         public static int CheckingRangeINT(int x, int y, int inputvalINT)
         {
@@ -43,7 +43,7 @@ namespace ItemList.Classes
             return integer;
         }
 
-        public static double CheckingValuesDouble(Data data, string input)
+        public static double CheckingValuesDouble(string input)
         {
 
             bool canconvert = false;
@@ -66,7 +66,7 @@ namespace ItemList.Classes
             return doublevalue;
         }
 
-        public static double CheckingValuesChar(Data data, string input)
+        public static char CheckingValuesChar( string input)
         {
 
             bool canconvert = false;

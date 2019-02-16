@@ -1,24 +1,23 @@
-﻿using System;
+﻿using ItemList.Classes;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ItemList
 {
     public class Data
     {
-        
-
         // General class variables
         public string path = "data.txt";
         public string pathId = "idfile.txt";
         public string currentidStr = "1";
         public int currentid = 1;
 
+        CheckingNumbers checkingNumbers = new CheckingNumbers();
+       
         public Data()
         {
 
@@ -139,7 +138,19 @@ namespace ItemList
             Console.WriteLine("Enter Description:");
             string userDescription = Console.ReadLine();
 
+            Console.WriteLine();
+
+            
+
+           
+
             Item item = new Item(userTitle, currentid);
+
+            char priority = DefaultFunctions.SetPriority();
+            if (priority != 'x')
+            {
+                item.priority = priority;
+            }
 
             Console.WriteLine();
             Console.WriteLine(" Want to enter a Enddate? [y/n]");

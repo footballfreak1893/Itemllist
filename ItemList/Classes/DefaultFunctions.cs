@@ -40,32 +40,42 @@ namespace ItemList
         }
 
         // --> Checking
-        public static string SetPriority()
+        public static char SetPriority()
         {
             Console.WriteLine("Enter Priority");
-            Console.WriteLine("Enter 1: --> high");
-            Console.WriteLine("Enter 2: --> medium");
-            Console.WriteLine("Enter 3: --> low");
+            Console.WriteLine("Enter a: --> high");
+            Console.WriteLine("Enter b: --> medium");
+            Console.WriteLine("Enter c: --> low");
             var inputvalue = Console.ReadLine();
-            string priority = "";
+            char priority ='x';
 
-            if (inputvalue == "1")
+            if (inputvalue != "")
             {
-                priority = "high";
+                priority = CheckingNumbers.CheckingValuesChar(inputvalue);
+
+
+
+                switch (priority)
+                {
+                    case 'a':
+                        priority = 'a';
+                        break;
+
+                    case 'b':
+                        priority = 'b';
+                        break;
+
+                    case 'c':
+                        priority = 'c';
+                        break;
+
+                    default:
+                        return 'x';
+                        break;
+                }
+                return priority;
             }
-            else if (inputvalue == "2")
-            {
-                priority = "medium";
-            }
-            else if (inputvalue == "3")
-            {
-                priority = "low";
-            }
-            else
-            {
-                priority = "";
-            }
-            return priority;
+            else return 'x';
         }
 
         public static string NotDefind()
@@ -95,9 +105,9 @@ namespace ItemList
             return date;
         }
 
-        
 
-       
+
+
 
         //public void displayList()
         //{
