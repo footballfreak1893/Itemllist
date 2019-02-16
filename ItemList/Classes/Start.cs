@@ -35,7 +35,7 @@ namespace ItemList
                 Console.WriteLine("Reset List [r]");
                 Console.WriteLine("Filter [f]");
                 Console.WriteLine("Finished entries [fi]");
-                Console.WriteLine("sort dict [so]");
+                //Console.WriteLine("sort dict [so]");
 
 
                 string userinput = Console.ReadLine();
@@ -77,10 +77,10 @@ namespace ItemList
                         display.EntriesSetFinished(data);
                         break;
 
-                    case "so":
-                        Console.Clear();
-                        display.shortDict(data, "isfinished");
-                        break;
+                    //case "so":
+                    //    Console.Clear();
+                    //    display.shortDict(data, "isfinished");
+                    //    break;
 
                     default:
                         Console.Clear();

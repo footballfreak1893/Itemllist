@@ -114,8 +114,6 @@ namespace ItemList.Classes
 
         public void FilterMenu(Data data)
         {
-            while (true)
-            {
                 Console.WriteLine("Filter attributes");
                 Console.WriteLine();
                 Console.WriteLine("Show entries which are finished [f]");
@@ -131,7 +129,6 @@ namespace ItemList.Classes
                 }
                 Console.Clear();
                 shortDict(data, inputvalue);
-            }
         }
 
         public Dictionary<int, Item> EntriesSetFinished(Data data)
@@ -188,6 +185,7 @@ namespace ItemList.Classes
                
             }
             //ShowDetails(data, false);
+
             Console.ReadKey();
             Console.Clear();
           
@@ -197,7 +195,7 @@ namespace ItemList.Classes
         {
             if (sorter == '>')
             {
-                data.dict = data.dict.Where(x => (x.Value.enddate.Date >= DateTime.Now.Date)).ToDictionary(x => x.Key, i => i.Value);
+                data.dict = data.dict.Where(x => (x.Value.enddate.Date > DateTime.Now.Date)).ToDictionary(x => x.Key, i => i.Value);
             }
 
             if (sorter == '<')
