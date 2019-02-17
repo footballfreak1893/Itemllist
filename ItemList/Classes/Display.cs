@@ -155,21 +155,22 @@ namespace ItemList.Classes
 
         public void FilterMenu(Data data)
         {
-                Console.WriteLine("Filter attributes");
-                Console.WriteLine();
-                Console.WriteLine("Show entries which are finished [f]");
-                Console.WriteLine("enddate < today [e<]");
-                Console.WriteLine("enddate > today [e>]");
-                Console.WriteLine("enddate equals today [e=]");
-                string inputvalue = Console.ReadLine();
+            Console.WriteLine("Filter attributes");
+            Console.WriteLine();
+            Console.WriteLine("Show entries which are finished [f]");
+            Console.WriteLine("enddate < today [e<]");
+            Console.WriteLine("enddate > today [e>]");
+            Console.WriteLine("enddate equals today [e=]");
+            Console.WriteLine("priority [p]");
+            string inputvalue = Console.ReadLine();
 
-                if (inputvalue == "")
-                {
-                    Console.Clear();
-                    return;
-                }
+            if (inputvalue == "")
+            {
                 Console.Clear();
-                shortDict(data, inputvalue);
+                return;
+            }
+            Console.Clear();
+            shortDict(data, inputvalue);
         }
 
         public Dictionary<int, Item> EntriesSetFinished(Data data)
@@ -183,6 +184,7 @@ namespace ItemList.Classes
         {
             bool endate = false;
             bool isfinished = false;
+            bool priority = false;
             var array = sortattribute.ToCharArray();
 
 
@@ -204,12 +206,19 @@ namespace ItemList.Classes
                 }
 
             }
+
             if (array[0] == 'f')
             {
                 isfinished = true;
                 data.dict = EntriesSetFinished(data);
             }
 
+            if (array[0] == 'p')
+            {
+                priority = true;
+                data.dict = ShortPriority(data, 'c');
+            }
+            
             //ShowDetails(data, false, data.dict);
 
             foreach (KeyValuePair<int, Item> entries in data.dict)
@@ -224,12 +233,17 @@ namespace ItemList.Classes
                     Console.WriteLine(entries.Value.id + ".) " + entries.Value.title);
                 }
 
+                if (priority == true)
+                {
+                    Console.WriteLine(entries.Value.id + ".) " + entries.Value.title + ": --> " + entries.Value.priority);
+                }
+
             }
 
-           // ShowDetails(data, false, data.dict);
+            // ShowDetails(data, false, data.dict);
             Console.ReadKey();
             Console.Clear();
-          
+
         }
 
         public Dictionary<int, Item> ShortEnddate(Data data, char sorter)
@@ -249,6 +263,27 @@ namespace ItemList.Classes
                 data.dict = data.dict.Where(x => (x.Value.enddate.Date == DateTime.Now.Date)).ToDictionary(x => x.Key, i => i.Value);
             }
             data.dict = data.dict.OrderBy(x => (x.Value.enddate.Date)).ToDictionary(x => x.Key, i => i.Value);
+            return data.dict;
+        }
+
+        //Untermenu der Attribute!
+        public Dictionary<int, Item> ShortPriority(Data data, char sorter)
+        {
+            if (sorter == 'a')
+            {
+                data.dict = data.dict.Where(x => (x.Value.priority == 'a')).ToDictionary(x => x.Key, i => i.Value);
+            }
+
+            if (sorter == 'b')
+            {
+                data.dict = data.dict.Where(x => (x.Value.priority == 'b')).ToDictionary(x => x.Key, i => i.Value);
+            }
+
+            if (sorter == 'c')
+            {
+                data.dict = data.dict.Where(x => (x.Value.priority == 'c')).ToDictionary(x => x.Key, i => i.Value);
+            }
+            data.dict = data.dict.OrderBy(x => (x.Value.priority)).ToDictionary(x => x.Key, i => i.Value);
             return data.dict;
         }
     }
