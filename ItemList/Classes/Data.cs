@@ -89,6 +89,14 @@ namespace ItemList
                 item.description = inputdescription;
             }
 
+            char priority = DefaultFunctions.SetPriority();
+            if (priority != 'x')
+            {
+                item.priority = priority;
+            }
+
+            Console.WriteLine();
+
             SaveList(path);
             //Console.WriteLine("entry: " + item.id + ".)");
         }
@@ -139,10 +147,6 @@ namespace ItemList
             string userDescription = Console.ReadLine();
 
             Console.WriteLine();
-
-            
-
-           
 
             Item item = new Item(userTitle, currentid);
 
