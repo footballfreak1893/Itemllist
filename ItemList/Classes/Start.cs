@@ -14,6 +14,7 @@ namespace ItemList
             Data data = new Data();
             StartProgramm(data);
             Display display = new Display();
+            
         }
 
         public static void StartProgramm(Data data)
@@ -22,6 +23,7 @@ namespace ItemList
             data.FileExists();
             string version = "v 1.0";
             Display display = new Display();
+            Filter filter = new Filter();
 
             while (true)
             {
@@ -69,7 +71,7 @@ namespace ItemList
 
                     case "f":
                         Console.Clear();
-                        display.FilterMenu(data);
+                        filter.FilterMenu(data);
                         break;
 
                     //case "fi":
