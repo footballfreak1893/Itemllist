@@ -66,15 +66,8 @@ namespace ItemList.Classes
             Console.WriteLine("Description: " + item.description);
             Console.WriteLine("Createdate: " + item.createdate.ToShortDateString());
             Console.WriteLine("Priority: " + item.priority);
-            if (item.enddate.Equals("0001, 01, 01")) //--> Checking Date Value
-            {
-                Console.WriteLine("Enddate: ");
-            }
-
-            else
-            {
-                Console.WriteLine("Enddate: " + item.enddate.ToShortDateString());
-            }
+            Console.WriteLine("Enddate: " + item.enddate.ToShortDateString());
+            
             Console.WriteLine();
             Console.WriteLine("Update Item [u]");
             Console.WriteLine("Delete Item [d]");
@@ -112,49 +105,5 @@ namespace ItemList.Classes
                     return;
             }
         }
-
-        //public void EditEntry(Data data, int id, Item item)
-        //{
-        //    Console.WriteLine();
-        //    Console.WriteLine("Update Item [u]");
-        //    Console.WriteLine("Delete Item [d]");
-        //    Console.WriteLine("Set entry finish [f]");
-        //    Console.WriteLine("Exit Programm [e]");
-        //    string inputvalue = Console.ReadLine();
-
-        //    switch (inputvalue)
-        //    {
-        //        case "u":
-        //            Console.Clear();
-        //            data.UpdateItem(id, item);
-        //            Console.Clear();
-        //            break;
-
-        //        case "d":
-        //            Console.Clear();
-        //            data.DeleteItem(id, item);
-        //            break;
-
-        //        case "f":
-        //            Console.Clear();
-        //            item.isfinished = true;
-        //            Console.WriteLine("Set is finsihed"); //--> Evtl eigene Methode
-        //            data.SaveList(data.path);
-        //            break;
-
-        //        case "e":
-        //            Console.Clear();
-        //            Start.Exit(data);
-        //            break;
-
-        //        default:
-        //            Console.Clear();
-        //            return;
-        //    }
-        //}
-
-
-
-
     }
 }

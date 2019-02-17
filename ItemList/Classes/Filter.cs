@@ -154,7 +154,7 @@ namespace ItemList.Classes
             return data.dict;
         }
 
-        //Untermenu der Attribute!
+        
         public Dictionary<int, Item> ShortPriority(Data data, char sorter)
         {
             if (sorter == 'a')
