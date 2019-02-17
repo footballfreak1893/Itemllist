@@ -13,10 +13,18 @@ namespace ItemList.Classes
             Console.WriteLine("Filter attributes");
             Console.WriteLine();
             Console.WriteLine("Show entries which are finished [f]");
+            Console.WriteLine();
+            Console.WriteLine("Attribute: Enddate");
+            Console.WriteLine("Generalsort [e]");
             Console.WriteLine("enddate < today [e<]");
             Console.WriteLine("enddate > today [e>]");
             Console.WriteLine("enddate equals today [e=]");
-            Console.WriteLine("priority [p]");
+            Console.WriteLine();
+            Console.WriteLine("Attribute: Priority");
+            Console.WriteLine("Generalsort [p]");
+            Console.WriteLine("priority equals 'A' [pa]");
+            Console.WriteLine("priority equals 'B' [pb]");
+            Console.WriteLine("priority equals 'C' [pc]");
             string inputvalue = Console.ReadLine();
 
             if (inputvalue == "")
@@ -46,8 +54,12 @@ namespace ItemList.Classes
             if (array[0] == 'e')
             {
                 endate = true;
+                if (sortattribute == "e")
+                {
+                    data.dict = ShortEnddate(data, 'x');
+                }
 
-                if (array[1] == '<')
+                else if (array[1] == '<')
                 {
                     data.dict = ShortEnddate(data, '<');
                 }
@@ -55,13 +67,16 @@ namespace ItemList.Classes
                 {
                     data.dict = ShortEnddate(data, '>');
                 }
-                else
+                else if (array[1] == '=')
                 {
                     data.dict = ShortEnddate(data, '=');
                 }
 
+                // Ungültiger Case hinzufügen
+               
             }
 
+            // Ungültiger Case hinzufügen
             if (array[0] == 'f')
             {
                 isfinished = true;
@@ -71,7 +86,25 @@ namespace ItemList.Classes
             if (array[0] == 'p')
             {
                 priority = true;
-                data.dict = ShortPriority(data, 'c');
+
+                if (sortattribute == "p")
+                {
+                    data.dict = ShortPriority(data, 'x');
+                }
+
+                else if (array[1] == 'a')
+                {
+                    data.dict = ShortPriority(data, 'a');
+                }
+                else if (array[1] == 'b')
+                {
+                    data.dict = ShortPriority(data, 'b');
+                }
+                else if (array[1] == 'c')
+                {
+                    data.dict = ShortPriority(data, 'c');
+                }
+              
             }
 
             //ShowDetails(data, false, data.dict);
