@@ -36,6 +36,7 @@ namespace ItemList
                 Console.WriteLine("Show Deatils [x]");
                 Console.WriteLine("Reset List [r]");
                 Console.WriteLine("Filter [f]");
+                Console.WriteLine("Test [t]");
                 //Console.WriteLine("Finished entries [fi]");
                 //Console.WriteLine("sort dict [so]");
 
@@ -72,6 +73,12 @@ namespace ItemList
                     case "f":
                         Console.Clear();
                         filter.FilterMenu(data);
+                        break;
+
+                    //case "t":
+                    //    Console.Clear();
+                    //    Test();
+                        
                         break;
 
                     //case "fi":
@@ -136,6 +143,12 @@ namespace ItemList
                         return;
                 }
             }
+        }
+
+        public static void CreateFolder(string foldername)
+        {
+            DirectoryInfo di = new DirectoryInfo(foldername);
+            di.Create();
         }
     }
 

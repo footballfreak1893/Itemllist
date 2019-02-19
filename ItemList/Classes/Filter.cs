@@ -170,7 +170,9 @@ namespace ItemList.Classes
             if (sorter == 'c')
             {
                 data.dict = data.dict.Where(x => (x.Value.priority == 'c')).ToDictionary(x => x.Key, i => i.Value);
+
             }
+            data.dict = data.dict.Where(x => (x.Value.priority == 'a' || x.Value.priority == 'b' || x.Value.priority == 'c')).ToDictionary(x => x.Key, i => i.Value);
             data.dict = data.dict.OrderBy(x => (x.Value.priority)).ToDictionary(x => x.Key, i => i.Value);
             return data.dict;
         }
