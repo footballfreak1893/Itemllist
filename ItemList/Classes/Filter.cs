@@ -105,19 +105,23 @@ namespace ItemList.Classes
             {
                 if (endate == true)
                 {
-                    Console.WriteLine(entries.Value.id + ".) " + entries.Value.title + ": --> " + entries.Value.enddate.Date);
+                    Console.WriteLine(entries.Value.id + ".) " + entries.Value.title);
+                    Console.WriteLine("Enndate: --> " + entries.Value.enddate.ToShortDateString());
+                    Console.WriteLine();
                 }
 
                 if (isfinished == true)
                 {
                     Console.WriteLine(entries.Value.id + ".) " + entries.Value.title);
+                    Console.WriteLine();
                 }
 
                 if (priority == true)
                 {
-                    Console.WriteLine(entries.Value.id + ".) " + entries.Value.title + ": --> " + entries.Value.priority);
+                    Console.WriteLine(entries.Value.id + ".) " + entries.Value.title);
+                    Console.WriteLine("Priority: --> " + entries.Value.priority);
+                    Console.WriteLine();
                 }
-
             }
 
             // ShowDetails(data, false, data.dict);
