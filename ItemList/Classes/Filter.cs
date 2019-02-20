@@ -43,7 +43,6 @@ namespace ItemList.Classes
             bool priority = false;
             var array = sortattribute.ToCharArray();
 
-
             if (array[0] == 'e')
             {
                 endate = true;

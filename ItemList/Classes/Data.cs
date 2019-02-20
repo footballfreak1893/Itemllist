@@ -65,49 +65,6 @@ namespace ItemList
             return dict;
         }
 
-        public void DeleteItem(int id, Item item)
-        {
-            dict.Remove(id);
-            SaveList(path);
-        }
-
-        public void UpdateItem(int index, Item item)
-        {
-            Console.WriteLine("Update entry: ");
-            Console.WriteLine();
-            Console.WriteLine("Update Title");
-            var inputtitle = Console.ReadLine();
-            if (inputtitle != "")
-            {
-                item.title = inputtitle;
-            }
-
-            Console.WriteLine("Update description");
-            var inputdescription = Console.ReadLine();
-            if (inputdescription != "")
-            {
-                item.description = inputdescription;
-            }
-
-            char priority = DefaultFunctions.SetPriority();
-            if (priority != 'x')
-            {
-                item.priority = priority;
-            }
-
-            Console.WriteLine();
-
-            SaveList(path);
-            //Console.WriteLine("entry: " + item.id + ".)");
-        }
-
-        public int CountItems()
-        {
-            var itemscount = dict.Count();
-            Console.WriteLine("Number of items " + itemscount);
-            return itemscount;
-        }
-
         public int ReadId()
         {
             currentidStr = File.ReadAllText(pathId);
@@ -165,13 +122,11 @@ namespace ItemList
                 var userEnddate = DefaultFunctions.SetDateValue();
                 item.enddate = userEnddate;
             }
-            
 
             Console.WriteLine();
             item.description = userDescription;
 
             item.createdate = DateTime.Now;
-
 
             Console.WriteLine("Save this entry [y/n]");
             string inputuser = Console.ReadLine();
@@ -189,9 +144,51 @@ namespace ItemList
                 dict.Add(item.id, item);
                 SaveList(path);
             }
-
         }
 
+        public void DeleteItem(int id, Item item)
+        {
+            dict.Remove(id);
+            SaveList(path);
+        }
+
+        public void UpdateItem(int index, Item item)
+        {
+            Console.WriteLine("Update entry: ");
+            Console.WriteLine();
+            Console.WriteLine("Update Title");
+            var inputtitle = Console.ReadLine();
+            if (inputtitle != "")
+            {
+                item.title = inputtitle;
+            }
+
+            Console.WriteLine("Update description");
+            var inputdescription = Console.ReadLine();
+            if (inputdescription != "")
+            {
+                item.description = inputdescription;
+            }
+
+            char priority = DefaultFunctions.SetPriority();
+            if (priority != 'x')
+            {
+                item.priority = priority;
+            }
+
+            Console.WriteLine();
+
+            SaveList(path);
+            //Console.WriteLine("entry: " + item.id + ".)");
+        }
+
+        public int CountItems()
+        {
+            var itemscount = dict.Count();
+            Console.WriteLine("Number of items " + itemscount);
+            return itemscount;
+        }
+        
         public void ClearList()
         {
             dict.Clear();
@@ -200,6 +197,5 @@ namespace ItemList
             SaveList(path);
             Console.WriteLine("List has been reseted");
         }
-
     }
 }

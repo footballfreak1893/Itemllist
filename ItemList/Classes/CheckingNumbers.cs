@@ -37,7 +37,6 @@ namespace ItemList.Classes
                 {
                     break;
                 }
-
             }
 
             return integer;
@@ -45,7 +44,6 @@ namespace ItemList.Classes
 
         public static double CheckingValuesDouble(string input)
         {
-
             bool canconvert = false;
             double doublevalue = 0;
 
@@ -61,7 +59,6 @@ namespace ItemList.Classes
                 {
                     break;
                 }
-
             }
             return doublevalue;
         }
@@ -84,10 +81,8 @@ namespace ItemList.Classes
                 {
                     break;
                 }
-
             }
             return charvalue;
         }
-
     }
 }

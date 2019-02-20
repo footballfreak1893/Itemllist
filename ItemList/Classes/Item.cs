@@ -18,8 +18,6 @@ namespace ItemList
         string currentidStr = "1";
         int currentid = 1;
 
-
-
         //Attributes
         public int id { get; set; }
         public string title { get; set; }
@@ -43,15 +41,6 @@ namespace ItemList
         {
 
         }
-
-
-       
-
-        
-      
-
-        
-
     }
 }
 

@@ -7,8 +7,6 @@ namespace ItemList
 {
     public class Start
     {
-         
-
         static void Main(string[] args)
         {
             Data data = new Data();
@@ -27,19 +25,15 @@ namespace ItemList
 
             while (true)
             {
-
                 Console.WriteLine("Checkliste ("+version+")");
                 Console.WriteLine();
                 Console.WriteLine("New Entry [n]");
-                //Console.WriteLine("Display entries [s]");
                 Console.WriteLine("Exit Programm [e]");
                 Console.WriteLine("Show Deatils [x]");
                 Console.WriteLine("Reset List [r]");
                 Console.WriteLine("Filter [f]");
-                Console.WriteLine("Test [t]");
+               // Console.WriteLine("Test [t]");
                 //Console.WriteLine("Finished entries [fi]");
-                //Console.WriteLine("sort dict [so]");
-
 
                 string userinput = Console.ReadLine();
 
@@ -49,11 +43,6 @@ namespace ItemList
                         Console.Clear();
                         data.AddItem();
                         break;
-
-                    //case "s":
-                    //    Console.Clear();
-                    //    display.DisplayAllItems(data);
-                    //    break;
 
                     case "e":
                         Console.Clear();
@@ -79,16 +68,11 @@ namespace ItemList
                     //    Console.Clear();
                     //    Test();
                         
-                        break;
+                      //  break;
 
                     //case "fi":
                     //    Console.Clear();
                     //    display.EntriesSetFinished(data);
-                    //    break;
-
-                    //case "so":
-                    //    Console.Clear();
-                    //    display.shortDict(data, "isfinished");
                     //    break;
 
                     default:
@@ -98,15 +82,6 @@ namespace ItemList
                         break;
                 }
             }
-
-        }
-
-        public static void Exit(Data data)
-        {
-            data.SaveList(data.path);
-            data.SaveId(data.pathId, data.currentid);
-            Environment.Exit(1);
-
         }
 
         public static void ListContainsEntries(Data data)
@@ -145,11 +120,11 @@ namespace ItemList
             }
         }
 
-        public static void CreateFolder(string foldername)
+        public static void Exit(Data data)
         {
-            DirectoryInfo di = new DirectoryInfo(foldername);
-            di.Create();
+            data.SaveList(data.path);
+            data.SaveId(data.pathId, data.currentid);
+            Environment.Exit(1);
         }
     }
-
 }

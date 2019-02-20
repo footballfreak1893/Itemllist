@@ -45,9 +45,6 @@ namespace ItemList.Classes
             }
             int id = CheckingNumbers.CheckingValuesINT(inputid);
 
-
-            //int id = Convert.ToInt16(inputid);
-
             while (!data.dict.ContainsKey(id))
             {
                 Console.WriteLine("ID does not exist, try again");
