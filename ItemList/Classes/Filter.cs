@@ -36,13 +36,6 @@ namespace ItemList.Classes
             shortDict(data, inputvalue);
         }
 
-        public Dictionary<int, Item> EntriesSetFinished(Data data)
-        {
-            data.dict = data.dict.Where(x => (x.Value.isfinished == true)).ToDictionary(x => x.Key, i => i.Value);
-            return data.dict;
-        }
-
-        //Hier weiter
         public void shortDict(Data data, string sortattribute)
         {
             bool endate = false;
@@ -56,55 +49,55 @@ namespace ItemList.Classes
                 endate = true;
                 if (sortattribute == "e")
                 {
-                    data.dict = ShortEnddate(data, 'x');
+                    data.dict = SortEnddate(data, 'x');
                 }
 
                 else if (array[1] == '<')
                 {
-                    data.dict = ShortEnddate(data, '<');
+                    data.dict = SortEnddate(data, '<');
                 }
                 else if (array[1] == '>')
                 {
-                    data.dict = ShortEnddate(data, '>');
+                    data.dict = SortEnddate(data, '>');
                 }
                 else if (array[1] == '=')
                 {
-                    data.dict = ShortEnddate(data, '=');
+                    data.dict = SortEnddate(data, '=');
                 }
-
-                // Ungültiger Case hinzufügen
-               
             }
 
-            // Ungültiger Case hinzufügen
-            if (array[0] == 'f')
+            else if (array[0] == 'f')
             {
                 isfinished = true;
                 data.dict = EntriesSetFinished(data);
             }
 
-            if (array[0] == 'p')
+            else if (array[0] == 'p')
             {
                 priority = true;
 
                 if (sortattribute == "p")
                 {
-                    data.dict = ShortPriority(data, 'x');
+                    data.dict = SortPriority(data, 'x');
+                    DictContainsValues(data, data.dict);
                 }
 
                 else if (array[1] == 'a')
                 {
-                    data.dict = ShortPriority(data, 'a');
+                    data.dict = SortPriority(data, 'a');
+                    DictContainsValues(data, data.dict);
+
                 }
                 else if (array[1] == 'b')
                 {
-                    data.dict = ShortPriority(data, 'b');
+                    data.dict = SortPriority(data, 'b');
+                    DictContainsValues(data, data.dict);
                 }
                 else if (array[1] == 'c')
                 {
-                    data.dict = ShortPriority(data, 'c');
+                    data.dict = SortPriority(data, 'c');
+                    DictContainsValues(data, data.dict);
                 }
-              
             }
 
             //ShowDetails(data, false, data.dict);
@@ -134,28 +127,37 @@ namespace ItemList.Classes
 
         }
 
-        public Dictionary<int, Item> ShortEnddate(Data data, char sorter)
+        public Dictionary<int, Item> EntriesSetFinished(Data data)
+        {
+            data.dict = data.dict.Where(x => (x.Value.isfinished == true)).ToDictionary(x => x.Key, i => i.Value);
+            return data.dict;
+        }
+
+        public Dictionary<int, Item> SortEnddate(Data data, char sorter)
         {
             if (sorter == '>')
             {
                 data.dict = data.dict.Where(x => (x.Value.enddate.Date > DateTime.Now.Date)).ToDictionary(x => x.Key, i => i.Value);
+                DictContainsValues(data, data.dict);
             }
 
             if (sorter == '<')
             {
                 data.dict = data.dict.Where(x => (x.Value.enddate.Date < DateTime.Now.Date)).ToDictionary(x => x.Key, i => i.Value);
+                DictContainsValues(data, data.dict);
             }
 
             if (sorter == '=')
             {
                 data.dict = data.dict.Where(x => (x.Value.enddate.Date == DateTime.Now.Date)).ToDictionary(x => x.Key, i => i.Value);
+                DictContainsValues(data, data.dict);
             }
             data.dict = data.dict.OrderBy(x => (x.Value.enddate.Date)).ToDictionary(x => x.Key, i => i.Value);
+
             return data.dict;
         }
 
-        
-        public Dictionary<int, Item> ShortPriority(Data data, char sorter)
+        public Dictionary<int, Item> SortPriority(Data data, char sorter)
         {
             if (sorter == 'a')
             {
@@ -175,6 +177,14 @@ namespace ItemList.Classes
             data.dict = data.dict.Where(x => (x.Value.priority == 'a' || x.Value.priority == 'b' || x.Value.priority == 'c')).ToDictionary(x => x.Key, i => i.Value);
             data.dict = data.dict.OrderBy(x => (x.Value.priority)).ToDictionary(x => x.Key, i => i.Value);
             return data.dict;
+        }
+
+        public void DictContainsValues(Data data, Dictionary<int, Item> dict)
+        {
+            if (data.dict.Count == 0)
+            {
+                Console.WriteLine("No values avaible");
+            }
         }
     }
 }
