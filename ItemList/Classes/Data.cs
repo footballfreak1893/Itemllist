@@ -11,8 +11,9 @@ namespace ItemList
     public class Data
     {
         // General class variables
-        public string path = "data.txt";
-        public string pathId = "idfile.txt";
+        public string folder = @"Data";
+        public string path = @"Data\list.txt";
+        public string pathId = @"Data\idfile.txt";
         public string currentidStr = "1";
         public int currentid = 1;
 
@@ -23,6 +24,19 @@ namespace ItemList
 
         }
         public Dictionary<int, Item> dict = new Dictionary<int, Item>();
+
+        public void FolderExists()
+        {
+            if (Directory.Exists(folder))
+            {
+                FileExists();
+            }
+            else
+            {
+                DefaultFunctions.CreateFolder(folder);
+                FileExists();
+            }
+        }
 
         public void FileExists()
         {

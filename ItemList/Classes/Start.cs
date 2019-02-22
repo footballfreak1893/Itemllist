@@ -18,7 +18,7 @@ namespace ItemList
         public static void StartProgramm(Data data)
         {
             string path = "data";
-            data.FileExists();
+            data.FolderExists();
             string version = "v 1.0";
             Display display = new Display();
             Filter filter = new Filter();

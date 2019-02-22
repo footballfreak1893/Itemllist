@@ -80,6 +80,7 @@ namespace ItemList
         {
             DirectoryInfo di = new DirectoryInfo(foldername);
             di.Create();
+            Console.WriteLine("Folder created");
         }
     }
 }
