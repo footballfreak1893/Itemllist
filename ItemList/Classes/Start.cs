@@ -19,7 +19,7 @@ namespace ItemList
         {
             string path = "data";
             data.FolderExists();
-            string version = "v 1.0";
+            string version = "v 2.0";
             Display display = new Display();
             Filter filter = new Filter();
 
