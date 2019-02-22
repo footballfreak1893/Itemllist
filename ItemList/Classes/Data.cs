@@ -170,13 +170,14 @@ namespace ItemList
                 item.title = inputtitle;
             }
 
-            Console.WriteLine("Update description");
+            Console.WriteLine("Update Description");
             var inputdescription = Console.ReadLine();
             if (inputdescription != "")
             {
                 item.description = inputdescription;
             }
 
+            Console.WriteLine("Update Priority");
             char priority = DefaultFunctions.SetPriority();
             if (priority != 'x')
             {
