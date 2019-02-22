@@ -32,6 +32,12 @@ namespace ItemList
 
 
             }
+            else
+            {
+                currentid = 0;
+                SaveId(pathId, currentid);
+            }
+
             if (File.Exists(pathId))
             {
                 currentid = ReadId();
@@ -41,6 +47,7 @@ namespace ItemList
             {
                 currentid = 0;
                 SaveId(pathId, currentid);
+                ClearList();
             }
 
         }
