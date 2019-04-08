@@ -19,10 +19,11 @@ namespace ItemList
         {
             string path = "data";
             //Defaullist
-            data.FolderExists(data.folderDefault, data.pathDefault, data.pathIdDefault);
+            data.FolderExists(data.folderDefault, data.pathDefault, data.pathIdDefault, "dict");
             string version = "v 2.0";
             Display display = new Display();
             Filter filter = new Filter();
+            Sublist sublist = new Sublist();
 
             while (true)
             {
@@ -33,7 +34,8 @@ namespace ItemList
                 Console.WriteLine("Show Deatils [x]");
                 Console.WriteLine("Reset List [r]");
                 Console.WriteLine("Filter [f]");
-               // Console.WriteLine("Test [t]");
+                Console.WriteLine("Test [t]");
+                Console.WriteLine("Count [o]");
                 //Console.WriteLine("Finished entries [fi]");
 
                 string userinput = Console.ReadLine();
@@ -42,7 +44,7 @@ namespace ItemList
                 {
                     case "n":
                         Console.Clear();
-                        data.AddItem();
+                        data.AddItem(data.dict, data.currentidDefault, data.pathIdDefault, data.pathDefault );
                         break;
 
                     case "e":
@@ -65,11 +67,17 @@ namespace ItemList
                         filter.FilterMenu(data);
                         break;
 
-                    //case "t":
-                    //    Console.Clear();
-                    //    Test();
-                        
-                      //  break;
+                    case "t":
+                        Console.Clear();
+                        sublist.SubMenu();
+                        break;
+
+                    case "o":
+                        Console.Clear();
+                        data.CountItems();
+
+
+                        break;
 
                     //case "fi":
                     //    Console.Clear();
@@ -105,7 +113,7 @@ namespace ItemList
                 switch (inputvalue)
                 {
                     case "n":
-                        data.AddItem();
+                        //data.AddItem();
                         Console.Clear();
                         break;
 
@@ -124,7 +132,7 @@ namespace ItemList
         public static void Exit(Data data)
         {
             data.SaveList(data.pathDefault, data.dict);
-            data.SaveId(data.pathIdDefault, data.currentidDefault);
+            //data.SaveId(data.pathIdDefault, data.currentidDefault); --> Hier wird Fehler mit ID geworfen 
             Environment.Exit(1);
         }
     }

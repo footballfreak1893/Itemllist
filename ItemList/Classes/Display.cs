@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ItemList.Classes
 {
-    class Display
+     public class Display
     {
         Start start = new Start();
 
@@ -76,13 +76,13 @@ namespace ItemList.Classes
             {
                 case "u":
                     Console.Clear();
-                    data.UpdateItem(id, item);
+                    data.UpdateItem(id, item, data.dict);
                     Console.Clear();
                     break;
 
                 case "d":
                     Console.Clear();
-                    data.DeleteItem(id, item);
+                    data.DeleteItem(id, item, data.dict);
                     break;
 
                 case "f":
