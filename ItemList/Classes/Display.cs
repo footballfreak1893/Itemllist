@@ -28,12 +28,12 @@ namespace ItemList.Classes
             }
         }
 
-        public void ShowDetails(Data data, bool deactivateDisplayAllItem, Dictionary<int, Item> dict)
+        public void ShowDetails(Data data, Dictionary<int, Item> list)
         {
-            if (deactivateDisplayAllItem == false)
-            {
-                DisplayAllItems(data);
-            }
+            //Foreach aller elemente
+            DisplayAllItems(data);
+
+            Start.ListContainsEntries(data);
 
             Console.WriteLine("Enter ID to display details [number]");
             string inputid;
@@ -45,7 +45,7 @@ namespace ItemList.Classes
             }
             int id = CheckingNumbers.CheckingValuesINT(inputid);
 
-            while (!data.dict.ContainsKey(id))
+            while (!list.ContainsKey(id))
             {
                 Console.WriteLine("ID does not exist, try again");
                 DisplayAllItems(data);
@@ -56,7 +56,7 @@ namespace ItemList.Classes
                 Console.Clear();
             }
 
-            Item item = data.dict[id];
+            Item item = list[id];
             Console.Clear();
             Console.WriteLine("ID: " + item.id);
             Console.WriteLine("Title: " + item.title);
@@ -89,7 +89,7 @@ namespace ItemList.Classes
                     Console.Clear();
                     item.isfinished = true;
                     Console.WriteLine("Set is finsihed"); //--> Evtl eigene Methode
-                    data.SaveList(data.path);
+                    data.SaveList(data.pathDefault, list);
                     break;
 
                 case "e":

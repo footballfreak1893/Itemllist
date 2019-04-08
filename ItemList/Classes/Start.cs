@@ -18,7 +18,8 @@ namespace ItemList
         public static void StartProgramm(Data data)
         {
             string path = "data";
-            data.FolderExists();
+            //Defaullist
+            data.FolderExists(data.folderDefault, data.pathDefault, data.pathIdDefault);
             string version = "v 2.0";
             Display display = new Display();
             Filter filter = new Filter();
@@ -51,7 +52,7 @@ namespace ItemList
 
                     case "x":
                         Console.Clear();
-                        display.ShowDetails(data, false, data.dict);
+                        display.ShowDetails(data, data.dict);
                         break;
 
                     case "r":
@@ -122,8 +123,8 @@ namespace ItemList
 
         public static void Exit(Data data)
         {
-            data.SaveList(data.path);
-            data.SaveId(data.pathId, data.currentid);
+            data.SaveList(data.pathDefault, data.dict);
+            data.SaveId(data.pathIdDefault, data.currentidDefault);
             Environment.Exit(1);
         }
     }

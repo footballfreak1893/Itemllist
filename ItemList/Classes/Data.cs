@@ -11,11 +11,17 @@ namespace ItemList
     public class Data
     {
         // General class variables
-        public string folder = @"Data";
-        public string path = @"Data\list.txt";
-        public string pathId = @"Data\idfile.txt";
-        public string currentidStr = "1";
-        public int currentid = 1;
+        public string folderDefault = @"Data";
+        public string pathDefault = @"Data\list.txt";
+        public string pathIdDefault = @"Data\idfile.txt";
+        public string StartIdDefault = "1";
+        public int currentidDefault = 1;
+
+        public string folderSub = @"Data\Sub";
+        public string pathSub = @"Data\Sub\list.txt";
+        public string pathIdSub = @"Data\Sub\idfile.txt";
+        public string StartIdSub = "1";
+        public int currentidDefaultSub = 1;
 
         CheckingNumbers checkingNumbers = new CheckingNumbers();
        
@@ -25,91 +31,90 @@ namespace ItemList
         }
         public Dictionary<int, Item> dict = new Dictionary<int, Item>();
 
-        public void FolderExists()
+        public void FolderExists(string foldername, string filePath, string filePathId)
         {
-            if (Directory.Exists(folder))
+            if (Directory.Exists(foldername))
             {
-                FileExists();
+                FileExists(filePath, filePathId);
             }
             else
             {
-                DefaultFunctions.CreateFolder(folder);
-                FileExists();
+                DefaultFunctions.CreateFolder(foldername);
+                FileExists(pathDefault, filePathId);
             }
         }
 
-        public void FileExists()
+        public void FileExists(string filePath, string filePathId)
         {
-            if (File.Exists(path))
+            if (File.Exists(pathDefault))
             {
-                dict = LoadList(path);
-
-
-            }
-            else
-            {
-                currentid = 0;
-                SaveId(pathId, currentid);
-            }
-
-            if (File.Exists(pathId))
-            {
-                currentid = ReadId();
+                dict = LoadList(filePath, dict);
             }
 
             else
             {
-                currentid = 0;
-                SaveId(pathId, currentid);
+                currentidDefault = 0;
+                SaveId(filePathId, currentidDefault);
+            }
+
+            if (File.Exists(pathIdDefault))
+            {
+                currentidDefault = ReadId(pathIdDefault);
+            }
+
+            else
+            {
+                currentidDefault = 0;
+                SaveId(pathIdDefault, currentidDefault);
                 ClearList();
             }
 
         }
 
-        public void SaveList(string path)
+        public void SaveList(string path, Dictionary <int, Item> list)
         {
             System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Create, System.IO.FileAccess.Write);
             IFormatter bf = new BinaryFormatter();
 
-            bf.Serialize(fs, dict);
+            bf.Serialize(fs, list);
 
             fs.Close();
         }
 
-        public Dictionary<int, Item> LoadList(string path)
+        public Dictionary<int, Item> LoadList(string path, Dictionary<int, Item> list)
         {
             System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
             IFormatter bf = new BinaryFormatter();
-            dict = (Dictionary<int, Item>)bf.Deserialize(fs);
+            list = (Dictionary<int, Item>)bf.Deserialize(fs);
             fs.Close();
 
-            return dict;
+            return list;
         }
 
-        public int ReadId()
+        public int ReadId(string fileIdPath)
         {
-            currentidStr = File.ReadAllText(pathId);
-            int currentid = Convert.ToInt32(currentidStr);
+            StartIdDefault = File.ReadAllText(fileIdPath);
+            int currentid = Convert.ToInt32(StartIdDefault);
             return currentid;
         }
 
-        public void SaveId(string pathId, int currentid)
+        public void SaveId(string fileIdPath, int currentid)
         {
-            currentidStr = Convert.ToString(currentid);
-            File.WriteAllText(pathId, currentidStr);
+            StartIdDefault = Convert.ToString(currentid);
+            File.WriteAllText(fileIdPath, StartIdDefault);
         }
 
-        public int CountId(int currentid)
+        public int CountId(int idToCount)
         {
-            currentid = currentid + 1;
-            return currentid;
+            idToCount = idToCount + 1;
+            return idToCount;
         }
 
         public void AddItem()
         {
-            currentid = ReadId();
-            currentid = CountId(currentid);
-            SaveId(pathId, currentid);
+            currentidDefault = ReadId(pathIdDefault);
+            currentidDefault = CountId(currentidDefault);
+            SaveId(pathIdDefault, currentidDefault);
 
             Console.WriteLine("Add Entry");
             Console.WriteLine("Enter Title:");
@@ -126,7 +131,7 @@ namespace ItemList
 
             Console.WriteLine();
 
-            Item item = new Item(userTitle, currentid);
+            Item item = new Item(userTitle, currentidDefault);
 
             char priority = DefaultFunctions.SetPriority();
             if (priority != 'x')
@@ -154,8 +159,8 @@ namespace ItemList
 
             if (inputuser == "n")
             {
-                currentid--;
-                SaveId(pathId, currentid);
+                currentidDefault--;
+                SaveId(pathIdDefault, currentidDefault);
                 Console.Clear();
                 return;
             }
@@ -163,14 +168,14 @@ namespace ItemList
             {
                 Console.Clear();
                 dict.Add(item.id, item);
-                SaveList(path);
+                SaveList(pathDefault, dict);
             }
         }
 
         public void DeleteItem(int id, Item item)
         {
             dict.Remove(id);
-            SaveList(path);
+            SaveList(pathDefault, dict);
         }
 
         public void UpdateItem(int index, Item item)
@@ -200,7 +205,7 @@ namespace ItemList
 
             Console.WriteLine();
 
-            SaveList(path);
+            SaveList(pathDefault, dict);
             //Console.WriteLine("entry: " + item.id + ".)");
         }
 
@@ -214,9 +219,9 @@ namespace ItemList
         public void ClearList()
         {
             dict.Clear();
-            currentid = 0;
-            SaveId(pathId, currentid);
-            SaveList(path);
+            currentidDefault = 0;
+            SaveId(pathIdDefault, currentidDefault);
+            SaveList(pathDefault, dict);
             Console.WriteLine("List has been reseted");
         }
     }
