@@ -86,16 +86,16 @@ namespace ItemList
 
                     default:
                         Console.Clear();
-                        display.DisplayAllItems(data);
+                        display.DisplayAllItems(data, data.dict);
                         Console.Clear();
                         break;
                 }
             }
         }
 
-        public static void ListContainsEntries(Data data)
+        public static void ListContainsEntries(Data data, Dictionary <int, Item> list)
         {
-            var counterentries = data.dict.Count;
+            var counterentries = list.Count;
 
             if (counterentries != 0)
             {
@@ -132,6 +132,13 @@ namespace ItemList
         public static void Exit(Data data)
         {
             data.SaveList(data.pathDefault, data.dict);
+            //data.SaveId(data.pathIdDefault, data.currentidDefault); --> Hier wird Fehler mit ID geworfen 
+            Environment.Exit(1);
+        }
+
+        public static void ExitSub(Data data)
+        {
+            data.SaveList(data.pathSub, data.sub);
             //data.SaveId(data.pathIdDefault, data.currentidDefault); --> Hier wird Fehler mit ID geworfen 
             Environment.Exit(1);
         }

@@ -41,7 +41,8 @@ namespace ItemList.Classes
 
                     case "e":
                         Console.Clear();
-                        Start.Exit(data);
+                        //Start.Exit(data);
+                        Start.ExitSub(data);
                         break;
 
                     case "x":
@@ -72,7 +73,7 @@ namespace ItemList.Classes
 
                     default:
                         Console.Clear();
-                        display.DisplayAllItems(data);
+                        display.DisplayAllItems(data, data.sub);
                         Console.Clear();
                         break;
                 }

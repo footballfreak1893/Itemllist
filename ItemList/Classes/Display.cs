@@ -10,11 +10,11 @@ namespace ItemList.Classes
     {
         Start start = new Start();
 
-        public void DisplayAllItems(Data data)
+        public void DisplayAllItems(Data data, Dictionary<int, Item> list)
         {
-            Start.ListContainsEntries(data);
+            Start.ListContainsEntries(data, list);
 
-            foreach (KeyValuePair<int, Item> entries in data.dict)
+            foreach (KeyValuePair<int, Item> entries in list)
             {
                 if (entries.Value.isfinished == true)
                 {
@@ -31,9 +31,9 @@ namespace ItemList.Classes
         public void ShowDetails(Data data, Dictionary<int, Item> list)
         {
             //Foreach aller elemente
-            DisplayAllItems(data);
+            DisplayAllItems(data, list);
 
-            Start.ListContainsEntries(data);
+            Start.ListContainsEntries(data, list);
 
             Console.WriteLine("Enter ID to display details [number]");
             string inputid;
@@ -48,7 +48,7 @@ namespace ItemList.Classes
             while (!list.ContainsKey(id))
             {
                 Console.WriteLine("ID does not exist, try again");
-                DisplayAllItems(data);
+                DisplayAllItems(data, list);
 
                 Console.WriteLine("Enter ID to display details [number]");
                 inputid = Console.ReadLine();
