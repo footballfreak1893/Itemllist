@@ -40,12 +40,15 @@ namespace ItemList
 
             if (Directory.Exists(foldername))
             {
-                FileExists(filePath, filePathId, listtype);
+                //FileExists(filePath, filePathId, listtype);
+
+                FileExistsDefault();
             }
             else
             {
                 DefaultFunctions.CreateFolder(foldername);
-                FileExists(pathDefault, filePathId, listtype);
+                //FileExists(pathDefault, filePathId, listtype);
+                FileExistsDefault();
             }
         }
 
@@ -87,6 +90,32 @@ namespace ItemList
 
         }
 
+        public void FileExistsDefault()
+        {
+            //Zuerst überprüfen, ob ID existiert
+            if (File.Exists(pathIdDefault))
+            {
+                  currentidDefault = ReadId(pathIdDefault);
+                if (File.Exists(pathDefault))
+                {
+                   dict = LoadList(pathDefault, dict);
+                }
+                else
+                {
+                    Console.WriteLine("List File can't be found");
+                }
+            }
+            else
+            {
+                Console.WriteLine("ID File can't be found");
+                currentidDefault = 0;
+                SaveId(pathIdDefault, currentidDefault);
+                Console.WriteLine("ID File was created");
+
+            }
+
+        }
+
         public void IDFileExists(string pathId)
         {
             if (!File.Exists(pathId))
@@ -118,7 +147,7 @@ namespace ItemList
         public int ReadId(string fileIdPath)
         {
             //Anwendung Sub
-            StartIdSub = File.ReadAllText(fileIdPath);
+            StartIdDefault = File.ReadAllText(fileIdPath);
             int currentid = Convert.ToInt32(StartIdDefault);
             return currentid;
         }
@@ -154,7 +183,8 @@ namespace ItemList
         public void AddItem(Dictionary<int, Item> list, int currentId, string fileIdPath, string filePath)
         {
             //Aktuell Sub
-           currentId = proccessingID(currentidDefaultSub, pathIdSub);
+            currentId = proccessingID(currentidDefaultSub, pathIdDefault);
+            //currentidDefault = ReadId(pathDefault);
 
             Console.WriteLine("Add Entry");
             Console.WriteLine("Enter Title:");
