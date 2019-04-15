@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ItemList.Classes
 {
     class Sublist
     {
+        Data data = new Data();
+        string listcollectionPath = @"ListCollection\collection.txt";
+        //Erweietrungen
         public void SubMenu()
         {
             string version = "v 2.0";
@@ -16,10 +22,13 @@ namespace ItemList.Classes
             Data data = new Data();
             data.CheckListtype("s");
             data.FolderExists();
+            
 
             while (true)
             {
                 Console.WriteLine("Sublist Menu:");
+                Console.WriteLine();
+                Console.WriteLine("Sublist");
                 Console.WriteLine();
                 Console.WriteLine("New Entry [n]");
                 Console.WriteLine("Exit Programm [e]");
@@ -71,7 +80,51 @@ namespace ItemList.Classes
                         Console.Clear();
                         return;
                 }
+
             }
+        }
+
+        public void SubOverview()
+        {
+            Console.WriteLine("Avaible lists");
+            Console.WriteLine();
+            Console.WriteLine("Coose a list");
+            Console.WriteLine("New sublist");
+
+          
+            List<string> listCollection = new List<string>();
+            listCollection.Add("Sub1");
+            listCollection.Add("Sub2");
+            listCollection.Add("Sub3");
+
+            // File.WriteAllLines(listcollectionPath, listCollection);
+            foreach (var item in listCollection)
+            {
+                Console.WriteLine(item + "  [ "+item[0]+item[3]+"]");
+            }
+            var userinput = Console.ReadLine();
+
+            //switch (userinput)
+            //{
+            //    case "s1":
+            //        //
+            //        break;
+
+            //    case "s2":
+            //        //
+            //        break;
+
+            //    case "s3":
+            //        //
+            //        break;
+
+            //    default:
+            //        break;
+            //}
+
+            data.CheckListtype(userinput);
+            data.FolderExists();
+
         }
     }
 }

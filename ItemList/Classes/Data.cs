@@ -10,7 +10,7 @@ namespace ItemList
 {
     public class Data
     {
-        // General class variables
+        // Default Parameters
         public string folder = @"Data";
         public string path = @"Data\list.txt";
         public string pathId = @"Data\idfile.txt";
@@ -24,7 +24,9 @@ namespace ItemList
 
         }
         public Dictionary<int, Item> dict = new Dictionary<int, Item>();
-        public Dictionary<int, Item> sub = new Dictionary<int, Item>();
+        public Dictionary<int, Item> sub1 = new Dictionary<int, Item>();
+        public Dictionary<int, Item> sub2 = new Dictionary<int, Item>();
+        public Dictionary<int, Item> sub3 = new Dictionary<int, Item>();
 
         public void FolderExists()
         {
@@ -233,14 +235,37 @@ namespace ItemList
                     currentid = 1;
                     break;
 
-                case "s":
+                case "s1":
                     folder = @"Data\Sub";
-                    path = @"Data\Sub\sub.txt";
-                    pathId = @"Data\Sub\subIdFile.txt";
+                    path = @"Data\Sub\sub1.txt";
+                    pathId = @"Data\Sub\sub1IdFile.txt";
                     currentidStr = "1";
                     currentid = 1;
-                    dict = sub;
+                    dict = sub1;
                     break;
+
+                case "s2":
+                    folder = @"Data\Sub";
+                    path = @"Data\Sub\sub2.txt";
+                    pathId = @"Data\Sub\subId2File.txt";
+                    currentidStr = "1";
+                    currentid = 1;
+                    dict = sub2;
+                    break;
+
+                case "s3":
+                    folder = @"Data\Sub";
+                    path = @"Data\Sub\sub3.txt";
+                    pathId = @"Data\Sub\subId3File.txt";
+                    currentidStr = "1";
+                    currentid = 1;
+                    dict = sub3;
+                    break;
+
+                    //Benutzerdefinierte List:
+                    //Phats aus name der list zusammensetzten
+                    //
+                    //
             }
         }
     }

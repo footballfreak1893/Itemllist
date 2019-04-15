@@ -33,6 +33,8 @@ namespace ItemList
             {
                 Console.WriteLine("Checkliste ("+version+")");
                 Console.WriteLine();
+                Console.WriteLine("Defaultlist");
+                Console.WriteLine();
                 Console.WriteLine("New Entry [n]");
                 Console.WriteLine("Exit Programm [e]");
                 Console.WriteLine("Show Deatils [x]");
@@ -73,6 +75,7 @@ namespace ItemList
 
                     case "s":
                         Console.Clear();
+                        sublist.SubOverview();
                         sublist.SubMenu();
                        
 
