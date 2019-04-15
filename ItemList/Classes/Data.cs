@@ -18,12 +18,13 @@ namespace ItemList
         public int currentid = 1;
 
         CheckingNumbers checkingNumbers = new CheckingNumbers();
-       
+
         public Data()
         {
 
         }
         public Dictionary<int, Item> dict = new Dictionary<int, Item>();
+        public Dictionary<int, Item> sub = new Dictionary<int, Item>();
 
         public void FolderExists()
         {
@@ -210,7 +211,7 @@ namespace ItemList
             Console.WriteLine("Number of items " + itemscount);
             return itemscount;
         }
-        
+
         public void ClearList()
         {
             dict.Clear();
@@ -218,6 +219,29 @@ namespace ItemList
             SaveId(pathId, currentid);
             SaveList(path);
             Console.WriteLine("List has been reseted");
+        }
+
+        public void CheckListtype(string listtype)
+        {
+            switch (listtype)
+            {
+                case "d":
+                    folder = @"Data\Default";
+                    path = @"Data\Default\default.txt";
+                    pathId = @"Data\Default\defaultIdFile.txt";
+                    currentidStr = "1";
+                    currentid = 1;
+                    break;
+
+                case "s":
+                    folder = @"Data\Sub";
+                    path = @"Data\Sub\sub.txt";
+                    pathId = @"Data\Sub\subIdFile.txt";
+                    currentidStr = "1";
+                    currentid = 1;
+                    dict = sub;
+                    break;
+            }
         }
     }
 }

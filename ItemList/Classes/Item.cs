@@ -28,6 +28,7 @@ namespace ItemList
         public char priority { get; set; }
         public DateTime createdate { get; set; }
         public DateTime enddate { get; set; }
+        public char listtype { get; set; }
 
 
 
@@ -41,6 +42,10 @@ namespace ItemList
         {
 
         }
+
     }
+  
+
+   
 }
 

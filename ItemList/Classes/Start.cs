@@ -5,6 +5,7 @@ using System.IO;
 
 namespace ItemList
 {
+
     public class Start
     {
         static void Main(string[] args)
@@ -18,7 +19,12 @@ namespace ItemList
         public static void StartProgramm(Data data)
         {
             string path = "data";
+            data.CheckListtype("d");
             data.FolderExists();
+            Sublist sublist = new Sublist();
+            
+            
+
             string version = "v 2.0";
             Display display = new Display();
             Filter filter = new Filter();
@@ -32,7 +38,8 @@ namespace ItemList
                 Console.WriteLine("Show Deatils [x]");
                 Console.WriteLine("Reset List [r]");
                 Console.WriteLine("Filter [f]");
-               // Console.WriteLine("Test [t]");
+                Console.WriteLine("Test [t]");
+                Console.WriteLine("Sublist [s]");
                 //Console.WriteLine("Finished entries [fi]");
 
                 string userinput = Console.ReadLine();
@@ -64,11 +71,12 @@ namespace ItemList
                         filter.FilterMenu(data);
                         break;
 
-                    //case "t":
-                    //    Console.Clear();
-                    //    Test();
-                        
-                      //  break;
+                    case "s":
+                        Console.Clear();
+                        sublist.SubMenu();
+                       
+
+                        break;
 
                     //case "fi":
                     //    Console.Clear();
