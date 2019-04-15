@@ -19,7 +19,7 @@ namespace ItemList
         {
             string path = "data";
             //Defaullist
-            data.FolderExists(data.folderDefault, data.pathDefault, data.pathIdDefault, "dict");
+             data.dict = data.FolderExists(data.folderDefault, data.pathDefault, data.pathIdDefault, data.currentidDefault, data.StartIdDefault, data.dict);
             string version = "v 2.0";
             Display display = new Display();
             Filter filter = new Filter();

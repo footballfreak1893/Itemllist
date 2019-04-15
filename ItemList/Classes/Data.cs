@@ -35,94 +35,93 @@ namespace ItemList
 
 
         //!!!! Vorerst: Eiegne File Exits Methode für Sub
-        public void FolderExists(string foldername, string filePath, string filePathId, string listtype)
+        public Dictionary<int, Item> FolderExists(string foldername, string filePath, string filePathId, int currentId, string startid, Dictionary<int, Item> list)
         {
 
             if (Directory.Exists(foldername))
             {
                 //FileExists(filePath, filePathId, listtype);
 
-                FileExistsDefault();
+                list = FileExists(filePath, filePathId, currentId, startid, list);
             }
             else
             {
                 DefaultFunctions.CreateFolder(foldername);
                 //FileExists(pathDefault, filePathId, listtype);
-                FileExistsDefault();
+                list = FileExists(filePath, filePathId, currentId, startid, list);
             }
+            return list;
         }
 
-        //!!!! Vorerst: Eiegne File Exits Methode für Sub
-        public void FileExists(string filePath, string filePathId, string listtype)
-        {
-            if (File.Exists(filePath))
-            {
-                if (listtype == "sub")
-                {
-                    sub = LoadList(filePath, sub);
-                    SaveId(pathIdSub, currentidDefaultSub);
-                }
-                else
-                {
-                    dict = LoadList(filePath, dict);
-                }
-               //Überprüfen, das Sub ID File erstellt wird, siehe Branch v2
+        ////!!!! Vorerst: Eiegne File Exits Methode für Sub
+        //public void FileExists(string filePath, string filePathId, string listtype)
+        //{
+        //    if (File.Exists(filePath))
+        //    {
+        //        if (listtype == "sub")
+        //        {
+        //            sub = LoadList(filePath, sub);
+        //            SaveId(pathIdSub, currentidDefaultSub);
+        //        }
+        //        else
+        //        {
+        //            dict = LoadList(filePath, dict);
+        //        }
+        //       //Überprüfen, das Sub ID File erstellt wird, siehe Branch v2
                
-            }
+        //    }
 
-            else
-            {
-                currentidDefault = 0;
-                SaveId(filePathId, currentidDefault);
-            }
+        //    else
+        //    {
+        //        currentidDefault = 0;
+        //        SaveId(filePathId, currentidDefault);
+        //    }
 
-            if (File.Exists(pathIdDefault))
-            {
-                currentidDefault = ReadId(pathIdDefault);
-            }
+        //    if (File.Exists(pathIdDefault))
+        //    {
+        //        currentidDefault = ReadId(pathIdDefault, StartIdDefault);
+        //    }
 
-            else
-            {
-                currentidDefault = 0;
-                SaveId(pathIdDefault, currentidDefault);
-                ClearList();
-            }
+        //    else
+        //    {
+        //        currentidDefault = 0;
+        //        SaveId(pathIdDefault, currentidDefault);
+        //        ClearList();
+        //    }
 
-        }
+        //}
 
-        public void FileExistsDefault()
+        public Dictionary<int, Item> FileExists(string filePath, string fileIdPath, int currentId, string startId, Dictionary<int, Item> list)
         {
             //Zuerst überprüfen, ob ID existiert
-            if (File.Exists(pathIdDefault))
+            if (File.Exists(fileIdPath))
             {
-                  currentidDefault = ReadId(pathIdDefault);
-                if (File.Exists(pathDefault))
+                  currentId = ReadId(fileIdPath, startId);
+                SaveId(fileIdPath, currentId);
+                Console.WriteLine("ID File saved");
+
+                if (File.Exists(filePath))
                 {
-                   dict = LoadList(pathDefault, dict);
+                   list = LoadList(filePath, list);
                 }
                 else
                 {
                     Console.WriteLine("List File can't be found");
                 }
+                
             }
             else
             {
                 Console.WriteLine("ID File can't be found");
-                currentidDefault = 0;
-                SaveId(pathIdDefault, currentidDefault);
+                currentId = 0;
+                SaveId(fileIdPath, currentId);
                 Console.WriteLine("ID File was created");
 
             }
+            return list;
 
         }
 
-        public void IDFileExists(string pathId)
-        {
-            if (!File.Exists(pathId))
-            {
-                //ID File erstellen
-            }
-        }
 
         public void SaveList(string path, Dictionary <int, Item> list)
         {
@@ -144,11 +143,11 @@ namespace ItemList
             return list;
         }
 
-        public int ReadId(string fileIdPath)
+        //Funktion passt
+        public int ReadId(string fileIdPath, string textId)
         {
-            //Anwendung Sub
-            StartIdDefault = File.ReadAllText(fileIdPath);
-            int currentid = Convert.ToInt32(StartIdDefault);
+            textId = File.ReadAllText(fileIdPath);
+            int currentid = Convert.ToInt32(textId);
             return currentid;
         }
 
@@ -164,12 +163,13 @@ namespace ItemList
             return idToCount;
         }
 
-        public int proccessingID(int currentId, string fileIdPath)
+        public int proccessingID(int currentId, string fileIdPath, string textId)
         {
             //Liest aktuelle ID aus und erhöht um 1
-            currentId = ReadId(fileIdPath);
+            currentId = ReadId(fileIdPath, textId);
             currentId = CountId(currentId);
             SaveId(fileIdPath, currentId);
+              currentId = ReadId(fileIdPath, textId);
             return currentId;
         }
 
@@ -182,8 +182,8 @@ namespace ItemList
         }
         public void AddItem(Dictionary<int, Item> list, int currentId, string fileIdPath, string filePath)
         {
-            //Aktuell Sub
-            currentId = proccessingID(currentidDefaultSub, pathIdDefault);
+            
+            currentId = proccessingID(currentId, fileIdPath, fileIdPath);
             //currentidDefault = ReadId(pathDefault);
 
             Console.WriteLine("Add Entry");

@@ -16,7 +16,7 @@ namespace ItemList.Classes
             Display display = new Display();
             Filter filter = new Filter();
             Data data = new Data();
-            data.FolderExists(data.folderSub, data.pathSub, data.pathIdSub, "sub");
+             data. sub = data.FolderExists(data.folderSub, data.pathSub, data.pathIdSub, data.currentidDefaultSub, data.StartIdSub, data.sub);
 
             while (true)
             {
