@@ -139,7 +139,6 @@ namespace ItemList
         public static void ExitSub(Data data)
         {
             data.SaveList(data.pathSub, data.sub);
-            //data.SaveId(data.pathIdDefault, data.currentidDefault); --> Hier wird Fehler mit ID geworfen 
             Environment.Exit(1);
         }
     }

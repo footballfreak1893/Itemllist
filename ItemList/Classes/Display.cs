@@ -76,13 +76,13 @@ namespace ItemList.Classes
             {
                 case "u":
                     Console.Clear();
-                    data.UpdateItem(id, item, data.dict);
+                    data.UpdateItem(id, item, list, data.pathDefault);
                     Console.Clear();
                     break;
 
                 case "d":
                     Console.Clear();
-                    data.DeleteItem(id, item, data.dict);
+                    //data.DeleteItem(id, item, data.dict);
                     break;
 
                 case "f":

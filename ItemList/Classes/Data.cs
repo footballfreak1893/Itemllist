@@ -241,13 +241,13 @@ namespace ItemList
             }
         }
 
-        public void DeleteItem(int id, Item item, Dictionary <int,Item> list)
+        public void DeleteItem(int id, Item item, Dictionary <int,Item> list, string filePath)
         {
             list.Remove(id);
-            SaveList(pathDefault, list);
+            SaveList(filePath, list);
         }
 
-        public void UpdateItem(int index, Item item, Dictionary<int, Item> list)
+        public void UpdateItem(int index, Item item, Dictionary<int, Item> list, string pathFile)
         {
             Console.WriteLine("Update entry: ");
             Console.WriteLine();
@@ -274,7 +274,7 @@ namespace ItemList
 
             Console.WriteLine();
 
-            SaveList(pathDefault, list);
+            SaveList(pathFile, list);
             //Console.WriteLine("entry: " + item.id + ".)");
         }
 
