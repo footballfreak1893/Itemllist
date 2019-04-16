@@ -75,6 +75,15 @@ namespace ItemList
             return notDefind;
         }
 
+        public static string RenameList(string listname)
+        {
+            Console.WriteLine("Enter new Name");
+            var newName = Console.ReadLine();
+            listname = newName;
+            Console.WriteLine("New Name " +newName);
+            return newName;
+        }
+
         //Not used
         public static void CreateFolder(string foldername)
         {

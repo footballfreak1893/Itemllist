@@ -39,6 +39,7 @@ namespace ItemList
                 Console.WriteLine("Exit Programm [e]");
                 Console.WriteLine("Show Deatils [x]");
                 Console.WriteLine("Reset List [r]");
+                Console.WriteLine("Rename List [rn]");
                 Console.WriteLine("Filter [f]");
                 Console.WriteLine("Test [t]");
                 Console.WriteLine("Sublist [s]");
@@ -76,7 +77,7 @@ namespace ItemList
                     case "s":
                         Console.Clear();
                         sublist.SubOverview(data);
-                        sublist.SubMenu(data);
+                        
                        
 
                         break;
