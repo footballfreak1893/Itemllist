@@ -11,15 +11,21 @@ namespace ItemList.Classes
 {
     class Sublist
     {
-        Data data = new Data();
+       // Data data = new Data();
+
+        public Sublist(Data data)
+        {
+            
+        }
+
         string listcollectionPath = @"ListCollection\collection.txt";
         //Erweietrungen
-        public void SubMenu()
+        public void SubMenu(Data data)
         {
             string version = "v 2.0";
             Display display = new Display();
             Filter filter = new Filter();
-            Data data = new Data();
+            //Data data = new Data();
             data.CheckListtype("s");
             data.FolderExists();
             
@@ -84,7 +90,7 @@ namespace ItemList.Classes
             }
         }
 
-        public void SubOverview()
+        public void SubOverview(Data data)
         {
             Console.WriteLine("Avaible lists");
             Console.WriteLine();

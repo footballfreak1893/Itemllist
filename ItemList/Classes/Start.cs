@@ -21,7 +21,7 @@ namespace ItemList
             string path = "data";
             data.CheckListtype("d");
             data.FolderExists();
-            Sublist sublist = new Sublist();
+            Sublist sublist = new Sublist(data);
             
             
 
@@ -75,8 +75,8 @@ namespace ItemList
 
                     case "s":
                         Console.Clear();
-                        sublist.SubOverview();
-                        sublist.SubMenu();
+                        sublist.SubOverview(data);
+                        sublist.SubMenu(data);
                        
 
                         break;
