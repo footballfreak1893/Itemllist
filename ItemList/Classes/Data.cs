@@ -24,9 +24,6 @@ namespace ItemList
 
         }
         public Dictionary<int, Item> dict = new Dictionary<int, Item>();
-        public Dictionary<int, Item> sub1 = new Dictionary<int, Item>();
-        public Dictionary<int, Item> sub2 = new Dictionary<int, Item>();
-        public Dictionary<int, Item> sub3 = new Dictionary<int, Item>();
 
         public void FolderExists()
         {
@@ -223,50 +220,60 @@ namespace ItemList
             Console.WriteLine("List has been reseted");
         }
 
-        public void CheckListtype(string listtype)
+        //public void CheckListtype(string listtype)
+        //{
+        //    switch (listtype)
+        //    {
+        //        case "d":
+        //            folder = @"Data\Default";
+        //            path = @"Data\Default\default.txt";
+        //            pathId = @"Data\Default\defaultIdFile.txt";
+        //            currentidStr = "1";
+        //            currentid = 1;
+        //            break;
+
+        //        case "s1":
+        //            folder = @"Data\Sub";
+        //            path = @"Data\Sub\sub1.txt";
+        //            pathId = @"Data\Sub\sub1IdFile.txt";
+        //            currentidStr = "1";
+        //            currentid = 1;
+        //            dict = sub1;
+        //            break;
+
+        //        case "s2":
+        //            folder = @"Data\Sub";
+        //            path = @"Data\Sub\sub2.txt";
+        //            pathId = @"Data\Sub\subId2File.txt";
+        //            currentidStr = "1";
+        //            currentid = 1;
+        //            dict = sub2;
+        //            break;
+
+        //        case "s3":
+        //            folder = @"Data\Sub";
+        //            path = @"Data\Sub\sub3.txt";
+        //            pathId = @"Data\Sub\subId3File.txt";
+        //            currentidStr = "1";
+        //            currentid = 1;
+        //            dict = sub3;
+        //            break;
+
+        //            //Benutzerdefinierte List:
+        //            //Phats aus name der list zusammensetzten
+        //            //
+        //            //
+        //    }
+        //}
+
+        public void CreatePath( string input)
         {
-            switch (listtype)
-            {
-                case "d":
-                    folder = @"Data\Default";
-                    path = @"Data\Default\default.txt";
-                    pathId = @"Data\Default\defaultIdFile.txt";
-                    currentidStr = "1";
-                    currentid = 1;
-                    break;
-
-                case "s1":
-                    folder = @"Data\Sub";
-                    path = @"Data\Sub\sub1.txt";
-                    pathId = @"Data\Sub\sub1IdFile.txt";
-                    currentidStr = "1";
-                    currentid = 1;
-                    dict = sub1;
-                    break;
-
-                case "s2":
-                    folder = @"Data\Sub";
-                    path = @"Data\Sub\sub2.txt";
-                    pathId = @"Data\Sub\subId2File.txt";
-                    currentidStr = "1";
-                    currentid = 1;
-                    dict = sub2;
-                    break;
-
-                case "s3":
-                    folder = @"Data\Sub";
-                    path = @"Data\Sub\sub3.txt";
-                    pathId = @"Data\Sub\subId3File.txt";
-                    currentidStr = "1";
-                    currentid = 1;
-                    dict = sub3;
-                    break;
-
-                    //Benutzerdefinierte List:
-                    //Phats aus name der list zusammensetzten
-                    //
-                    //
-            }
+            folder = Path.Combine("Data\\Sub", input);
+            path = folder + "_Data.txt"; //Wird noch nicht erstellt
+            pathId = folder + "_IdFile.txt";
+            currentidStr = "1";
+            currentid = 1;
+            //--> Bug daten werden außerhalb des Ordners erstellt!!
         }
     }
 }

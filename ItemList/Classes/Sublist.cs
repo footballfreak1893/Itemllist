@@ -17,10 +17,66 @@ namespace ItemList.Classes
 
         public Sublist(Data data)
         {
-            
+
         }
 
-        string listcollectionPath = @"collection.txt";
+        //paths
+        string ListFullNamesPath = @"fullnames.txt";
+        string ListShortNamesPath = @"shortnames.txt";
+
+        public void SubOverview(Data data)
+        {
+            while (true)
+            {
+                listnames = ReadingStringLists(ListFullNamesPath);
+                shortNamesOfList = ReadingStringLists(ListShortNamesPath);
+
+                Console.WriteLine("Sub Overview");
+                Console.WriteLine("Avaible lists");
+                Console.WriteLine();
+                DisplayListnames(listnames);
+                Console.WriteLine();
+                Console.WriteLine("Create new list [n]");
+                Console.WriteLine("Open list [enter short of listname]");
+                Console.WriteLine("Back to main menu [b]");
+                Console.WriteLine();
+
+                var userinput = Console.ReadLine();
+                userinput.ToLower();
+
+                switch (userinput)
+                {
+                    case "n":
+                        Console.Clear();
+                        AddSublist(data, listnames);
+                        break;
+
+                    case "b":
+                        Console.Clear();
+                        return;
+
+                    default:
+                        if (!shortNamesOfList.Contains(userinput))
+                        {
+                            Console.WriteLine("Error: " + userinput + " does not exists");
+                            break;
+                        }
+                        Console.Clear();
+                        OpenList(data, userinput);
+                        break;
+                }
+
+                ////Notizen für weitere Features
+                ////Listnamen in File speichern, inkl. Namensüberschreibung
+                ////Passwort datei
+                ////-->Neue List: Eigene Methode: 3-4 einstellen
+                ////Wenn methode ausgeführt wird soll neue Liste sichtbar sein, mit Bennenung und evtl. passwort schutz+ weitere Details (kategorie..)
+                ////Listen sollen gelöscht werden können
+                ////Listen sollen germerged werden können
+                ////Prüfen, dass Name nicht doppelt vorkommt, wenn user Liste erstellt
+            }
+        }
+
         //Erweietrungen
         public void SubMenu(Data data, string listname)
         {
@@ -29,18 +85,12 @@ namespace ItemList.Classes
             string version = "v 2.0";
             Display display = new Display();
             Filter filter = new Filter();
-            //Kann evtl. weg
-            //Data data = new Data();
-            //data.CheckListtype("s");
-            //data.FolderExists();
-
 
             while (true)
             {
-
-                Console.WriteLine("Sublist Menu:");
+                Console.WriteLine("Sublist Menu");
                 Console.WriteLine();
-                Console.WriteLine(listname);
+                Console.WriteLine("--> " + listname + " <--");
                 Console.WriteLine();
                 Console.WriteLine("New Entry [n]");
                 Console.WriteLine("Exit Programm [e]");
@@ -48,7 +98,6 @@ namespace ItemList.Classes
                 Console.WriteLine("Reset List [r]");
                 Console.WriteLine("Filter [f]");
                 Console.WriteLine("back to Main[b]");
-                Console.WriteLine("[st]");
                 //Console.WriteLine("Finished entries [fi]");
 
                 string userinput = Console.ReadLine();
@@ -89,10 +138,6 @@ namespace ItemList.Classes
                         DefaultFunctions.RenameList(listname);
                         return;
 
-                    case "st":
-                        Console.Clear();
-                        return;
-
                     //Speicherung von Listnamen
 
                     //case "fi":
@@ -104,55 +149,12 @@ namespace ItemList.Classes
                         Console.Clear();
                         return;
                 }
-
             }
         }
 
-        public void SubOverview(Data data)
+        public void SaveStringLists(List<string> list, string path)
         {
-
-            var listnames = ReadingListNames();
-
-            Console.WriteLine("Sub Overview");
-            Console.WriteLine("Avaible lists");
-            Console.WriteLine();
-            DisplayListnames(listnames);
-            Console.WriteLine();
-            Console.WriteLine("Create new list [n]");
-            Console.WriteLine("Open list [enter short of listname]");
-            Console.WriteLine();
-
-
-            var userinput = Console.ReadLine();
-
-            switch (userinput)
-            {
-                case "n":
-                    AddSublist(data, this.listnames);
-                    break;
-
-                case "o":
-                   
-                    break;
-
-                default:
-                    OpenList(data, userinput);
-                    break;
-            }
-
-            ////Notizen für weitere Features
-            ////Listnamen in File speichern, inkl. Namensüberschreibung
-            ////Passwort datei
-            ////-->Neue List: Eigene Methode: 3-4 einstellen
-            ////Wenn methode ausgeführt wird soll neue Liste sichtbar sein, mit Bennenung und evtl. passwort schutz+ weitere Details (kategorie..)
-            ////Listen sollen gelöscht werden können
-            ////Listen sollen germerged werden können
-            ////Prüfen, dass Name nicht doppelt vorkommt, wenn user Liste erstellt
-        }
-
-        public void WritingListNames(List<string> list)
-        {
-            using (FileStream fs = new FileStream(listcollectionPath, FileMode.Append, FileAccess.Write))
+            using (FileStream fs = new FileStream(path, FileMode.Append, FileAccess.Write))
             using (StreamWriter sw = new StreamWriter(fs))
             {
                 foreach (var item in list)
@@ -164,17 +166,18 @@ namespace ItemList.Classes
             }
         }
 
-        public string[] ReadingListNames()
+        public List<string> ReadingStringLists(string path)
         {
-            if (!File.Exists(listcollectionPath))
+            if (!File.Exists(path))
             {
-                File.Create(listcollectionPath);
+                File.WriteAllText(path, "test");
             }
-            var inputnames = File.ReadAllLines(listcollectionPath);
-            return inputnames;
+            var stringArr = File.ReadAllLines(path);
+            var stringList = stringArr.ToList();
+            return stringList;
         }
 
-        public void DisplayListnames(string[] inputnames)
+        public void DisplayListnames(List<string> inputnames)
         {
             foreach (var item in inputnames)
             {
@@ -184,74 +187,90 @@ namespace ItemList.Classes
 
         public void AddSublist(Data data, List<string> listCollection)
         {
+            ////ACHTUNG: Wenn List angelegt wird soll der Path der Datenen hinterlegt werden !!!!! -----> Soll bei Open abgefragt werden
             //Für später
             //In Shortliste überprüfen ob kürzel vorhanden, wenn ja dann erste 3 Ziffern verwenden, muss in Open Methode nachgezogen werden
+            Console.WriteLine("Create new List");
+            Console.WriteLine();
             Console.WriteLine("Enter Name");
             var listname = Console.ReadLine();
-            listCollection.Add(listname + "[" + listname[0] + listname[1] + "]");
-            WritingListNames(listCollection);
-            var inputnames = ReadingListNames();
 
-            foreach (var item in inputnames)
+            while (listname.Length < 2)
             {
-                char x2 = item[item.Length - 2];
-                char x3 = item[item.Length - 3];
-                char[] XArr = new char[] { x3, x2 };
-                 var shortNameInput = new string(XArr);
-                shortNamesOfList.Add(shortNameInput);
-
-                CreatePath(data, shortNameInput);
-                data.FolderExists();
-
-
+                Console.WriteLine("The listname is too short.");
+                Console.WriteLine("Add a listname with at least a length of 2");
+                listname = Console.ReadLine();
+                Console.Clear();
             }
+            string x  = listname + "[" + listname[0] + listname[1] + "]";
+            listCollection.Add(x);
+            //ACHTung: Daten haben redundante Daten
+            SaveStringLists(listCollection, ListFullNamesPath);
+            var inputnames = ReadingStringLists(ListFullNamesPath);
+            var shortNameInput = "";
+            //foreach (var item in inputnames)
+            //{
+                char nameShort1 = x[x.Length - 2];
+                char nameShort2 = x[x.Length - 3];
+                char nameShort3 = x[x.Length - 4];
+            char[] nameShortArr = { nameShort3, nameShort2, nameShort1 };
+                shortNameInput = new string(nameShortArr);
+
+                if (shortNamesOfList.Contains(shortNameInput)) //Todo: Für mehrere Fälle machen, universell machen
+                {
+                    char[] test = new char[3];
+                    test[0] = nameShortArr[0];
+                    test[1] = nameShortArr[1];
+                    test[2] = nameShortArr[2];
+
+
+                    shortNameInput = new string(test);
+                    shortNamesOfList.Add(shortNameInput);
+                }
+                else
+                {
+                    char[] test = new char[2];
+                    test[0] = nameShortArr[0];
+                    test[1] = nameShortArr[1];
+
+
+                    shortNameInput = new string(test);
+                    shortNamesOfList.Add(shortNameInput);
+                }
+
+            //}
+            data.CreatePath(shortNameInput);
+            SaveStringLists(shortNamesOfList, ListShortNamesPath);
+            data.FolderExists();
+            Console.WriteLine();
+            Console.WriteLine("List greated");
+            Console.Clear();
 
         }
 
         public void OpenList(Data data, string shortNameInput)
         {
+            data.CreatePath(shortNameInput);
+            data.FolderExists();
             Console.WriteLine("Open List");
+            Console.Clear();
             SubMenu(data, shortNameInput);
-            //var inputnames = ReadingListNames();
-            //DisplayListnames(inputnames);
-
-            //foreach (var item in inputnames)
-            //{
-            //    char x2 = item[item.Length - 2];
-            //    char x3 = item[item.Length - 3];
-            //    char[] XArr = new char[] { x3, x2 };
-            //    shortNameInput = new string(XArr);
-            //    shortNamesOfList.Add(shortNameInput);
-
-
-
-            //}
-            //Console.WriteLine();
-            //Console.WriteLine("Input short");
-            //var input = shortNameInput;
-            ////var input = Console.ReadLine();
-            //if (shortNamesOfList.Contains(input))
-            //{
-            //    //Hier soll das ListMenu angezeigt werden
-            //    Console.WriteLine("Continue");
-            //    CreatePath(data, input);
-            //    data.FolderExists();
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Err");
-            //}
         }
 
-        public void CreatePath(Data data, string input)
+        //public void CreatePath(Data data, string input)
+        //{
+        //    data.folder = Path.Combine("Data\\Sub", input);
+        //    data.path = data.folder + "_Data.txt"; //Wird noch nicht erstellt
+        //    data.pathId = data.folder + "_IdFile.txt";
+        //    data.currentidStr = "1";
+        //    data.currentid = 1;
+        //    //--> Bug daten werden außerhalb des Ordners erstellt!!
+        //    Console.WriteLine("Data generated");
+        //}
+
+        public void ReadPath()
         {
-            data.folder = Path.Combine("Data\\Sub", input);
-            data.path = data.folder + "_Data.txt"; //Wird noch nicht erstellt
-            data.pathId = data.folder + "_IdFile.txt";
-            data.currentidStr = "1";
-            data.currentid = 1;
-            //--> Bug daten werden außerhalb des Ordners erstellt!!
-            Console.WriteLine("Data generated");
+
         }
     }
 }

@@ -19,7 +19,7 @@ namespace ItemList
         public static void StartProgramm(Data data)
         {
             string path = "data";
-            data.CheckListtype("d");
+            //data.CheckListtype("d");
             data.FolderExists();
             Sublist sublist = new Sublist(data);
             
