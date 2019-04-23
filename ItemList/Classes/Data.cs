@@ -14,6 +14,7 @@ namespace ItemList
         public string folder = @"Data";
         public string path = @"Data\list.txt";
         public string pathId = @"Data\idfile.txt";
+        public string pathPassword = @"Data\password.txt";
         public string currentidStr = "1";
         public int currentid = 1;
 
@@ -228,6 +229,7 @@ namespace ItemList
 
             path = Path.Combine( folder + "\\_Data.txt");//Wird noch nicht erstellt
             pathId =Path.Combine(folder + "\\_IdFile.txt");
+            pathPassword = Path.Combine(folder + "\\_Password.txt");
             currentidStr = "1";
             currentid = 1;
             return path;

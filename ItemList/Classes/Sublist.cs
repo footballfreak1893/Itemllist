@@ -245,7 +245,19 @@ namespace ItemList.Classes
                 listCollection.Add(fulnameString);
                 SaveStringLists(listCollection, ListFullNamesPath);
             }
-            
+            Console.WriteLine("Set a password? [y/n]");
+            var setPassword = Console.ReadLine();
+
+            switch (setPassword)
+            {
+                case "n":
+                    break;
+
+                default:
+                    SetPassword(data);
+                    break;
+            }
+
             data.CreatePath(shortName);
             data.FolderExists();
             Console.WriteLine();
@@ -276,7 +288,6 @@ namespace ItemList.Classes
             SubMenu(data, shortNameInput);
         }
 
-
         public void DisplayShortlist()
         {
             var list = ReadingStringLists(ListShortNamesPath);
@@ -294,6 +305,29 @@ namespace ItemList.Classes
             Console.WriteLine("folder created");
             return folder;
         }
+
+        public void SetPassword(Data data)
+        {
+            Console.WriteLine("Enter password");
+            Console.ForegroundColor = ConsoleColor.Black;
+            var password = Console.ReadLine();
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Password set");
+
+            SaveString(password, data.pathPassword);
+            //Passwort datei, bei anderen pfad dateien speichern
+            
+        }
+        public void SaveString(string text, string path)
+        {
+            File.WriteAllText(path, text);
+        }
+
+        //Open Passwort methode
+        //Pfad soll beim öffnen ausgelsen werden, ist die datei null, ist kein passwort gesetzt
+        //Für später : Passwort datei soll verschlüsselt werden
     }
+
+    
 }
 
