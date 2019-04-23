@@ -266,14 +266,28 @@ namespace ItemList
         //    }
         //}
 
-        public void CreatePath( string input)
+        public string CreatePath( string input)
         {
-            folder = Path.Combine("Data\\Sub", input);
-            path = folder + "_Data.txt"; //Wird noch nicht erstellt
-            pathId = folder + "_IdFile.txt";
+            var folder = Path.Combine("Data\\Sub", input);
+            Directory.CreateDirectory(folder);
+            Console.WriteLine("folder created");
+
+            path = Path.Combine( folder + "\\_Data.txt");//Wird noch nicht erstellt
+            pathId =Path.Combine(folder + "\\_IdFile.txt");
             currentidStr = "1";
             currentid = 1;
-            //--> Bug daten werden außerhalb des Ordners erstellt!!
+            return path;
         }
+
+        //public string CreatePath(string input)
+        //{
+        //    folder = Path.Combine("Data\\Sub", input);
+        //    path = Path.Combine(folder + "\\_Data.txt"); //Wird noch nicht erstellt
+        //    pathId = Path.Combine(folder + "\\_IdFile.txt");
+        //    currentidStr = "1";
+        //    currentid = 1;
+        //    //--> Bug daten werden außerhalb des Ordners erstellt!!
+        //    return path;
+        //}
     }
 }

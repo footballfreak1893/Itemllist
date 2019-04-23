@@ -39,6 +39,7 @@ namespace ItemList.Classes
                 Console.WriteLine("Create new list [n]");
                 Console.WriteLine("Open list [enter short of listname]");
                 Console.WriteLine("Back to main menu [b]");
+                Console.WriteLine("Exit programm [e]");
                 Console.WriteLine("DisplayShortlist d ");
                 Console.WriteLine();
 
@@ -48,7 +49,7 @@ namespace ItemList.Classes
                 switch (userinput)
                 {
                     case "n":
-                        //Console.Clear();
+                        Console.Clear();
                         AddSublist(data, listnames);
                         break;
 
@@ -60,10 +61,16 @@ namespace ItemList.Classes
                         DisplayShortlist();
                         return;
 
+                    case "e":
+                        Start.Exit(data);
+                        return;
+
                     default:
                         if (!shortNamesOfList.Contains(userinput))
                         {
+                            Console.Clear();
                             Console.WriteLine("Error: " + userinput + " does not exists");
+                            
                             break;
                         }
                         Console.Clear();
@@ -166,7 +173,6 @@ namespace ItemList.Classes
                 {
                     sw.WriteLine(item);
                 }
-              
             }
         }
 
@@ -192,97 +198,77 @@ namespace ItemList.Classes
         public void AddSublist(Data data, List<string> listCollection)
         {
             shortNamesOfList = ReadingStringLists(ListShortNamesPath);
-            ////ACHTUNG: Wenn List angelegt wird soll der Path der Datenen hinterlegt werden !!!!! -----> Soll bei Open abgefragt werden
-            //Für später
             Console.WriteLine("Create new List");
             Console.WriteLine();
             Console.WriteLine("Enter Name");
             var listname = Console.ReadLine();
 
-            while (listname.Length < 2)
+            while (listname.Length < 3)
             {
                 Console.WriteLine("The listname is too short.");
                 Console.WriteLine("Add a listname with at least a length of 2");
                 listname = Console.ReadLine();
                 Console.Clear();
             }
-            string fulnameString = listname + "[" + listname[0] + listname[1] + "]";
+            string fulnameString = listname + "[" + listname[0] + listname[1] + "]"; //-->Bug liste kann nur geöffnet werden, wenn Großkleinschreibung stimmt
             string fulnameStringLong = listname + "[" + listname[0] + listname[1] + listname[2] + "]";
-            //var inputnames = ReadingStringLists(ListFullNamesPath);
-            var shortNameInput = "";
+            var shortName = "";
 
             char nameShort1 = fulnameString[fulnameString.Length - 2];
             char nameShort2 = fulnameString[fulnameString.Length - 3];
             char[] nameShortArr = { nameShort2, nameShort1 };
-            shortNameInput = new string(nameShortArr);
+            shortName = new string(nameShortArr);
 
             Console.WriteLine();
-            Console.WriteLine(shortNameInput);
+            Console.WriteLine(shortName);
             Console.WriteLine();
             Console.ReadLine();
 
-            if (shortNamesOfList.Contains(shortNameInput)) //Todo: Für mehrere Fälle machen, universell machen --> Rekursive Methode
+            if (shortNamesOfList.Contains(shortName)) //Todo: Für mehrere Fälle machen, universell machen --> Rekursive Methode
             {
-                char nameShort4 = listname[2];
-                char[] test = new char[3];
-                test[0] = nameShortArr[0];
-                test[1] = nameShortArr[1];
-                test[2] = nameShort4;
-
+                char nameShort3 = listname[2];
+                char[] shortnameArr = new char[3];
+                shortnameArr[0] = nameShortArr[0];
+                shortnameArr[1] = nameShortArr[1];
+                shortnameArr[2] = nameShort3;
                 
 
-                shortNameInput = new string(test);
-                Console.WriteLine(shortNameInput);
-                shortNamesOfList.Add(shortNameInput);
-                Console.WriteLine("Name contained in list");
-                Console.ReadLine();
+                shortName = new string(shortnameArr);
+                shortNamesOfList.Add(shortName);
                 SaveStringLists(shortNamesOfList, ListShortNamesPath);
                 listCollection.Add(fulnameStringLong);
                 SaveStringLists(listCollection, ListFullNamesPath);
             }
             else
             {
-                char[] test = new char[2];
-                test[0] = nameShortArr[0];
-                test[1] = nameShortArr[1];
+                char[] shortnameArr = new char[2];
+                shortnameArr[0] = nameShortArr[0];
+                shortnameArr[1] = nameShortArr[1];
 
-
-                shortNameInput = new string(test);
-                shortNamesOfList.Add(shortNameInput);
-                Console.WriteLine("Name does not contained in list");
-                Console.ReadLine();
+                shortName = new string(shortnameArr);
+                shortNamesOfList.Add(shortName);
                 SaveStringLists(shortNamesOfList, ListShortNamesPath);
                 listCollection.Add(fulnameString);
                 SaveStringLists(listCollection, ListFullNamesPath);
             }
-
-            data.CreatePath(shortNameInput);
+            
+            data.CreatePath(shortName);
             data.FolderExists();
             Console.WriteLine();
-            Console.WriteLine("List greated");
+            Console.WriteLine("List created");
             Console.Clear();
 
         }
 
         public void OpenList(Data data, string shortNameInput)
         {
-            data.CreatePath(shortNameInput);
+           data.CreatePath(shortNameInput);
             data.FolderExists();
             Console.WriteLine("Open List");
             Console.Clear();
             SubMenu(data, shortNameInput);
         }
 
-        //public void CreatePath(Data data, string input)
-        //{
-        //    data.folder = Path.Combine("Data\\Sub", input);
-        //    data.path = data.folder + "_Data.txt"; //Wird noch nicht erstellt
-        //    data.pathId = data.folder + "_IdFile.txt";
-        //    data.currentidStr = "1";
-        //    data.currentid = 1;
-        //    //--> Bug daten werden außerhalb des Ordners erstellt!!
-        //    Console.WriteLine("Data generated");
-        //}
 
         public void DisplayShortlist()
         {
@@ -291,6 +277,15 @@ namespace ItemList.Classes
             {
                 Console.WriteLine(shorts);
             }
+        }
+
+        public string GenerateFolder(string input)
+        {
+
+           var folder = Path.Combine("Data\\Sub", input);
+            Directory.CreateDirectory(folder);
+            Console.WriteLine("folder created");
+            return folder;
         }
     }
 }
