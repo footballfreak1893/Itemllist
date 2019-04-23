@@ -39,6 +39,7 @@ namespace ItemList.Classes
                 Console.WriteLine("Create new list [n]");
                 Console.WriteLine("Open list [enter short of listname]");
                 Console.WriteLine("Back to main menu [b]");
+                Console.WriteLine("DisplayShortlist d ");
                 Console.WriteLine();
 
                 var userinput = Console.ReadLine();
@@ -47,12 +48,16 @@ namespace ItemList.Classes
                 switch (userinput)
                 {
                     case "n":
-                        Console.Clear();
+                        //Console.Clear();
                         AddSublist(data, listnames);
                         break;
 
                     case "b":
                         Console.Clear();
+                        return;
+
+                    case "d":
+                        DisplayShortlist();
                         return;
 
                     default:
@@ -154,15 +159,14 @@ namespace ItemList.Classes
 
         public void SaveStringLists(List<string> list, string path)
         {
-            using (FileStream fs = new FileStream(path, FileMode.Append, FileAccess.Write))
+            using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write))
             using (StreamWriter sw = new StreamWriter(fs))
             {
                 foreach (var item in list)
                 {
                     sw.WriteLine(item);
                 }
-                //File Append Methode einbauen
-                //ACHTUNG FEHLER
+              
             }
         }
 
@@ -170,7 +174,7 @@ namespace ItemList.Classes
         {
             if (!File.Exists(path))
             {
-                File.WriteAllText(path, "test");
+                File.WriteAllText(path, "");
             }
             var stringArr = File.ReadAllLines(path);
             var stringList = stringArr.ToList();
@@ -187,9 +191,9 @@ namespace ItemList.Classes
 
         public void AddSublist(Data data, List<string> listCollection)
         {
+            shortNamesOfList = ReadingStringLists(ListShortNamesPath);
             ////ACHTUNG: Wenn List angelegt wird soll der Path der Datenen hinterlegt werden !!!!! -----> Soll bei Open abgefragt werden
             //Für später
-            //In Shortliste überprüfen ob kürzel vorhanden, wenn ja dann erste 3 Ziffern verwenden, muss in Open Methode nachgezogen werden
             Console.WriteLine("Create new List");
             Console.WriteLine();
             Console.WriteLine("Enter Name");
@@ -202,45 +206,57 @@ namespace ItemList.Classes
                 listname = Console.ReadLine();
                 Console.Clear();
             }
-            string x  = listname + "[" + listname[0] + listname[1] + "]";
-            listCollection.Add(x);
-            //ACHTung: Daten haben redundante Daten
-            SaveStringLists(listCollection, ListFullNamesPath);
-            var inputnames = ReadingStringLists(ListFullNamesPath);
+            string fulnameString = listname + "[" + listname[0] + listname[1] + "]";
+            string fulnameStringLong = listname + "[" + listname[0] + listname[1] + listname[2] + "]";
+            //var inputnames = ReadingStringLists(ListFullNamesPath);
             var shortNameInput = "";
-            //foreach (var item in inputnames)
-            //{
-                char nameShort1 = x[x.Length - 2];
-                char nameShort2 = x[x.Length - 3];
-                char nameShort3 = x[x.Length - 4];
-            char[] nameShortArr = { nameShort3, nameShort2, nameShort1 };
-                shortNameInput = new string(nameShortArr);
 
-                if (shortNamesOfList.Contains(shortNameInput)) //Todo: Für mehrere Fälle machen, universell machen
-                {
-                    char[] test = new char[3];
-                    test[0] = nameShortArr[0];
-                    test[1] = nameShortArr[1];
-                    test[2] = nameShortArr[2];
+            char nameShort1 = fulnameString[fulnameString.Length - 2];
+            char nameShort2 = fulnameString[fulnameString.Length - 3];
+            char[] nameShortArr = { nameShort2, nameShort1 };
+            shortNameInput = new string(nameShortArr);
+
+            Console.WriteLine();
+            Console.WriteLine(shortNameInput);
+            Console.WriteLine();
+            Console.ReadLine();
+
+            if (shortNamesOfList.Contains(shortNameInput)) //Todo: Für mehrere Fälle machen, universell machen --> Rekursive Methode
+            {
+                char nameShort4 = listname[2];
+                char[] test = new char[3];
+                test[0] = nameShortArr[0];
+                test[1] = nameShortArr[1];
+                test[2] = nameShort4;
+
+                
+
+                shortNameInput = new string(test);
+                Console.WriteLine(shortNameInput);
+                shortNamesOfList.Add(shortNameInput);
+                Console.WriteLine("Name contained in list");
+                Console.ReadLine();
+                SaveStringLists(shortNamesOfList, ListShortNamesPath);
+                listCollection.Add(fulnameStringLong);
+                SaveStringLists(listCollection, ListFullNamesPath);
+            }
+            else
+            {
+                char[] test = new char[2];
+                test[0] = nameShortArr[0];
+                test[1] = nameShortArr[1];
 
 
-                    shortNameInput = new string(test);
-                    shortNamesOfList.Add(shortNameInput);
-                }
-                else
-                {
-                    char[] test = new char[2];
-                    test[0] = nameShortArr[0];
-                    test[1] = nameShortArr[1];
+                shortNameInput = new string(test);
+                shortNamesOfList.Add(shortNameInput);
+                Console.WriteLine("Name does not contained in list");
+                Console.ReadLine();
+                SaveStringLists(shortNamesOfList, ListShortNamesPath);
+                listCollection.Add(fulnameString);
+                SaveStringLists(listCollection, ListFullNamesPath);
+            }
 
-
-                    shortNameInput = new string(test);
-                    shortNamesOfList.Add(shortNameInput);
-                }
-
-            //}
             data.CreatePath(shortNameInput);
-            SaveStringLists(shortNamesOfList, ListShortNamesPath);
             data.FolderExists();
             Console.WriteLine();
             Console.WriteLine("List greated");
@@ -268,9 +284,13 @@ namespace ItemList.Classes
         //    Console.WriteLine("Data generated");
         //}
 
-        public void ReadPath()
+        public void DisplayShortlist()
         {
-
+            var list = ReadingStringLists(ListShortNamesPath);
+            foreach (var shorts in list)
+            {
+                Console.WriteLine(shorts);
+            }
         }
     }
 }
