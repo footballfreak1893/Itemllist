@@ -220,52 +220,6 @@ namespace ItemList
             Console.WriteLine("List has been reseted");
         }
 
-        //public void CheckListtype(string listtype)
-        //{
-        //    switch (listtype)
-        //    {
-        //        case "d":
-        //            folder = @"Data\Default";
-        //            path = @"Data\Default\default.txt";
-        //            pathId = @"Data\Default\defaultIdFile.txt";
-        //            currentidStr = "1";
-        //            currentid = 1;
-        //            break;
-
-        //        case "s1":
-        //            folder = @"Data\Sub";
-        //            path = @"Data\Sub\sub1.txt";
-        //            pathId = @"Data\Sub\sub1IdFile.txt";
-        //            currentidStr = "1";
-        //            currentid = 1;
-        //            dict = sub1;
-        //            break;
-
-        //        case "s2":
-        //            folder = @"Data\Sub";
-        //            path = @"Data\Sub\sub2.txt";
-        //            pathId = @"Data\Sub\subId2File.txt";
-        //            currentidStr = "1";
-        //            currentid = 1;
-        //            dict = sub2;
-        //            break;
-
-        //        case "s3":
-        //            folder = @"Data\Sub";
-        //            path = @"Data\Sub\sub3.txt";
-        //            pathId = @"Data\Sub\subId3File.txt";
-        //            currentidStr = "1";
-        //            currentid = 1;
-        //            dict = sub3;
-        //            break;
-
-        //            //Benutzerdefinierte List:
-        //            //Phats aus name der list zusammensetzten
-        //            //
-        //            //
-        //    }
-        //}
-
         public string CreatePath( string input)
         {
             var folder = Path.Combine("Data\\Sub", input);
@@ -278,16 +232,5 @@ namespace ItemList
             currentid = 1;
             return path;
         }
-
-        //public string CreatePath(string input)
-        //{
-        //    folder = Path.Combine("Data\\Sub", input);
-        //    path = Path.Combine(folder + "\\_Data.txt"); //Wird noch nicht erstellt
-        //    pathId = Path.Combine(folder + "\\_IdFile.txt");
-        //    currentidStr = "1";
-        //    currentid = 1;
-        //    //--> Bug daten werden außerhalb des Ordners erstellt!!
-        //    return path;
-        //}
     }
 }

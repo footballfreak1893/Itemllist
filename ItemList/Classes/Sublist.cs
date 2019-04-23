@@ -40,7 +40,7 @@ namespace ItemList.Classes
                 Console.WriteLine("Open list [enter short of listname]");
                 Console.WriteLine("Back to main menu [b]");
                 Console.WriteLine("Exit programm [e]");
-                Console.WriteLine("DisplayShortlist d ");
+                Console.WriteLine("Display Shortlist [d] ");
                 Console.WriteLine();
 
                 var userinput = Console.ReadLine();
@@ -55,10 +55,6 @@ namespace ItemList.Classes
 
                     case "b":
                         Console.Clear();
-                        return;
-
-                    case "d":
-                        DisplayShortlist();
                         return;
 
                     case "e":
@@ -105,6 +101,7 @@ namespace ItemList.Classes
                 Console.WriteLine("--> " + listname + " <--");
                 Console.WriteLine();
                 Console.WriteLine("New Entry [n]");
+                //Console.WriteLine("Delete sublist [d]");
                 Console.WriteLine("Exit Programm [e]");
                 Console.WriteLine("Show Deatils [x]");
                 Console.WriteLine("Reset List [r]");
@@ -120,6 +117,10 @@ namespace ItemList.Classes
                         Console.Clear();
                         data.AddItem();
                         break;
+
+                    //case "d":
+                    //    DeleteSublist(data, listname);
+                    //    return;
 
                     case "e":
                         Console.Clear();
@@ -144,13 +145,6 @@ namespace ItemList.Classes
                     case "b":
                         Console.Clear();
                         return;
-
-                    case "rn":
-                        Console.Clear();
-                        DefaultFunctions.RenameList(listname);
-                        return;
-
-                    //Speicherung von Listnamen
 
                     //case "fi":
                     //    Console.Clear();
@@ -259,6 +253,19 @@ namespace ItemList.Classes
             Console.Clear();
 
         }
+
+        //public void DeleteSublist(Data data, /*string shortname*/ string fullname)
+        //{
+        //    var fullnameList = ReadingStringLists(ListFullNamesPath);
+        //    var shortnameList = ReadingStringLists(ListShortNamesPath);
+
+        //    fullnameList.Remove(fullname);
+        //    //shortnameList.Remove(shortname);
+        //    SaveStringLists(fullnameList, ListFullNamesPath);
+        //    //SaveStringLists(shortnameList, ListShortNamesPath);
+
+        //    Console.WriteLine("Sublist has been removed");
+        //}
 
         public void OpenList(Data data, string shortNameInput)
         {
