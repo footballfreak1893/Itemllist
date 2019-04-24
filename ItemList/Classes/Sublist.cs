@@ -105,6 +105,7 @@ namespace ItemList.Classes
                 //Console.WriteLine("Delete sublist [d]");
                 Console.WriteLine("Exit Programm [e]");
                 Console.WriteLine("Show Deatils [x]");
+                Console.WriteLine("Password settings [p]");
                 Console.WriteLine("Reset List [r]");
                 Console.WriteLine("Filter [f]");
                 Console.WriteLine("back to Main[b]");
@@ -131,6 +132,11 @@ namespace ItemList.Classes
                     case "x":
                         Console.Clear();
                         display.ShowDetails(data, false, data.dict);
+                        break;
+
+                    case "p":
+                        Console.Clear();
+                        PasswortSettings(data);
                         break;
 
                     case "r":
@@ -311,6 +317,7 @@ namespace ItemList.Classes
             return folder;
         }
 
+        //Passwort
         public void SetPassword(Data data)
         {
             Console.WriteLine("Enter password");
@@ -331,14 +338,85 @@ namespace ItemList.Classes
             }
 
             Console.WriteLine("This list requires a password, please enter it");
+            Console.ForegroundColor = ConsoleColor.Black;
             var inputPassword = Console.ReadLine();
-            
+            Console.ForegroundColor = ConsoleColor.White;
 
-            while(password != inputPassword)
+            while (password != inputPassword)
             {
                 Console.WriteLine("Password is incorrect, try again");
+                Console.ForegroundColor = ConsoleColor.Black;
                 inputPassword = Console.ReadLine();
+                Console.ForegroundColor = ConsoleColor.White;
             }
+        }
+
+       
+        public void Change_Or_SetNull_Password(Data data, char deleteOrChange)
+        {
+            if (deleteOrChange == 'd')
+            {
+                var password = "";
+                SaveString(password, data.pathPassword);
+            }
+
+            else
+            {
+                Console.WriteLine("Change password");
+                Console.WriteLine("enter current password");
+                Console.ForegroundColor = ConsoleColor.Black;
+                var inputPasswordCurrent = Console.ReadLine();
+                var password = ReadString(data.pathPassword);
+
+                while (password != inputPasswordCurrent)
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("Current password is incorrect, try again");
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    inputPasswordCurrent = Console.ReadLine();
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                Console.ForegroundColor = ConsoleColor.White;
+
+                Console.WriteLine("enter new password");
+                Console.ForegroundColor = ConsoleColor.Black;
+                password = Console.ReadLine();
+                SaveString(password, data.pathPassword);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("Password has successfully changed");
+            }
+        }
+
+        public void PasswortSettings(Data data)
+        {
+            //--> BUG: Wenn Feature Farbe ändern eingebaut wird muss andere Lösung her als vordergrundfarbe zu ändern (Idee -->..)
+            Console.WriteLine("Password settings");
+            Console.WriteLine();
+            Console.WriteLine("add password [a]"); //Achtung: menu so anpassen, dass add nur verfügbar ist, wenn kein passwort gesetzt wurde
+            Console.WriteLine("Change password [c]");
+            Console.WriteLine("Deactivate password [d]");
+            var userinput = Console.ReadLine();
+           userinput = userinput.ToLower();
+            //Abfragen ob bereits pw vorhanden, wenn nein: add passwort ausblenden
+
+            switch (userinput)
+            {
+                case "a":
+                    SetPassword(data);
+                    break;
+
+                case "c":
+                    Change_Or_SetNull_Password(data, 'c');
+                    break;
+
+                case "d":
+                    Change_Or_SetNull_Password(data, 'd');
+                    break;
+
+                default:
+                    return;
+            }
+            Console.Clear();
         }
         public void SaveString(string text, string path)
         {
@@ -350,12 +428,6 @@ namespace ItemList.Classes
            var text = File.ReadAllText(path);
             return text;
         }
-
-        //Open Passwort methode
-        //Pfad soll beim öffnen ausgelsen werden, ist die datei null, ist kein passwort gesetzt
-        //Für später : Passwort datei soll verschlüsselt werden
     }
-
-    
 }
 
