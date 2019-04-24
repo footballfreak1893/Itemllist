@@ -99,6 +99,7 @@ namespace ItemList.Classes
                 Console.WriteLine("Sublist Menu");
                 Console.WriteLine();
                 Console.WriteLine("--> " + listname + " <--");
+                EnterPassword(data);
                 Console.WriteLine();
                 Console.WriteLine("New Entry [n]");
                 //Console.WriteLine("Delete sublist [d]");
@@ -248,20 +249,23 @@ namespace ItemList.Classes
             Console.WriteLine("Set a password? [y/n]");
             var setPassword = Console.ReadLine();
 
+           
+
+            data.CreatePath(shortName);
+            data.FolderExists();
+            Console.WriteLine();
+            Console.WriteLine("List created");
+            //Hier weiter --> Passwort wird generiert
             switch (setPassword)
             {
                 case "n":
+                    SaveString("", data.pathPassword);
                     break;
 
                 default:
                     SetPassword(data);
                     break;
             }
-
-            data.CreatePath(shortName);
-            data.FolderExists();
-            Console.WriteLine();
-            Console.WriteLine("List created");
             Console.Clear();
 
         }
@@ -281,6 +285,7 @@ namespace ItemList.Classes
 
         public void OpenList(Data data, string shortNameInput)
         {
+             
            data.CreatePath(shortNameInput);
             data.FolderExists();
             Console.WriteLine("Open List");
@@ -314,13 +319,36 @@ namespace ItemList.Classes
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Password set");
 
-            SaveString(password, data.pathPassword);
-            //Passwort datei, bei anderen pfad dateien speichern
+           SaveString(password, data.pathPassword);
+        }
+
+        public void EnterPassword(Data data)
+        {
+            var password = ReadString(data.pathPassword);
+            if (password == null || password == "")
+            {
+                return;
+            }
+
+            Console.WriteLine("This list requires a password, please enter it");
+            var inputPassword = Console.ReadLine();
             
+
+            while(password != inputPassword)
+            {
+                Console.WriteLine("Password is incorrect, try again");
+                inputPassword = Console.ReadLine();
+            }
         }
         public void SaveString(string text, string path)
         {
             File.WriteAllText(path, text);
+        }
+
+        public string ReadString(string path)
+        {
+           var text = File.ReadAllText(path);
+            return text;
         }
 
         //Open Passwort methode
