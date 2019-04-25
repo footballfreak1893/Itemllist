@@ -317,6 +317,8 @@ namespace ItemList.Classes
             return folder;
         }
 
+
+
         //Passwort
         public void SetPassword(Data data)
         {
@@ -326,12 +328,17 @@ namespace ItemList.Classes
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Password set");
 
-           SaveString(password, data.pathPassword);
+            password = AES.CryptMenu(password, 'e');
+            SaveString(password, data.pathPassword);
+
+           //SaveString(password, data.pathPassword);
         }
 
         public void EnterPassword(Data data)
         {
             var password = ReadString(data.pathPassword);
+            password = AES.CryptMenu(password, 'd');
+
             if (password == null || password == "")
             {
                 return;
@@ -367,6 +374,8 @@ namespace ItemList.Classes
                 Console.ForegroundColor = ConsoleColor.Black;
                 var inputPasswordCurrent = Console.ReadLine();
                 var password = ReadString(data.pathPassword);
+                password = AES.CryptMenu(password, 'd');
+                Console.ForegroundColor = ConsoleColor.White;
 
                 while (password != inputPasswordCurrent)
                 {
@@ -381,6 +390,7 @@ namespace ItemList.Classes
                 Console.WriteLine("enter new password");
                 Console.ForegroundColor = ConsoleColor.Black;
                 password = Console.ReadLine();
+                password = AES.CryptMenu(password, 'e');
                 SaveString(password, data.pathPassword);
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("Password has successfully changed");
@@ -392,12 +402,19 @@ namespace ItemList.Classes
             //--> BUG: Wenn Feature Farbe ändern eingebaut wird muss andere Lösung her als vordergrundfarbe zu ändern (Idee -->..)
             Console.WriteLine("Password settings");
             Console.WriteLine();
-            Console.WriteLine("add password [a]"); //Achtung: menu so anpassen, dass add nur verfügbar ist, wenn kein passwort gesetzt wurde
+
+             var password = ReadString(data.pathPassword);
+             password = AES.CryptMenu(password, 'd');
+
+            if (password == null || password == "")
+            {
+                Console.WriteLine("add password [a]");
+            }
+
             Console.WriteLine("Change password [c]");
             Console.WriteLine("Deactivate password [d]");
             var userinput = Console.ReadLine();
            userinput = userinput.ToLower();
-            //Abfragen ob bereits pw vorhanden, wenn nein: add passwort ausblenden
 
             switch (userinput)
             {
@@ -413,11 +430,21 @@ namespace ItemList.Classes
                     Change_Or_SetNull_Password(data, 'd');
                     break;
 
+                case "p":
+                   
+                    break;
+
+
+
                 default:
                     return;
             }
             Console.Clear();
         }
+
+
+
+
         public void SaveString(string text, string path)
         {
             File.WriteAllText(path, text);

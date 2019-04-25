@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\AES.cs" />
     <Compile Include="Classes\CheckingNumbers.cs" />
     <Compile Include="Classes\Data.cs" />
     <Compile Include="Classes\DefaultFunctions.cs" />
