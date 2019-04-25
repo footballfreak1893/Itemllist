@@ -1,5 +1,5 @@
 ﻿Listen:
--Passwort schützen (aufheben, ändern, Passwortdatei verschlüsseln)
+DONE -Passwort schützen (aufheben, ändern, Passwortdatei verschlüsseln)
 -Namen (shortname eindeutig halten(--> Rekursive Methode))
 -Sublisten löschen -- 
 -Defaultliste auswählen (-->User Settings)
@@ -12,7 +12,7 @@ Ordner:
 
 
 Obtik:
--Farbe ändern (User Settings)
+-Farbe ändern (User Settings) Wegen passwort: So einstellen, wenn passwort eingeben wird: Das background color == foreground color
 -Fällige einträge mit gelb(=heute fällig), rot(=überfällig), grün(=noch nicht fällig)
 
 

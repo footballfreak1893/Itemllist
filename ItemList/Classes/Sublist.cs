@@ -38,6 +38,7 @@ namespace ItemList.Classes
                 Console.WriteLine();
                 Console.WriteLine("Create new list [n]");
                 Console.WriteLine("Open list [enter short of listname]");
+                Console.WriteLine("Delete sublist [d]");
                 Console.WriteLine("Back to main menu [b]");
                 Console.WriteLine("Exit programm [e]");
                 Console.WriteLine("Display Shortlist [d] ");
@@ -51,6 +52,10 @@ namespace ItemList.Classes
                     case "n":
                         Console.Clear();
                         AddSublist(data, listnames);
+                        break;
+
+                    case "d":
+                        DeleteSublist(data);
                         break;
 
                     case "b":
@@ -120,9 +125,7 @@ namespace ItemList.Classes
                         data.AddItem();
                         break;
 
-                    //case "d":
-                    //    DeleteSublist(data, listname);
-                    //    return;
+                    
 
                     case "e":
                         Console.Clear();
@@ -207,7 +210,7 @@ namespace ItemList.Classes
             while (listname.Length < 3)
             {
                 Console.WriteLine("The listname is too short.");
-                Console.WriteLine("Add a listname with at least a length of 2");
+                Console.WriteLine("Add a listname with at least a length of 3");
                 listname = Console.ReadLine();
                 Console.Clear();
             }
@@ -264,30 +267,48 @@ namespace ItemList.Classes
             //Hier weiter --> Passwort wird generiert
             switch (setPassword)
             {
-                case "n":
-                    SaveString("", data.pathPassword);
+                case "y":
+                    SetPassword(data);
                     break;
 
                 default:
-                    SetPassword(data);
+                    SaveString("", data.pathPassword);
                     break;
             }
             Console.Clear();
 
         }
 
-        //public void DeleteSublist(Data data, /*string shortname*/ string fullname)
-        //{
-        //    var fullnameList = ReadingStringLists(ListFullNamesPath);
-        //    var shortnameList = ReadingStringLists(ListShortNamesPath);
+        public void DeleteSublist(Data data)
+        {
+          //  var fullnameList = ReadingStringLists(ListFullNamesPath);
+            var shortnameList = ReadingStringLists(ListShortNamesPath);
+            Console.WriteLine("Enter short");
+               var shortname = Console.ReadLine();
 
-        //    fullnameList.Remove(fullname);
-        //    //shortnameList.Remove(shortname);
-        //    SaveStringLists(fullnameList, ListFullNamesPath);
-        //    //SaveStringLists(shortnameList, ListShortNamesPath);
+            if (!shortNamesOfList.Contains(shortname))
+            {
+                Console.Clear();
+                Console.WriteLine("Error: " + shortname + " does not exists");
 
-        //    Console.WriteLine("Sublist has been removed");
-        //}
+                return;
+            }
+            int indexOfname = shortnameList.IndexOf(shortname);
+
+            SearchString(data, listnames, indexOfname);
+            shortnameList.Remove(shortname);
+            SaveStringLists(shortnameList, ListShortNamesPath);
+
+            var folder = Path.Combine("Data\\Sub", shortname);
+            Directory.Delete(folder, true);
+            Console.WriteLine("Sublist has been removed");
+        }
+
+        public void SearchString(Data data, List<string> list, int index) 
+        {
+            list.RemoveAt(index);
+            SaveStringLists(list, ListFullNamesPath);
+        }
 
         public void OpenList(Data data, string shortNameInput)
         {
@@ -320,6 +341,9 @@ namespace ItemList.Classes
 
 
         //Passwort
+
+        //--> Hier könnte man noch Passwortrichtlinien erstellen
+        
         public void SetPassword(Data data)
         {
             Console.WriteLine("Enter password");
@@ -434,16 +458,11 @@ namespace ItemList.Classes
                    
                     break;
 
-
-
                 default:
                     return;
             }
             Console.Clear();
         }
-
-
-
 
         public void SaveString(string text, string path)
         {

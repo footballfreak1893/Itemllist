@@ -89,7 +89,6 @@ namespace ItemList.Classes
 
             ms.Close();
             cs.Close();
-            //Console.WriteLine("Clear: "+cleartext);
             return cleartext;
 
         }
