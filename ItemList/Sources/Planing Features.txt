@@ -1,7 +1,7 @@
 ﻿Listen:
 DONE -Passwort schützen (aufheben, ändern, Passwortdatei verschlüsseln)
 -Namen (shortname eindeutig halten(--> Rekursive Methode))
--Sublisten löschen -- 
+DONE-Sublisten löschen -- 
 -Defaultliste auswählen (-->User Settings)
 -Defaultansicht auswählen pro liste
 -Listen mergen

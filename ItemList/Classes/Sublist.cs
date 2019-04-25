@@ -12,7 +12,7 @@ namespace ItemList.Classes
 {
     class Sublist
     {
-        List<string> listnames = new List<string>();
+        List<string> longNamesOfList = new List<string>();
         List<string> shortNamesOfList = new List<string>();
 
         public Sublist(Data data)
@@ -28,13 +28,13 @@ namespace ItemList.Classes
         {
             while (true)
             {
-                listnames = ReadingStringLists(ListFullNamesPath);
+                longNamesOfList = ReadingStringLists(ListFullNamesPath);
                 shortNamesOfList = ReadingStringLists(ListShortNamesPath);
 
                 Console.WriteLine("Sub Overview");
                 Console.WriteLine("Avaible lists");
                 Console.WriteLine();
-                DisplayListnames(listnames);
+                DisplayListnames(longNamesOfList);
                 Console.WriteLine();
                 Console.WriteLine("Create new list [n]");
                 Console.WriteLine("Open list [enter short of listname]");
@@ -51,7 +51,7 @@ namespace ItemList.Classes
                 {
                     case "n":
                         Console.Clear();
-                        AddSublist(data, listnames);
+                        AddSublist(data, longNamesOfList);
                         break;
 
                     case "d":
@@ -199,6 +199,86 @@ namespace ItemList.Classes
             }
         }
 
+        //public void AddSublist(Data data, List<string> listCollection)
+        //{
+        //    shortNamesOfList = ReadingStringLists(ListShortNamesPath);
+        //    Console.WriteLine("Create new List");
+        //    Console.WriteLine();
+        //    Console.WriteLine("Enter Name");
+        //    var listname = Console.ReadLine();
+
+        //    while (listname.Length < 5)
+        //    {
+        //        Console.WriteLine("The listname is too short.");
+        //        Console.WriteLine("Add a listname with at least a length of 3");
+        //        listname = Console.ReadLine();
+        //        Console.Clear();
+        //    }
+        //    string fulnameString = listname + "[" + listname[0] + listname[1] + "]"; //-->Bug liste kann nur geöffnet werden, wenn Großkleinschreibung stimmt
+        //    string fulnameStringLong = listname + "[" + listname[0] + listname[1] + listname[2] + "]";
+        //    var shortName = "";
+
+        //    char nameShort1 = fulnameString[fulnameString.Length - 2];
+        //    char nameShort2 = fulnameString[fulnameString.Length - 3];
+        //    char[] nameShortArr = { nameShort2, nameShort1 };
+        //    shortName = new string(nameShortArr);
+
+        //    Console.WriteLine();
+        //    Console.WriteLine(shortName);
+        //    Console.WriteLine();
+        //    Console.ReadLine();
+
+        //    if (shortNamesOfList.Contains(shortName)) //Todo: Für mehrere Fälle machen, universell machen --> Rekursive Methode
+        //    {
+        //        char nameShort3 = listname[2];
+        //        char[] shortnameArr = new char[3];
+        //        shortnameArr[0] = nameShortArr[0];
+        //        shortnameArr[1] = nameShortArr[1];
+        //        shortnameArr[2] = nameShort3;
+
+
+        //        shortName = new string(shortnameArr);
+        //        shortNamesOfList.Add(shortName);
+        //        SaveStringLists(shortNamesOfList, ListShortNamesPath);
+        //        listCollection.Add(fulnameStringLong);
+        //        SaveStringLists(listCollection, ListFullNamesPath);
+        //    }
+        //    else
+        //    {
+        //        char[] shortnameArr = new char[2];
+        //        shortnameArr[0] = nameShortArr[0];
+        //        shortnameArr[1] = nameShortArr[1];
+
+        //        shortName = new string(shortnameArr);
+        //        shortNamesOfList.Add(shortName);
+        //        SaveStringLists(shortNamesOfList, ListShortNamesPath);
+        //        listCollection.Add(fulnameString);
+        //        SaveStringLists(listCollection, ListFullNamesPath);
+        //    }
+        //    Console.WriteLine("Set a password? [y/n]");
+        //    var setPassword = Console.ReadLine();
+
+           
+
+        //    data.CreatePath(shortName);
+        //    data.FolderExists();
+        //    Console.WriteLine();
+        //    Console.WriteLine("List created");
+        //    //Hier weiter --> Passwort wird generiert
+        //    switch (setPassword)
+        //    {
+        //        case "y":
+        //            SetPassword(data);
+        //            break;
+
+        //        default:
+        //            SaveString("", data.pathPassword);
+        //            break;
+        //    }
+        //    Console.Clear();
+
+        //}
+
         public void AddSublist(Data data, List<string> listCollection)
         {
             shortNamesOfList = ReadingStringLists(ListShortNamesPath);
@@ -214,51 +294,25 @@ namespace ItemList.Classes
                 listname = Console.ReadLine();
                 Console.Clear();
             }
-            string fulnameString = listname + "[" + listname[0] + listname[1] + "]"; //-->Bug liste kann nur geöffnet werden, wenn Großkleinschreibung stimmt
-            string fulnameStringLong = listname + "[" + listname[0] + listname[1] + listname[2] + "]";
+             //-->Bug liste kann nur geöffnet werden, wenn Großkleinschreibung stimmt
+            
             var shortName = "";
 
-            char nameShort1 = fulnameString[fulnameString.Length - 2];
-            char nameShort2 = fulnameString[fulnameString.Length - 3];
-            char[] nameShortArr = { nameShort2, nameShort1 };
-            shortName = new string(nameShortArr);
 
-            Console.WriteLine();
-            Console.WriteLine(shortName);
-            Console.WriteLine();
-            Console.ReadLine();
 
-            if (shortNamesOfList.Contains(shortName)) //Todo: Für mehrere Fälle machen, universell machen --> Rekursive Methode
-            {
-                char nameShort3 = listname[2];
-                char[] shortnameArr = new char[3];
-                shortnameArr[0] = nameShortArr[0];
-                shortnameArr[1] = nameShortArr[1];
-                shortnameArr[2] = nameShort3;
-                
+            shortName = GenerateShortname(listname, shortNamesOfList, longNamesOfList);
 
-                shortName = new string(shortnameArr);
-                shortNamesOfList.Add(shortName);
-                SaveStringLists(shortNamesOfList, ListShortNamesPath);
-                listCollection.Add(fulnameStringLong);
-                SaveStringLists(listCollection, ListFullNamesPath);
-            }
-            else
-            {
-                char[] shortnameArr = new char[2];
-                shortnameArr[0] = nameShortArr[0];
-                shortnameArr[1] = nameShortArr[1];
+            listname = listname + "[" +shortName + "]";
 
-                shortName = new string(shortnameArr);
-                shortNamesOfList.Add(shortName);
-                SaveStringLists(shortNamesOfList, ListShortNamesPath);
-                listCollection.Add(fulnameString);
-                SaveStringLists(listCollection, ListFullNamesPath);
-            }
+            longNamesOfList.Add(listname);
+            shortNamesOfList.Add(shortName);
+            SaveStringLists(longNamesOfList, ListFullNamesPath);
+            SaveStringLists(shortNamesOfList, ListShortNamesPath);
+
             Console.WriteLine("Set a password? [y/n]");
             var setPassword = Console.ReadLine();
 
-           
+
 
             data.CreatePath(shortName);
             data.FolderExists();
@@ -279,6 +333,37 @@ namespace ItemList.Classes
 
         }
 
+        public string GenerateShortname( string listname, List<string> shortlist, List<string> longlist) //Nur kürzel für Ordner -->Googeln
+        {
+            int indexer = 2;
+            string listnameShort = listname.Substring(0, indexer);
+          
+            while (shortlist.Contains(listnameShort) && indexer < listname.Length)
+            {
+                indexer++;
+                listnameShort = listname.Substring(0, indexer);
+                //char additionalCharOfLongname = listname[1 + indexer];
+                //string removeLastCharOflongname = listname.Remove(listname.Length - 1);
+
+                //listname = removeLastCharOflongname + additionalCharOfLongname + "]";
+                //listnameShort = listnameShort + listname[indexer + 1];
+                //Console.WriteLine("Index: "+indexer);
+                //Console.WriteLine("Shortname"+listnameShort.Length);
+                //Console.ReadLine();
+
+                //indexer++;
+                //if(indexer == listname.Length-2 )
+                //{
+                //    listnameShort = listnameShort + listname[listname.Length - 1];
+                //    Console.WriteLine("ERREICHT");
+                //}
+            }
+            
+
+            return listnameShort;
+        }
+
+
         public void DeleteSublist(Data data)
         {
           //  var fullnameList = ReadingStringLists(ListFullNamesPath);
@@ -295,7 +380,7 @@ namespace ItemList.Classes
             }
             int indexOfname = shortnameList.IndexOf(shortname);
 
-            SearchString(data, listnames, indexOfname);
+            SearchString(data, longNamesOfList, indexOfname);
             shortnameList.Remove(shortname);
             SaveStringLists(shortnameList, ListShortNamesPath);
 
@@ -343,6 +428,7 @@ namespace ItemList.Classes
         //Passwort
 
         //--> Hier könnte man noch Passwortrichtlinien erstellen
+        //Bug: wenn passwort eingegen wird, das passwort kopiert ist, wird es sichtbar!!!!!
         
         public void SetPassword(Data data)
         {
