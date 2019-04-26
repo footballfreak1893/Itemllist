@@ -99,8 +99,6 @@ namespace ItemList.Classes
                 }
             }
 
-            //ShowDetails(data, false, data.dict);
-
             foreach (KeyValuePair<int, Item> entries in data.dict)
             {
                 if (endate == true)
@@ -124,7 +122,6 @@ namespace ItemList.Classes
                 }
             }
 
-            // ShowDetails(data, false, data.dict);
             Console.ReadKey();
             Console.Clear();
 

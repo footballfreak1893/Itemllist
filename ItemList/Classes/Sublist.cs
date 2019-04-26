@@ -20,6 +20,11 @@ namespace ItemList.Classes
 
         }
 
+        public Sublist()
+        {
+
+        }
+
         //paths
         string ListFullNamesPath = @"fullnames.txt";
         string ListShortNamesPath = @"shortnames.txt";
@@ -80,13 +85,8 @@ namespace ItemList.Classes
                 }
 
                 ////Notizen für weitere Features
-                ////Listnamen in File speichern, inkl. Namensüberschreibung
-                ////Passwort datei
-                ////-->Neue List: Eigene Methode: 3-4 einstellen
                 ////Wenn methode ausgeführt wird soll neue Liste sichtbar sein, mit Bennenung und evtl. passwort schutz+ weitere Details (kategorie..)
-                ////Listen sollen gelöscht werden können
                 ////Listen sollen germerged werden können
-                ////Prüfen, dass Name nicht doppelt vorkommt, wenn user Liste erstellt
             }
         }
 
@@ -199,86 +199,7 @@ namespace ItemList.Classes
             }
         }
 
-        //public void AddSublist(Data data, List<string> listCollection)
-        //{
-        //    shortNamesOfList = ReadingStringLists(ListShortNamesPath);
-        //    Console.WriteLine("Create new List");
-        //    Console.WriteLine();
-        //    Console.WriteLine("Enter Name");
-        //    var listname = Console.ReadLine();
-
-        //    while (listname.Length < 5)
-        //    {
-        //        Console.WriteLine("The listname is too short.");
-        //        Console.WriteLine("Add a listname with at least a length of 3");
-        //        listname = Console.ReadLine();
-        //        Console.Clear();
-        //    }
-        //    string fulnameString = listname + "[" + listname[0] + listname[1] + "]"; //-->Bug liste kann nur geöffnet werden, wenn Großkleinschreibung stimmt
-        //    string fulnameStringLong = listname + "[" + listname[0] + listname[1] + listname[2] + "]";
-        //    var shortName = "";
-
-        //    char nameShort1 = fulnameString[fulnameString.Length - 2];
-        //    char nameShort2 = fulnameString[fulnameString.Length - 3];
-        //    char[] nameShortArr = { nameShort2, nameShort1 };
-        //    shortName = new string(nameShortArr);
-
-        //    Console.WriteLine();
-        //    Console.WriteLine(shortName);
-        //    Console.WriteLine();
-        //    Console.ReadLine();
-
-        //    if (shortNamesOfList.Contains(shortName)) //Todo: Für mehrere Fälle machen, universell machen --> Rekursive Methode
-        //    {
-        //        char nameShort3 = listname[2];
-        //        char[] shortnameArr = new char[3];
-        //        shortnameArr[0] = nameShortArr[0];
-        //        shortnameArr[1] = nameShortArr[1];
-        //        shortnameArr[2] = nameShort3;
-
-
-        //        shortName = new string(shortnameArr);
-        //        shortNamesOfList.Add(shortName);
-        //        SaveStringLists(shortNamesOfList, ListShortNamesPath);
-        //        listCollection.Add(fulnameStringLong);
-        //        SaveStringLists(listCollection, ListFullNamesPath);
-        //    }
-        //    else
-        //    {
-        //        char[] shortnameArr = new char[2];
-        //        shortnameArr[0] = nameShortArr[0];
-        //        shortnameArr[1] = nameShortArr[1];
-
-        //        shortName = new string(shortnameArr);
-        //        shortNamesOfList.Add(shortName);
-        //        SaveStringLists(shortNamesOfList, ListShortNamesPath);
-        //        listCollection.Add(fulnameString);
-        //        SaveStringLists(listCollection, ListFullNamesPath);
-        //    }
-        //    Console.WriteLine("Set a password? [y/n]");
-        //    var setPassword = Console.ReadLine();
-
-           
-
-        //    data.CreatePath(shortName);
-        //    data.FolderExists();
-        //    Console.WriteLine();
-        //    Console.WriteLine("List created");
-        //    //Hier weiter --> Passwort wird generiert
-        //    switch (setPassword)
-        //    {
-        //        case "y":
-        //            SetPassword(data);
-        //            break;
-
-        //        default:
-        //            SaveString("", data.pathPassword);
-        //            break;
-        //    }
-        //    Console.Clear();
-
-        //}
-
+       
         public void AddSublist(Data data, List<string> listCollection)
         {
             shortNamesOfList = ReadingStringLists(ListShortNamesPath);
@@ -298,10 +219,14 @@ namespace ItemList.Classes
             
             var shortName = "";
 
-
-
             shortName = GenerateShortname(listname, shortNamesOfList, longNamesOfList);
 
+            while(listname == shortName)
+            {
+                Console.WriteLine("The listname is incorrect, enter a other name");
+                listname = Console.ReadLine();
+                shortName = GenerateShortname(listname, shortNamesOfList, longNamesOfList);
+            }
             listname = listname + "[" +shortName + "]";
 
             longNamesOfList.Add(listname);
@@ -312,13 +237,11 @@ namespace ItemList.Classes
             Console.WriteLine("Set a password? [y/n]");
             var setPassword = Console.ReadLine();
 
-
-
             data.CreatePath(shortName);
             data.FolderExists();
             Console.WriteLine();
             Console.WriteLine("List created");
-            //Hier weiter --> Passwort wird generiert
+
             switch (setPassword)
             {
                 case "y":
@@ -333,7 +256,7 @@ namespace ItemList.Classes
 
         }
 
-        public string GenerateShortname( string listname, List<string> shortlist, List<string> longlist) //Nur kürzel für Ordner -->Googeln
+        public string GenerateShortname( string listname, List<string> shortlist, List<string> longlist) //Nur erlaubte Zeichen für Ordner -->Googeln
         {
             int indexer = 2;
             string listnameShort = listname.Substring(0, indexer);
@@ -342,27 +265,10 @@ namespace ItemList.Classes
             {
                 indexer++;
                 listnameShort = listname.Substring(0, indexer);
-                //char additionalCharOfLongname = listname[1 + indexer];
-                //string removeLastCharOflongname = listname.Remove(listname.Length - 1);
-
-                //listname = removeLastCharOflongname + additionalCharOfLongname + "]";
-                //listnameShort = listnameShort + listname[indexer + 1];
-                //Console.WriteLine("Index: "+indexer);
-                //Console.WriteLine("Shortname"+listnameShort.Length);
-                //Console.ReadLine();
-
-                //indexer++;
-                //if(indexer == listname.Length-2 )
-                //{
-                //    listnameShort = listnameShort + listname[listname.Length - 1];
-                //    Console.WriteLine("ERREICHT");
-                //}
             }
-            
 
             return listnameShort;
         }
-
 
         public void DeleteSublist(Data data)
         {
@@ -405,25 +311,23 @@ namespace ItemList.Classes
             SubMenu(data, shortNameInput);
         }
 
-        public void DisplayShortlist()
-        {
-            var list = ReadingStringLists(ListShortNamesPath);
-            foreach (var shorts in list)
-            {
-                Console.WriteLine(shorts);
-            }
-        }
+        //public void DisplayShortlist()
+        //{
+        //    var list = ReadingStringLists(ListShortNamesPath);
+        //    foreach (var shorts in list)
+        //    {
+        //        Console.WriteLine(shorts);
+        //    }
+        //}
 
-        public string GenerateFolder(string input)
-        {
+        //public string GenerateFolder(string input)
+        //{
 
-           var folder = Path.Combine("Data\\Sub", input);
-            Directory.CreateDirectory(folder);
-            Console.WriteLine("folder created");
-            return folder;
-        }
-
-
+        //   var folder = Path.Combine("Data\\Sub", input);
+        //    Directory.CreateDirectory(folder);
+        //    Console.WriteLine("folder created");
+        //    return folder;
+        //}
 
         //Passwort
 

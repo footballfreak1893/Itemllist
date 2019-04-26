@@ -19,7 +19,7 @@ namespace ItemList
         public int currentid = 1;
 
         CheckingNumbers checkingNumbers = new CheckingNumbers();
-
+        Sublist sublist = new Sublist();
         public Data()
         {
 
@@ -218,6 +218,7 @@ namespace ItemList
             currentid = 0;
             SaveId(pathId, currentid);
             SaveList(path);
+            //Hier mmuss noch passwort reset eingebaut werden
             Console.WriteLine("List has been reseted");
         }
 
