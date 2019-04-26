@@ -10,10 +10,11 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ItemList.Classes
 {
-    class Sublist
+   public  class Sublist
     {
-        List<string> longNamesOfList = new List<string>();
-        List<string> shortNamesOfList = new List<string>();
+        List<string> longNamesList = new List<string>();
+        List<string> shortNamesList = new List<string>();
+        Password password = new Password();
 
         public Sublist(Data data)
         {
@@ -33,13 +34,13 @@ namespace ItemList.Classes
         {
             while (true)
             {
-                longNamesOfList = ReadingStringLists(ListFullNamesPath);
-                shortNamesOfList = ReadingStringLists(ListShortNamesPath);
+                longNamesList = data.ReadingStringLists(ListFullNamesPath);
+                shortNamesList = data.ReadingStringLists(ListShortNamesPath);
 
                 Console.WriteLine("Sub Overview");
                 Console.WriteLine("Avaible lists");
                 Console.WriteLine();
-                DisplayListnames(longNamesOfList);
+                data.DisplayListnames(longNamesList);
                 Console.WriteLine();
                 Console.WriteLine("Create new list [n]");
                 Console.WriteLine("Open list [enter short of listname]");
@@ -56,7 +57,7 @@ namespace ItemList.Classes
                 {
                     case "n":
                         Console.Clear();
-                        AddSublist(data, longNamesOfList);
+                        AddSublist(data, longNamesList);
                         break;
 
                     case "d":
@@ -72,7 +73,7 @@ namespace ItemList.Classes
                         return;
 
                     default:
-                        if (!shortNamesOfList.Contains(userinput))
+                        if (!shortNamesList.Contains(userinput))
                         {
                             Console.Clear();
                             Console.WriteLine("Error: " + userinput + " does not exists");
@@ -104,10 +105,9 @@ namespace ItemList.Classes
                 Console.WriteLine("Sublist Menu");
                 Console.WriteLine();
                 Console.WriteLine("--> " + listname + " <--");
-                EnterPassword(data);
+                password.EnterPassword(data);
                 Console.WriteLine();
                 Console.WriteLine("New Entry [n]");
-                //Console.WriteLine("Delete sublist [d]");
                 Console.WriteLine("Exit Programm [e]");
                 Console.WriteLine("Show Deatils [x]");
                 Console.WriteLine("Password settings [p]");
@@ -125,8 +125,6 @@ namespace ItemList.Classes
                         data.AddItem();
                         break;
 
-                    
-
                     case "e":
                         Console.Clear();
                         Start.Exit(data);
@@ -139,7 +137,7 @@ namespace ItemList.Classes
 
                     case "p":
                         Console.Clear();
-                        PasswortSettings(data);
+                        password.PasswortSettings(data);
                         break;
 
                     case "r":
@@ -168,41 +166,19 @@ namespace ItemList.Classes
             }
         }
 
-        public void SaveStringLists(List<string> list, string path)
+        public void OpenList(Data data, string shortNameInput)
         {
-            using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write))
-            using (StreamWriter sw = new StreamWriter(fs))
-            {
-                foreach (var item in list)
-                {
-                    sw.WriteLine(item);
-                }
-            }
+
+            data.CreatePath(shortNameInput);
+            data.FolderExists();
+            Console.WriteLine("Open List");
+            Console.Clear();
+            SubMenu(data, shortNameInput);
         }
 
-        public List<string> ReadingStringLists(string path)
-        {
-            if (!File.Exists(path))
-            {
-                File.WriteAllText(path, "");
-            }
-            var stringArr = File.ReadAllLines(path);
-            var stringList = stringArr.ToList();
-            return stringList;
-        }
-
-        public void DisplayListnames(List<string> inputnames)
-        {
-            foreach (var item in inputnames)
-            {
-                Console.WriteLine(item);
-            }
-        }
-
-       
         public void AddSublist(Data data, List<string> listCollection)
         {
-            shortNamesOfList = ReadingStringLists(ListShortNamesPath);
+            shortNamesList = data.ReadingStringLists(ListShortNamesPath);
             Console.WriteLine("Create new List");
             Console.WriteLine();
             Console.WriteLine("Enter Name");
@@ -215,24 +191,25 @@ namespace ItemList.Classes
                 listname = Console.ReadLine();
                 Console.Clear();
             }
-             //-->Bug liste kann nur geöffnet werden, wenn Großkleinschreibung stimmt
-            
+            //-->Bug liste kann nur geöffnet werden, wenn Großkleinschreibung stimmt
+
             var shortName = "";
 
-            shortName = GenerateShortname(listname, shortNamesOfList, longNamesOfList);
+            shortName = GenerateShortname(listname, shortNamesList, longNamesList);
+            shortName = shortName.ToLower(); 
 
-            while(listname == shortName)
+            while (listname == shortName)
             {
                 Console.WriteLine("The listname is incorrect, enter a other name");
                 listname = Console.ReadLine();
-                shortName = GenerateShortname(listname, shortNamesOfList, longNamesOfList);
+                shortName = GenerateShortname(listname, shortNamesList, longNamesList);
             }
-            listname = listname + "[" +shortName + "]";
+            listname = listname + "[" + shortName + "]";
 
-            longNamesOfList.Add(listname);
-            shortNamesOfList.Add(shortName);
-            SaveStringLists(longNamesOfList, ListFullNamesPath);
-            SaveStringLists(shortNamesOfList, ListShortNamesPath);
+            longNamesList.Add(listname);
+            shortNamesList.Add(shortName);
+            data.SaveStringLists(longNamesList, ListFullNamesPath);
+            data.SaveStringLists(shortNamesList, ListShortNamesPath);
 
             Console.WriteLine("Set a password? [y/n]");
             var setPassword = Console.ReadLine();
@@ -245,15 +222,45 @@ namespace ItemList.Classes
             switch (setPassword)
             {
                 case "y":
-                    SetPassword(data);
+                    password.SetPassword(data);
                     break;
 
                 default:
-                    SaveString("", data.pathPassword);
+                    data.SaveString("", data.pathPassword);
                     break;
             }
             Console.Clear();
+        }
 
+        public void DeleteSublist(Data data)
+        {
+            //  var fullnameList = ReadingStringLists(ListFullNamesPath);
+            var shortnameList = data.ReadingStringLists(ListShortNamesPath);
+            Console.WriteLine("Enter short");
+            var shortname = Console.ReadLine();
+
+            if (!shortNamesList.Contains(shortname))
+            {
+                Console.Clear();
+                Console.WriteLine("Error: " + shortname + " does not exists");
+
+                return;
+            }
+            int indexOfname = shortnameList.IndexOf(shortname);
+
+            SearchString(data, longNamesList, indexOfname);
+            shortnameList.Remove(shortname);
+            data.SaveStringLists(shortnameList, ListShortNamesPath);
+
+            var folder = Path.Combine("Data\\Sub", shortname);
+            Directory.Delete(folder, true);
+            Console.WriteLine("Sublist has been removed");
+        }
+
+        public void SearchString(Data data, List<string> list, int index)
+        {
+            list.RemoveAt(index);
+            data.SaveStringLists(list, ListFullNamesPath);
         }
 
         public string GenerateShortname( string listname, List<string> shortlist, List<string> longlist) //Nur erlaubte Zeichen für Ordner -->Googeln
@@ -270,47 +277,6 @@ namespace ItemList.Classes
             return listnameShort;
         }
 
-        public void DeleteSublist(Data data)
-        {
-          //  var fullnameList = ReadingStringLists(ListFullNamesPath);
-            var shortnameList = ReadingStringLists(ListShortNamesPath);
-            Console.WriteLine("Enter short");
-               var shortname = Console.ReadLine();
-
-            if (!shortNamesOfList.Contains(shortname))
-            {
-                Console.Clear();
-                Console.WriteLine("Error: " + shortname + " does not exists");
-
-                return;
-            }
-            int indexOfname = shortnameList.IndexOf(shortname);
-
-            SearchString(data, longNamesOfList, indexOfname);
-            shortnameList.Remove(shortname);
-            SaveStringLists(shortnameList, ListShortNamesPath);
-
-            var folder = Path.Combine("Data\\Sub", shortname);
-            Directory.Delete(folder, true);
-            Console.WriteLine("Sublist has been removed");
-        }
-
-        public void SearchString(Data data, List<string> list, int index) 
-        {
-            list.RemoveAt(index);
-            SaveStringLists(list, ListFullNamesPath);
-        }
-
-        public void OpenList(Data data, string shortNameInput)
-        {
-             
-           data.CreatePath(shortNameInput);
-            data.FolderExists();
-            Console.WriteLine("Open List");
-            Console.Clear();
-            SubMenu(data, shortNameInput);
-        }
-
         //public void DisplayShortlist()
         //{
         //    var list = ReadingStringLists(ListShortNamesPath);
@@ -323,147 +289,14 @@ namespace ItemList.Classes
         //public string GenerateFolder(string input)
         //{
 
-        //   var folder = Path.Combine("Data\\Sub", input);
+        //    var folder = Path.Combine("Data\\Sub", input);
         //    Directory.CreateDirectory(folder);
         //    Console.WriteLine("folder created");
         //    return folder;
         //}
 
-        //Passwort
-
-        //--> Hier könnte man noch Passwortrichtlinien erstellen
-        //Bug: wenn passwort eingegen wird, das passwort kopiert ist, wird es sichtbar!!!!!
         
-        public void SetPassword(Data data)
-        {
-            Console.WriteLine("Enter password");
-            Console.ForegroundColor = ConsoleColor.Black;
-            var password = Console.ReadLine();
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("Password set");
 
-            password = AES.CryptMenu(password, 'e');
-            SaveString(password, data.pathPassword);
-
-           //SaveString(password, data.pathPassword);
-        }
-
-        public void EnterPassword(Data data)
-        {
-            var password = ReadString(data.pathPassword);
-            password = AES.CryptMenu(password, 'd');
-
-            if (password == null || password == "")
-            {
-                return;
-            }
-
-            Console.WriteLine("This list requires a password, please enter it");
-            Console.ForegroundColor = ConsoleColor.Black;
-            var inputPassword = Console.ReadLine();
-            Console.ForegroundColor = ConsoleColor.White;
-
-            while (password != inputPassword)
-            {
-                Console.WriteLine("Password is incorrect, try again");
-                Console.ForegroundColor = ConsoleColor.Black;
-                inputPassword = Console.ReadLine();
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-        }
-
-       
-        public void Change_Or_SetNull_Password(Data data, char deleteOrChange)
-        {
-            if (deleteOrChange == 'd')
-            {
-                var password = "";
-                SaveString(password, data.pathPassword);
-            }
-
-            else
-            {
-                Console.WriteLine("Change password");
-                Console.WriteLine("enter current password");
-                Console.ForegroundColor = ConsoleColor.Black;
-                var inputPasswordCurrent = Console.ReadLine();
-                var password = ReadString(data.pathPassword);
-                password = AES.CryptMenu(password, 'd');
-                Console.ForegroundColor = ConsoleColor.White;
-
-                while (password != inputPasswordCurrent)
-                {
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("Current password is incorrect, try again");
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    inputPasswordCurrent = Console.ReadLine();
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-                Console.ForegroundColor = ConsoleColor.White;
-
-                Console.WriteLine("enter new password");
-                Console.ForegroundColor = ConsoleColor.Black;
-                password = Console.ReadLine();
-                password = AES.CryptMenu(password, 'e');
-                SaveString(password, data.pathPassword);
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Password has successfully changed");
-            }
-        }
-
-        public void PasswortSettings(Data data)
-        {
-            //--> BUG: Wenn Feature Farbe ändern eingebaut wird muss andere Lösung her als vordergrundfarbe zu ändern (Idee -->..)
-            Console.WriteLine("Password settings");
-            Console.WriteLine();
-
-             var password = ReadString(data.pathPassword);
-             password = AES.CryptMenu(password, 'd');
-
-            if (password == null || password == "")
-            {
-                Console.WriteLine("add password [a]");
-            }
-
-            Console.WriteLine("Change password [c]");
-            Console.WriteLine("Deactivate password [d]");
-            var userinput = Console.ReadLine();
-           userinput = userinput.ToLower();
-
-            switch (userinput)
-            {
-                case "a":
-                    SetPassword(data);
-                    break;
-
-                case "c":
-                    Change_Or_SetNull_Password(data, 'c');
-                    break;
-
-                case "d":
-                    Change_Or_SetNull_Password(data, 'd');
-                    break;
-
-                case "p":
-                   
-                    break;
-
-                default:
-                    return;
-            }
-            Console.Clear();
-        }
-
-        public void SaveString(string text, string path)
-        {
-            File.WriteAllText(path, text);
-        }
-
-        public string ReadString(string path)
-        {
-           var text = File.ReadAllText(path);
-            return text;
-        }
     }
 }
 

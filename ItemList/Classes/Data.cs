@@ -67,45 +67,6 @@ namespace ItemList
 
         }
 
-        public void SaveList(string path)
-        {
-            System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Create, System.IO.FileAccess.Write);
-            IFormatter bf = new BinaryFormatter();
-
-            bf.Serialize(fs, dict);
-
-            fs.Close();
-        }
-
-        public Dictionary<int, Item> LoadList(string path)
-        {
-            System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-            IFormatter bf = new BinaryFormatter();
-            dict = (Dictionary<int, Item>)bf.Deserialize(fs);
-            fs.Close();
-
-            return dict;
-        }
-
-        public int ReadId()
-        {
-            currentidStr = File.ReadAllText(pathId);
-            int currentid = Convert.ToInt32(currentidStr);
-            return currentid;
-        }
-
-        public void SaveId(string pathId, int currentid)
-        {
-            currentidStr = Convert.ToString(currentid);
-            File.WriteAllText(pathId, currentidStr);
-        }
-
-        public int CountId(int currentid)
-        {
-            currentid = currentid + 1;
-            return currentid;
-        }
-
         public void AddItem()
         {
             currentid = ReadId();
@@ -234,6 +195,91 @@ namespace ItemList
             currentidStr = "1";
             currentid = 1;
             return path;
+        }
+
+        //Working with lists
+
+        public void SaveList(string path)
+        {
+            System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Create, System.IO.FileAccess.Write);
+            IFormatter bf = new BinaryFormatter();
+
+            bf.Serialize(fs, dict);
+
+            fs.Close();
+        }
+
+        public Dictionary<int, Item> LoadList(string path)
+        {
+            System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+            IFormatter bf = new BinaryFormatter();
+            dict = (Dictionary<int, Item>)bf.Deserialize(fs);
+            fs.Close();
+
+            return dict;
+        }
+
+        public int ReadId()
+        {
+            currentidStr = File.ReadAllText(pathId);
+            int currentid = Convert.ToInt32(currentidStr);
+            return currentid;
+        }
+
+        public void SaveId(string pathId, int currentid)
+        {
+            currentidStr = Convert.ToString(currentid);
+            File.WriteAllText(pathId, currentidStr);
+        }
+
+        public int CountId(int currentid)
+        {
+            currentid = currentid + 1;
+            return currentid;
+        }
+
+
+        //Working with Strings /Lists
+        public void SaveString(string text, string path)
+        {
+            File.WriteAllText(path, text);
+        }
+
+        public string ReadString(string path)
+        {
+            var text = File.ReadAllText(path);
+            return text;
+        }
+
+        public void SaveStringLists(List<string> list, string path)
+        {
+            using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write))
+            using (StreamWriter sw = new StreamWriter(fs))
+            {
+                foreach (var item in list)
+                {
+                    sw.WriteLine(item);
+                }
+            }
+        }
+
+        public List<string> ReadingStringLists(string path)
+        {
+            if (!File.Exists(path))
+            {
+                File.WriteAllText(path, "");
+            }
+            var stringArr = File.ReadAllLines(path);
+            var stringList = stringArr.ToList();
+            return stringList;
+        }
+
+        public void DisplayListnames(List<string> inputnames)
+        {
+            foreach (var item in inputnames)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }

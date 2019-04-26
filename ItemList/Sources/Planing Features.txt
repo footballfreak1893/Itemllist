@@ -5,11 +5,6 @@ DONE-Sublisten löschen --
 -Update Methode für Sublisten
 -Defaultliste auswählen (-->User Settings)
 -Defaultansicht auswählen pro liste
--Listen mergen
-
-
-Ordner:
--Bei Passwort geschützter liste löschen verhindern --> Wolfgang empfilt das nicht
 
 
 Obtik:
@@ -17,11 +12,11 @@ Obtik:
 -Fällige einträge mit gelb(=heute fällig), rot(=überfällig), grün(=noch nicht fällig)
 
 
-
 Nice to Have Features / Feinheiten:
-
 -OpenList: Longname soll angezeigt werden
 -Passwort: Andere Möglichkeit für Passswortgenerierung (Aktuelles Problem: Wenn Passwort bei Eingabe kopiert wird, ist es sichtbar)
+-Listen mergen
+-Bei Passwort geschützter liste löschen verhindern --> Wolfgang empfilt das nicht
 
 
 

@@ -8,7 +8,6 @@ namespace ItemList.Classes
 {
     public static class AES
     {
-        
         public static string key = "00000000000000000000000000000000";
 
         private static byte[] DoExtendKey(string key, int newKeyLength)
@@ -37,8 +36,6 @@ namespace ItemList.Classes
 
         public static string Encrypt(string cleartext, string key)
         {
-
-            
             Aes AESCrypto = Aes.Create();
             AESCrypto.Key = DoExtendKey(key, 32);
             AESCrypto.IV = DoCreateBlocksize(16);
@@ -77,8 +74,6 @@ namespace ItemList.Classes
                 byte[] plainBytes = ms.ToArray();
                cleartext = Encoding.UTF8.GetString(plainBytes);
 
-               
-
             }
             catch (Exception)
             {
@@ -90,7 +85,6 @@ namespace ItemList.Classes
             ms.Close();
             cs.Close();
             return cleartext;
-
         }
 
         public static string CryptMenu(string text, char typ)

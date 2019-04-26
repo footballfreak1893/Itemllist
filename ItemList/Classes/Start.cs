@@ -12,18 +12,14 @@ namespace ItemList
         {
             Data data = new Data();
             StartProgramm(data);
-            Display display = new Display();
             
         }
 
         public static void StartProgramm(Data data)
         {
             string path = "data";
-            //data.CheckListtype("d");
             data.FolderExists();
             Sublist sublist = new Sublist(data);
-            
-            
 
             string version = "v 2.0";
             Display display = new Display();
@@ -77,9 +73,6 @@ namespace ItemList
                     case "s":
                         Console.Clear();
                         sublist.SubOverview(data);
-                        
-                       
-
                         break;
 
                     //case "fi":

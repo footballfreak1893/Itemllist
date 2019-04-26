@@ -84,12 +84,14 @@ namespace ItemList
             return newName;
         }
 
-        //Not used
+        
         public static void CreateFolder(string foldername)
         {
             DirectoryInfo di = new DirectoryInfo(foldername);
             di.Create();
             Console.WriteLine("Folder created");
         }
+
+      
     }
 }
