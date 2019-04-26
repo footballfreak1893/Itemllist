@@ -15,15 +15,67 @@ namespace ItemList
             
         }
 
+        //public static void StartMenu()
+        //{
+        //    Data data = new Data();
+        //    Sublist sublist = new Sublist(data);
+        //    Console.WriteLine("Checkliste");
+        //    Console.WriteLine();
+        //    Console.WriteLine("New List [n]");
+        //    Console.WriteLine("Open List [o]");
+        //    Console.WriteLine("Exit Programm [e]");
+
+        //    var userinput = Console.ReadLine();
+        //    userinput.ToLower();
+
+        //    switch (userinput)
+        //    {
+        //        case "n":
+        //            Console.Clear();
+        //            sublist.AddSublist(data, sublist.longNamesList);
+        //            break;
+
+        //        case "d":
+        //            sublist.DeleteSublist(data);
+        //            break;
+
+        //        case "b":
+        //            Console.Clear();
+        //            return;
+
+        //        case "e":
+        //            Start.Exit(data);
+        //            return;
+
+        //        default:
+        //            if (!sublist.shortNamesList.Contains(userinput))
+        //            {
+        //                Console.Clear();
+        //                Console.WriteLine("Error: " + userinput + " does not exists");
+
+        //                break;
+        //            }
+        //            Console.Clear();
+        //            sublist.OpenList(data, userinput);
+        //            break;
+        //    }
+        //}
+
         public static void StartProgramm(Data data)
         {
-            string path = "data";
-            data.FolderExists();
+            //data.FolderExists();
             Sublist sublist = new Sublist(data);
 
             string version = "v 2.0";
             Display display = new Display();
             Filter filter = new Filter();
+            //Das soll dynamisch passieren
+            //Idee: Defaultlist bei Programmstart einlesen, evtl. string speichern der dem Shortname hinzugefügt wird,
+            //Wenn Defaultlist geändert wird, wird der str der neuen liste hinzugefügt (Der char soll user nicht bemerken)
+            sublist.OpenDefaultList(data);
+            //sublist.SubMenu(data, "Ha");
+            //display.ShowDetails(data, false, data.dict);
+            sublist.SubOverview(data);
 
             while (true)
             {

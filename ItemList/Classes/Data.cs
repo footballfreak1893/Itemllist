@@ -16,6 +16,8 @@ namespace ItemList
         public string pathId = @"Data\idfile.txt";
         public string pathPassword = @"Data\password.txt";
         public string currentidStr = "1";
+        public string pathDefaultlist = @"Data\defaultlist.txt";
+        public string pathSubFolder = @"Data\Sub";
         public int currentid = 1;
 
         CheckingNumbers checkingNumbers = new CheckingNumbers();
@@ -183,18 +185,22 @@ namespace ItemList
             Console.WriteLine("List has been reseted");
         }
 
-        public string CreatePath( string input)
+        public string CreatePath( string input, bool createDefault)
         {
-            var folder = Path.Combine("Data\\Sub", input);
+            folder = Path.Combine("Data\\Sub", input);
             Directory.CreateDirectory(folder);
             Console.WriteLine("folder created");
 
             path = Path.Combine( folder + "\\_Data.txt");//Wird noch nicht erstellt
             pathId =Path.Combine(folder + "\\_IdFile.txt");
             pathPassword = Path.Combine(folder + "\\_Password.txt");
+            if (createDefault == true)
+            {
+                pathDefaultlist = Path.Combine(folder + "\\_default.txt");
+            }
             currentidStr = "1";
             currentid = 1;
-            return path;
+            return pathDefaultlist;
         }
 
         //Working with lists
