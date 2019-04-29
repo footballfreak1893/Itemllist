@@ -15,6 +15,7 @@ namespace ItemList.Classes
          public List<string> longNamesList = new List<string>();
          public List<string> shortNamesList = new List<string>();
         Password password = new Password();
+        Display display = new Display();
 
         public Sublist(Data data)
         {
@@ -31,15 +32,8 @@ namespace ItemList.Classes
              var newPath = data.folder+ "//_default.txt";
             string[] defaultArr = Directory.GetFiles(data.pathSubFolder, "_default.txt", SearchOption.AllDirectories);
             
-
             var oldPath = defaultArr[0];
-            Console.WriteLine(oldPath);
             File.Move(oldPath, newPath);
-
-            //var directoryPath = oldPath.Substring(0, oldPath.IndexOf("\\_default.txt"));
-            //var dirName = Directory.GetDirectories(directoryPath).Last();
-            //x[1]
-           // shortname = shortname + "D";
         }
 
         public void OpenDefaultList(Data data)
@@ -49,12 +43,13 @@ namespace ItemList.Classes
             var oldPath = defaultArr[0];
             var dirInfo = Directory.GetParent(oldPath);
             dirName = dirInfo.Name;
-            OpenList(data, dirName);
+
+            OpenList(data, dirName, true);
         }
 
         //paths
-        string ListFullNamesPath = @"fullnames.txt";
-        string ListShortNamesPath = @"shortnames.txt";
+       public string ListFullNamesPath = @"fullnames.txt";
+       public string ListShortNamesPath = @"shortnames.txt";
 
         public void SubOverview(Data data)
         {
@@ -83,6 +78,7 @@ namespace ItemList.Classes
                 data.DisplayListnames(longNamesList);
                 Console.WriteLine();
                 Console.WriteLine("Create new list [n]");
+                Console.WriteLine("Open  default list [o]");
                 Console.WriteLine("Open list [enter short of listname]");
                 Console.WriteLine("Delete sublist [d]");
                 Console.WriteLine();
@@ -104,13 +100,18 @@ namespace ItemList.Classes
                         DeleteSublist(data);
                         break;
 
-                    //case "b":
-                    //    Console.Clear();
-                    //    return;
+                    case "o":
+                        Console.Clear();
+                        OpenDefaultList(data);
+                        return;
 
                     case "e":
                         Start.Exit(data);
                         return;
+
+                    case "":
+                        Console.Clear();
+                        break;
 
                     default:
                         if (!shortNamesList.Contains(userinput))
@@ -121,7 +122,7 @@ namespace ItemList.Classes
                             break;
                         }
                         Console.Clear();
-                        OpenList(data, userinput);
+                        OpenList(data, userinput, false);
                         break;
                 }
 
@@ -132,7 +133,7 @@ namespace ItemList.Classes
         }
 
         //Erweietrungen
-        public void SubMenu(Data data, string listname)
+        public void SubMenu(Data data, string listname, bool openEntrysDirectly)
         {
             ////Richtige Datei öfnnen
 
@@ -147,6 +148,20 @@ namespace ItemList.Classes
             }
             while (true)
             {
+                if (openEntrysDirectly == true)
+                {
+                    Console.Clear();
+                    Console.WriteLine("--> Checklist <--");
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine("--> " + listname + " <--");
+                    Console.WriteLine("Entries:");
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    display.ShowDetails(data, false, data.dict);
+                    Console.Clear();
+                }
+
                 Console.WriteLine("Sublist Menu");
                 Console.WriteLine();
                 Console.WriteLine("--> " + listname + " <--");
@@ -162,7 +177,11 @@ namespace ItemList.Classes
                 Console.WriteLine("Set as default [t]");
                 //Console.WriteLine("Finished entries [fi]");
 
-                string userinput = Console.ReadLine();
+                string userinput = "x";
+
+                   userinput = Console.ReadLine();
+                
+                
 
                 switch (userinput.ToLower())
                 {
@@ -216,14 +235,14 @@ namespace ItemList.Classes
             }
         }
 
-        public void OpenList(Data data, string shortNameInput)
+        public void OpenList(Data data, string shortNameInput, bool openEntrysDirectly)
         {
 
             data.CreatePath(shortNameInput, false);
             data.FolderExists();
             Console.WriteLine("Open List");
             Console.Clear();
-            SubMenu(data, shortNameInput);
+            SubMenu(data, shortNameInput, openEntrysDirectly);
         }
 
        

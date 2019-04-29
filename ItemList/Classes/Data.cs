@@ -128,6 +128,7 @@ namespace ItemList
                 Console.Clear();
                 dict.Add(item.id, item);
                 SaveList(path);
+                SaveId(pathId, currentid);
             }
         }
 

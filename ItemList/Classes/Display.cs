@@ -38,9 +38,10 @@ namespace ItemList.Classes
             Console.WriteLine("Enter ID to display details [number]");
             string inputid;
             inputid = Console.ReadLine();
-            if (inputid == "")
+            if (inputid == "" || inputid == null)
             {
-                Console.Clear();
+                
+               // Console.Clear();
                 return;
             }
             int id = CheckingNumbers.CheckingValuesINT(inputid);
