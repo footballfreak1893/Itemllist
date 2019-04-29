@@ -16,7 +16,7 @@ namespace ItemList
 
         public static void StartProgramm(Data data)
         {
-            Sublist sublist = new Sublist(data);
+            List sublist = new List(data);
 
             //string version = "v 2.0";
             Display display = new Display();
@@ -27,7 +27,7 @@ namespace ItemList
                 sublist.OpenDefaultList(data);
             }
 
-            sublist.SubOverview(data);
+            sublist.ListOverview(data);
         }
 
         public static void ListContainsEntries(Data data)

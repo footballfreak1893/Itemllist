@@ -10,19 +10,19 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ItemList.Classes
 {
-   public  class Sublist
+   public  class List
     {
          public List<string> longNamesList = new List<string>();
          public List<string> shortNamesList = new List<string>();
         Password password = new Password();
         Display display = new Display();
 
-        public Sublist(Data data)
+        public List(Data data)
         {
 
         }
 
-        public Sublist()
+        public List()
         {
 
         }
@@ -51,7 +51,7 @@ namespace ItemList.Classes
        public string ListFullNamesPath = @"fullnames.txt";
        public string ListShortNamesPath = @"shortnames.txt";
 
-        public void SubOverview(Data data)
+        public void ListOverview(Data data)
         {
             if(!Directory.Exists(data.folder))
             {
@@ -59,7 +59,7 @@ namespace ItemList.Classes
                 Console.WriteLine();
                 Console.WriteLine("No lists avaible!");
                
-              var input =  AddSublist(data, longNamesList);
+              var input =  AddList(data, longNamesList);
                 data.CreatePath(input, true);
                 File.WriteAllText(data.pathDefaultlist, "");
             }
@@ -93,11 +93,11 @@ namespace ItemList.Classes
                 {
                     case "n":
                         Console.Clear();
-                        AddSublist(data, longNamesList);
+                        AddList(data, longNamesList);
                         break;
 
                     case "d":
-                        DeleteSublist(data);
+                        DeleteList(data);
                         break;
 
                     case "o":
@@ -125,18 +125,12 @@ namespace ItemList.Classes
                         OpenList(data, userinput, false);
                         break;
                 }
-
-                ////Notizen für weitere Features
-                ////Wenn methode ausgeführt wird soll neue Liste sichtbar sein, mit Bennenung und evtl. passwort schutz+ weitere Details (kategorie..)
-                ////Listen sollen germerged werden können
             }
         }
 
         //Erweietrungen
-        public void SubMenu(Data data, string listname, bool openEntrysDirectly)
+        public void ListMenu(Data data, string listname, bool openEntrysDirectly)
         {
-            ////Richtige Datei öfnnen
-
             string version = "v 2.0";
             Display display = new Display();
             Filter filter = new Filter();
@@ -242,12 +236,12 @@ namespace ItemList.Classes
             data.FolderExists();
             Console.WriteLine("Open List");
             Console.Clear();
-            SubMenu(data, shortNameInput, openEntrysDirectly);
+            ListMenu(data, shortNameInput, openEntrysDirectly);
         }
 
        
 
-        public string AddSublist(Data data, List<string> listCollection)
+        public string AddList(Data data, List<string> listCollection)
         {
             shortNamesList = data.ReadingStringLists(ListShortNamesPath);
             Console.WriteLine("Create new List");
@@ -307,7 +301,7 @@ namespace ItemList.Classes
             Console.Clear();
         }
 
-        public void DeleteSublist(Data data)
+        public void DeleteList(Data data)
         {
             //  var fullnameList = ReadingStringLists(ListFullNamesPath);
             var shortnameList = data.ReadingStringLists(ListShortNamesPath);

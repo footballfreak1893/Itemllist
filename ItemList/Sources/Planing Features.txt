@@ -3,7 +3,7 @@ DONE -Passwort schützen (aufheben, ändern, Passwortdatei verschlüsseln)
 DONE Namen (shortname eindeutig halten(--> Rekursive Methode))
 DONE-Sublisten löschen -- 
 -Update Methode für Sublisten
--Defaultliste auswählen (-->User Settings)
+DONE Defaultliste auswählen (-->User Settings)
 -Defaultansicht auswählen pro liste
 
 
@@ -20,3 +20,5 @@ Nice to Have Features / Feinheiten:
 
 
 
+UserSettings:
+Ideen: Farbänderung, Attribute verwalten (neue überlegen, User kann diese aktivieren/deactivieren)

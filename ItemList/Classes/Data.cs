@@ -21,7 +21,7 @@ namespace ItemList
         public int currentid = 1;
 
         CheckingNumbers checkingNumbers = new CheckingNumbers();
-        Sublist sublist = new Sublist();
+        List sublist = new List();
         public Data()
         {
 
