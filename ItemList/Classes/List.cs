@@ -14,12 +14,19 @@ namespace ItemList.Classes
     {
          public List<string> longNamesList = new List<string>();
          public List<string> shortNamesList = new List<string>();
+
+        //paths
+        public string ListFullNamesPath = @"Data/fullnames.txt";
+        public string ListShortNamesPath = @"Data/shortnames.txt";
+
         Password password = new Password();
         Display display = new Display();
         UserSettings us = new UserSettings();
 
         public List(Data data)
         {
+            
+            DefaultFunctions.CreateFolder("Data");
             us.LoadUserSettings();
         }
 
@@ -48,22 +55,18 @@ namespace ItemList.Classes
             OpenList(data, dirName, true);
         }
 
-        //paths
-       public string ListFullNamesPath = @"fullnames.txt";
-       public string ListShortNamesPath = @"shortnames.txt";
-
         public void ListOverview(Data data)
         {
-            if(!Directory.Exists(data.folder))
+            if (!File.Exists(ListShortNamesPath))
             {
                 Console.WriteLine("Checklist");
                 Console.WriteLine();
                 Console.WriteLine("No lists avaible!");
-               
-              var input =  AddList(data, longNamesList);
+                var input = AddList(data, longNamesList);
                 data.CreatePath(input, true);
                 File.WriteAllText(data.pathDefaultlist, "");
             }
+
             while (true)
             {
                 longNamesList = data.ReadingStringLists(ListFullNamesPath);

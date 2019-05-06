@@ -21,15 +21,6 @@ namespace ItemList
             //string version = "v 2.0";
             Display display = new Display();
             Filter filter = new Filter();
-            //UserSettings us = new UserSettings();
-
-            //us.LoadUserSettings();
-
-            if (File.Exists(sublist.ListShortNamesPath))
-            {
-                sublist.OpenDefaultList(data);
-            }
-
             sublist.ListOverview(data);
         }
 

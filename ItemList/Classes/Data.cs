@@ -17,7 +17,7 @@ namespace ItemList
         public string pathPassword = @"Data\password.txt";
         public string currentidStr = "1";
         public string pathDefaultlist = @"Data\defaultlist.txt";
-        public string pathSubFolder = @"Data\Sub";
+        public string pathSubFolder = @"Data\ListData";
         public int currentid = 1;
 
         CheckingNumbers checkingNumbers = new CheckingNumbers();
@@ -188,7 +188,7 @@ namespace ItemList
 
         public string CreatePath( string input, bool createDefault)
         {
-            folder = Path.Combine("Data\\Sub", input);
+            folder = Path.Combine("Data\\ListData", input);
             Directory.CreateDirectory(folder);
             Console.WriteLine("folder created");
 

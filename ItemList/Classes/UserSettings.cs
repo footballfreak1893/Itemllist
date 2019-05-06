@@ -8,8 +8,9 @@ namespace ItemList.Classes
 {
     class UserSettings
     {
-        string pathUserSettings = @"userSettings.txt";
-       private string[] arrUserSettings = new string[2];
+        string pathUserSettings = @"Data/userSettings.txt";
+        //Array muss erweitert werden, wenn neue Userwerte kommen !!!
+        private string[] arrUserSettings = new string[3];
 
         public void SetBackgroundColor(string userBackground, bool LoadUserSettings)
         {
@@ -155,8 +156,10 @@ namespace ItemList.Classes
             {
                 Console.WriteLine("Change font color [fc]");
                 Console.WriteLine("Change background color [bc]");
+                Console.WriteLine("Open Main menu, if the programm start [m]");
+                Console.WriteLine("Reset the programm [r]");
 
-                 var userinput = Console.ReadLine();
+                var userinput = Console.ReadLine();
 
                 switch (userinput)
                 {
@@ -168,6 +171,16 @@ namespace ItemList.Classes
                     case "bc":
                         SetBackgroundColor(arrUserSettings[0], false);
                         //SaveUserSettings();
+                        break;
+
+                    case "m":
+                        Console.Clear();
+                        StartView(arrUserSettings);
+                        Console.Clear();
+                        break;
+
+                    case "r":
+                        ResetProgramm();
                         break;
 
                     default:
@@ -190,14 +203,54 @@ namespace ItemList.Classes
                 File.WriteAllText(pathUserSettings, "");
                 SetBackgroundColor("0", true);
                 SetFontColor("7", true);
+                arrUserSettings[2] = "0";
+                SaveUserSettings(arrUserSettings);
             }
             arrUserSettings = File.ReadAllLines(pathUserSettings);
 
             SetBackgroundColor(arrUserSettings[0], true);
             SetFontColor(arrUserSettings[1], true);
 
+            if (arrUserSettings[2] == "1")
+            {
+                List list = new List();
+                Data data = new Data();
+                list.OpenDefaultList(data);
+            }
         }
-        
-        //Array muss erweitert werden, wenn neue Userwerte kommen
+
+        public void StartView(string [] arrUserSettings)
+        {
+            if (arrUserSettings[2] == "0")
+            {
+                Console.WriteLine("Open the defaultList, if programm starts [1]");
+            }
+            if (arrUserSettings[2] == "1")
+            {
+                Console.WriteLine("Open the main menu, if programm starts[0]");
+            }
+            var userinput = Console.ReadLine();
+
+            if (userinput == "1")
+            {
+                arrUserSettings[2] = "1";
+                SaveUserSettings(arrUserSettings);
+            }
+
+            else
+            {
+                arrUserSettings[2] = "0";
+                SaveUserSettings(arrUserSettings);
+            }
+        }
+
+        public void ResetProgramm()
+        {
+            Data data = new Data();
+            Directory.Delete("Data", true);
+            Environment.Exit(0);
+     
+            
+        }
     }
 }
