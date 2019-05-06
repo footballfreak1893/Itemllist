@@ -21,4 +21,4 @@ Nice to Have Features / Feinheiten:
 
 
 UserSettings:
-Ideen: Farbänderung, Attribute verwalten (neue überlegen, User kann diese aktivieren/deactivieren)
+Ideen:Attribute verwalten (neue überlegen, User kann diese aktivieren/deactivieren)

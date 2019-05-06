@@ -16,10 +16,11 @@ namespace ItemList.Classes
          public List<string> shortNamesList = new List<string>();
         Password password = new Password();
         Display display = new Display();
+        UserSettings us = new UserSettings();
 
         public List(Data data)
         {
-
+            us.LoadUserSettings();
         }
 
         public List()
@@ -81,9 +82,11 @@ namespace ItemList.Classes
                 Console.WriteLine("Open  default list [o]");
                 Console.WriteLine("Open list [enter short of listname]");
                 Console.WriteLine("Delete sublist [d]");
+
                 Console.WriteLine();
                 //Console.WriteLine("Back to main menu [b]");
                 Console.WriteLine("Exit programm [e]");
+                Console.WriteLine("User settings [u]");
                 Console.WriteLine();
 
                 var userinput = Console.ReadLine();
@@ -107,6 +110,11 @@ namespace ItemList.Classes
 
                     case "e":
                         Start.Exit(data);
+                        return;
+
+                    case "u":
+                        Console.Clear();
+                        us.SettingsMenu();
                         return;
 
                     case "":
