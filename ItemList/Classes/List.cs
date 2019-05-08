@@ -19,9 +19,9 @@ namespace ItemList.Classes
         public string ListFullNamesPath = @"Data/fullnames.txt";
         public string ListShortNamesPath = @"Data/shortnames.txt";
 
-        Password password = new Password();
         Display display = new Display();
         UserSettings us = new UserSettings();
+
 
         public List(Data data)
         {
@@ -29,6 +29,7 @@ namespace ItemList.Classes
             DefaultFunctions.CreateFolder("Data");
             us.LoadUserSettings();
         }
+        Password password = new Password();
 
         public List()
         {

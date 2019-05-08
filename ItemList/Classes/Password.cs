@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ItemList.Classes
 {
-    class Password
+     class Password
     {
         //--> Hier könnte man noch Passwortrichtlinien erstellen
         //Bug: wenn passwort eingegen wird, das passwort kopiert ist, wird es sichtbar!!!!!

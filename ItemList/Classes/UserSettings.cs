@@ -1,20 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
+using WSShell = IWshRuntimeLibrary.WshShell;
+using WSShortcut = IWshRuntimeLibrary.IWshShortcut;
+
 namespace ItemList.Classes
 {
     class UserSettings
     {
         string pathUserSettings = @"Data/userSettings.txt";
+
+        public static string pathStartUp = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+        public static string shortcut = @"ItemList.lnk";
+        public string shortcutPath = Path.Combine(pathStartUp, shortcut);
+      
         //Array muss erweitert werden, wenn neue Userwerte kommen !!!
         private string[] arrUserSettings = new string[3];
 
         public void SetBackgroundColor(string userBackground, bool LoadUserSettings)
         {
-            
+
             Console.WriteLine("Set Background-color");
             Console.WriteLine();
             Console.WriteLine();
@@ -32,9 +36,9 @@ namespace ItemList.Classes
                 userBackground = Console.ReadLine();
             }
 
-            Console.WriteLine("Hallo "+userBackground);
+            Console.WriteLine("Hallo " + userBackground);
             var backgroundNumber = CheckingNumbers.CheckingValuesINT(userBackground);
-           
+
 
             switch (backgroundNumber)
             {
@@ -147,17 +151,33 @@ namespace ItemList.Classes
             Console.Clear();
         }
 
+        public void GetFontColor()
+        {
+            Console.WriteLine(Console.ForegroundColor);
+            Console.ReadKey();
+        }
+
         public void SettingsMenu()
         {
             Console.WriteLine("Settings Menu");
             Console.WriteLine();
 
-            while(true)
+            while (true)
             {
                 Console.WriteLine("Change font color [fc]");
                 Console.WriteLine("Change background color [bc]");
-                Console.WriteLine("Open Main menu, if the programm start [m]");
+                Console.WriteLine("Set Main menu, if the programm start [m]");
+
+                if (!File.Exists(shortcutPath))
+                {
+                    Console.WriteLine("Add programm to autostart [a] ");
+                }
+                else
+                {
+                    Console.WriteLine("Remove programm from autostart [a] ");
+                }
                 Console.WriteLine("Reset the programm [r]");
+
 
                 var userinput = Console.ReadLine();
 
@@ -179,8 +199,24 @@ namespace ItemList.Classes
                         Console.Clear();
                         break;
 
+                    case "t":
+                        GetFontColor();
+                        break;
+
                     case "r":
                         ResetProgramm();
+                        break;
+
+                    case "a":
+                        if (!File.Exists(shortcutPath))
+                        {
+                            AddToAutostart();
+                        }
+                        else
+                        {
+                            RemoveFromAutostart(shortcutPath);
+                        }
+
                         break;
 
                     default:
@@ -191,14 +227,14 @@ namespace ItemList.Classes
             }
         }
 
-        public void SaveUserSettings(string [] arrUserSettings)
+        public void SaveUserSettings(string[] arrUserSettings)
         {
             File.WriteAllLines(pathUserSettings, arrUserSettings);
         }
 
         public void LoadUserSettings()
         {
-            if (!File.Exists(pathUserSettings) )
+            if (!File.Exists(pathUserSettings))
             {
                 File.WriteAllText(pathUserSettings, "");
                 SetBackgroundColor("0", true);
@@ -219,7 +255,7 @@ namespace ItemList.Classes
             }
         }
 
-        public void StartView(string [] arrUserSettings)
+        public void StartView(string[] arrUserSettings)
         {
             if (arrUserSettings[2] == "0")
             {
@@ -249,8 +285,29 @@ namespace ItemList.Classes
             Data data = new Data();
             Directory.Delete("Data", true);
             Environment.Exit(0);
-     
+        }
+
+        public void AddToAutostart()
+        {
+            var shortcut = @"ItemList.lnk";
+            var exe = "ItemList.exe";
+            var pathExe=Path.Combine( Environment.CurrentDirectory, exe);
             
+            //string shortcutPath = Path.Combine(pathStartUp, shortcut);
+
+            WSShell wsho = new WSShell();
+            WSShortcut sc = (WSShortcut)wsho.CreateShortcut(shortcutPath);
+            sc.TargetPath = pathExe;
+            sc.Description = "";
+            sc.WorkingDirectory = Path.GetDirectoryName(pathExe);
+            sc.Save();
+        }
+
+        public void RemoveFromAutostart(string shortcutPath)
+        {
+            File.Delete(shortcutPath);
         }
     }
 }
+    
+

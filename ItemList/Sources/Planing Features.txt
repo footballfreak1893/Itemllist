@@ -1,13 +1,6 @@
-﻿Listen:
-DONE -Passwort schützen (aufheben, ändern, Passwortdatei verschlüsseln)
-DONE Namen (shortname eindeutig halten(--> Rekursive Methode))
-DONE-Sublisten löschen -- 
+﻿Geplant
 -Update Methode für Sublisten
-DONE Defaultliste auswählen (-->User Settings)
 -Defaultansicht auswählen pro liste
-
-
-Obtik:
 -Farbe ändern (User Settings) Wegen passwort: So einstellen, wenn passwort eingeben wird: Das background color == foreground color
 -Fällige einträge mit gelb(=heute fällig), rot(=überfällig), grün(=noch nicht fällig)
 
@@ -20,6 +13,36 @@ Nice to Have Features / Feinheiten:
 
 
 
+---------------------------------------------------------------------------------
+Bevor in Master gemerged wird
+
+Wichtige Bugs, die gemacht werden sollen: --> Prio high
+
+Allgemein:
+- ConsoleClear einbauen
+- Alle möglichen Fehler abfangen
+
 UserSettings:
-Ideen:Attribute verwalten (neue überlegen, User kann diese aktivieren/deactivieren)
-Verknüpfung erstellen und in Autostart einfügen
+- Font darf nicht background color sein
+
+Passwort
+- Immer aktuelle background farbe verwenden, bei Passwort Eingabe, dannach hintergrund wieder zurückstellen (betrifft mehrere Methoden)
+
+Data:
+- Wenn User kein Datum gewählt hat, passwort auf null setzen, bzw. dann Datum nicht anzeigen
+
+Filter:
+- Klasse kontrollieren, Abfragen können bestimmt verbessert werden
+
+Display:
+- Komplett anschauen, was verbessert werden kann
+
+
+Code Refactoring:
+Klassen vernünftig benennen
+Objekte sinnvoll verwenden
+Unnötige Methoden löschen
+Variablen / Methoden korrekt benennen
+
+
+
