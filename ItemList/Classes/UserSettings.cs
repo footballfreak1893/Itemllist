@@ -34,9 +34,9 @@ namespace ItemList.Classes
             if (LoadUserSettings == false)
             {
                 userBackground = Console.ReadLine();
+                userBackground = FontColorEqualsBackgroundColor(userBackground, 1);
             }
 
-            Console.WriteLine("Hallo " + userBackground);
             var backgroundNumber = CheckingNumbers.CheckingValuesINT(userBackground);
 
 
@@ -103,8 +103,10 @@ namespace ItemList.Classes
             if (LoadUserSettings == false)
             {
                 userFont = Console.ReadLine();
+                userFont = FontColorEqualsBackgroundColor(userFont, 0);
             }
             var fontNumber = CheckingNumbers.CheckingValuesINT(userFont);
+            
 
             switch (fontNumber)
             {
@@ -151,10 +153,15 @@ namespace ItemList.Classes
             Console.Clear();
         }
 
-        public void GetFontColor()
+        public string FontColorEqualsBackgroundColor(string inputcolor, int arrItem)
         {
-            Console.WriteLine(Console.ForegroundColor);
-            Console.ReadKey();
+            arrUserSettings = File.ReadAllLines(pathUserSettings);
+            while (arrUserSettings[arrItem] == inputcolor)
+            {
+                Console.WriteLine("The background color can't equals the font color, try again");
+                inputcolor = Console.ReadLine();
+            }
+            return inputcolor;
         }
 
         public void SettingsMenu()
@@ -166,6 +173,7 @@ namespace ItemList.Classes
             {
                 Console.WriteLine("Change font color [fc]");
                 Console.WriteLine("Change background color [bc]");
+                Console.WriteLine("Reset color [rc]");
                 Console.WriteLine("Set Main menu, if the programm start [m]");
 
                 if (!File.Exists(shortcutPath))
@@ -184,13 +192,19 @@ namespace ItemList.Classes
                 switch (userinput)
                 {
                     case "fc":
+                        Console.Clear();
                         SetFontColor(arrUserSettings[1], false);
-                        //SaveUserSettings();
                         break;
 
                     case "bc":
+                        Console.Clear();
                         SetBackgroundColor(arrUserSettings[0], false);
-                        //SaveUserSettings();
+                        break;
+
+                    case "rc":
+                        Console.Clear();
+                        SetBackgroundColor("0", true);
+                        SetFontColor("7", true);
                         break;
 
                     case "m":
@@ -199,15 +213,12 @@ namespace ItemList.Classes
                         Console.Clear();
                         break;
 
-                    case "t":
-                        GetFontColor();
-                        break;
-
                     case "r":
                         ResetProgramm();
                         break;
 
                     case "a":
+                        Console.Clear();
                         if (!File.Exists(shortcutPath))
                         {
                             AddToAutostart();
@@ -220,7 +231,6 @@ namespace ItemList.Classes
                         break;
 
                     default:
-                        //SaveUserSettings();
                         return;
                 }
 

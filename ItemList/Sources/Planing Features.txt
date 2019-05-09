@@ -29,7 +29,7 @@ Passwort
 - Immer aktuelle background farbe verwenden, bei Passwort Eingabe, dannach hintergrund wieder zurückstellen (betrifft mehrere Methoden)
 
 Data:
-- Wenn User kein Datum gewählt hat, passwort auf null setzen, bzw. dann Datum nicht anzeigen
+- Wenn User kein Datum gewählt hat, wert auf null setzen, bzw. dann Datum nicht anzeigen
 
 Filter:
 - Klasse kontrollieren, Abfragen können bestimmt verbessert werden
