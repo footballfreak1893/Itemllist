@@ -1,74 +1,62 @@
 ﻿using ItemList.Classes;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace ItemList
 {
     public class DefaultFunctions
     {
         Data data = new Data();
-        public static char SetPriority()
-        {
-            Console.WriteLine("Enter Priority");
-            Console.WriteLine("Enter a: --> high");
-            Console.WriteLine("Enter b: --> medium");
-            Console.WriteLine("Enter c: --> low");
-            var inputvalue = Console.ReadLine();
-            char priority = 'x';
-
-            if (inputvalue != "")
-            {
-                priority = CheckingNumbers.CheckingValuesChar(inputvalue);
-
-                switch (priority)
-                {
-                    case 'a':
-                        priority = 'a';
-                        break;
-
-                    case 'b':
-                        priority = 'b';
-                        break;
-
-                    case 'c':
-                        priority = 'c';
-                        break;
-
-                    default:
-                        return 'x';
-                }
-                return priority;
-            }
-            else return 'x';
-        }
-
-        public static DateTime SetDateValue()
-        { 
-            Console.WriteLine("Enter Day");
-            var inputDay = Console.ReadLine();
-            int day = CheckingNumbers.CheckingValuesINT(inputDay);
-            day = CheckingNumbers.CheckingRangeINT(1, 31, day);
-
-            Console.WriteLine("Enter Month");
-            var inputMonth = Console.ReadLine();
-            int month = CheckingNumbers.CheckingValuesINT(inputMonth);
-            month = CheckingNumbers.CheckingRangeINT(1, 12, month);
-
-            Console.WriteLine("Enter Year");
-            var inputYear = Console.ReadLine();
-            int year = CheckingNumbers.CheckingValuesINT(inputYear);
-            year = CheckingNumbers.CheckingRangeINT(2019, 3000, year);
-
-            var date = new DateTime(year, month, day);
-            return date;
-        }
-
         
         public static void CreateFolder(string foldername)
         {
             DirectoryInfo di = new DirectoryInfo(foldername);
             di.Create();
             Console.WriteLine("Folder created");
+        }
+
+        public static void SaveString(string text, string path)
+        {
+            File.WriteAllText(path, text);
+        }
+
+        public static string ReadString(string path)
+        {
+            var text = File.ReadAllText(path);
+            return text;
+        }
+
+        public static void SaveStringLists(List<string> list, string path)
+        {
+            using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write))
+            using (StreamWriter sw = new StreamWriter(fs))
+            {
+                foreach (var item in list)
+                {
+                    sw.WriteLine(item);
+                }
+            }
+        }
+
+        public static List<string> ReadingStringLists(string path)
+        {
+            if (!File.Exists(path))
+            {
+                File.WriteAllText(path, "");
+            }
+            var stringArr = File.ReadAllLines(path);
+            var stringList = stringArr.ToList();
+            return stringList;
+        }
+
+        public static void DisplayListnames(List<string> inputnames)
+        {
+            foreach (var item in inputnames)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }

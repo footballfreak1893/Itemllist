@@ -33,10 +33,10 @@ namespace ItemList.Classes
                 return;
             }
             Console.Clear();
-            shortDict(data, inputvalue);
+            shortList(data, inputvalue);
         }
 
-        public void shortDict(Data data, string sortattribute)
+        public void shortList(Data data, string sortattribute)
         {
             bool endate = false;
             bool isfinished = false;

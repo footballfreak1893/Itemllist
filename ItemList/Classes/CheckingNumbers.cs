@@ -38,7 +38,6 @@ namespace ItemList.Classes
                     break;
                 }
             }
-
             return integer;
         }
 
@@ -65,7 +64,6 @@ namespace ItemList.Classes
 
         public static char CheckingValuesChar( string input)
         {
-
             bool canconvert = false;
             char charvalue = '0';
 

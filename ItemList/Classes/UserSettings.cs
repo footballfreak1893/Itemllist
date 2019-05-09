@@ -164,6 +164,26 @@ namespace ItemList.Classes
             return inputcolor;
         }
 
+        public string GetBackgroundColor()
+        {
+            arrUserSettings = File.ReadAllLines(pathUserSettings);
+            return arrUserSettings[0];
+        }
+
+        public string GetFontColor()
+        {
+            arrUserSettings = File.ReadAllLines(pathUserSettings);
+            return arrUserSettings[1];
+        }
+
+        //public void SetPasswortColor(string old )
+        //{
+        //    var userbackground = GetBackgroundColor();
+        //    var userfont = GetFontColor();
+
+        //}
+
+
         public void SettingsMenu()
         {
             Console.WriteLine("Settings Menu");

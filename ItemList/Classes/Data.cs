@@ -12,16 +12,18 @@ namespace ItemList
     {
         // Default Parameters
         public string folder = @"Data";
-        public string path = @"Data\list.txt";
+        public string pathList = @"Data\list.txt";
         public string pathId = @"Data\idfile.txt";
         public string pathPassword = @"Data\password.txt";
         public string currentidStr = "1";
         public string pathDefaultlist = @"Data\defaultlist.txt";
         public string pathSubFolder = @"Data\ListData";
+
+        public string ListFullNamesPath = @"Data/fullnames.txt";
+        public string ListShortNamesPath = @"Data/shortnames.txt";
+
         public int currentid = 1;
 
-        CheckingNumbers checkingNumbers = new CheckingNumbers();
-        List sublist = new List();
         public Data()
         {
 
@@ -43,12 +45,11 @@ namespace ItemList
 
         public void FileExists()
         {
-            if (File.Exists(path))
+            if (File.Exists(pathList))
             {
-                dict = LoadList(path);
-
-
+                dict = LoadList(pathList);
             }
+
             else
             {
                 currentid = 0;
@@ -78,12 +79,13 @@ namespace ItemList
             Console.WriteLine("Add Entry");
             Console.WriteLine("Enter Title:");
             string userTitle = Console.ReadLine();
+
             while (userTitle == "")
             {
                 Console.WriteLine("Title must have a value");
                 userTitle = Console.ReadLine();
-
             }
+
             Console.WriteLine();
             Console.WriteLine("Enter Description:");
             string userDescription = Console.ReadLine();
@@ -92,7 +94,7 @@ namespace ItemList
 
             Item item = new Item(userTitle, currentid);
 
-            char priority = DefaultFunctions.SetPriority();
+            char priority = item.SetPriority();
             if (priority != 'x')
             {
                 item.priority = priority;
@@ -104,7 +106,7 @@ namespace ItemList
 
             if (userEndddate == "y")
             {
-                var userEnddate = DefaultFunctions.SetDateValue();
+                var userEnddate = item.SetDateValue();
                 item.enddate = userEnddate;
             }
 
@@ -123,11 +125,12 @@ namespace ItemList
                 Console.Clear();
                 return;
             }
+
             else
             {
                 Console.Clear();
                 dict.Add(item.id, item);
-                SaveList(path);
+                SaveList(pathList);
                 SaveId(pathId, currentid);
             }
         }
@@ -135,7 +138,7 @@ namespace ItemList
         public void DeleteItem(int id, Item item)
         {
             dict.Remove(id);
-            SaveList(path);
+            SaveList(pathList);
         }
 
         public void UpdateItem(int index, Item item)
@@ -157,16 +160,13 @@ namespace ItemList
             }
 
             Console.WriteLine("Update Priority");
-            char priority = DefaultFunctions.SetPriority();
+            char priority = item.SetPriority();
             if (priority != 'x')
             {
                 item.priority = priority;
             }
 
-            Console.WriteLine();
-
-            SaveList(path);
-            //Console.WriteLine("entry: " + item.id + ".)");
+            SaveList(pathList);
         }
 
         public int CountItems()
@@ -181,34 +181,14 @@ namespace ItemList
             dict.Clear();
             currentid = 0;
             SaveId(pathId, currentid);
-            SaveList(path);
-            //Hier mmuss noch passwort reset eingebaut werden
+            SaveList(pathList);
+            //Hier muss noch passwort reset eingebaut werden
             Console.WriteLine("List has been reseted");
         }
 
-        public string CreatePath( string input, bool createDefault)
-        {
-            folder = Path.Combine("Data\\ListData", input);
-            Directory.CreateDirectory(folder);
-            Console.WriteLine("folder created");
-
-            path = Path.Combine( folder + "\\_Data.txt");//Wird noch nicht erstellt
-            pathId =Path.Combine(folder + "\\_IdFile.txt");
-            pathPassword = Path.Combine(folder + "\\_Password.txt");
-            if (createDefault == true)
-            {
-                pathDefaultlist = Path.Combine(folder + "\\_default.txt");
-            }
-            currentidStr = "1";
-            currentid = 1;
-            return pathDefaultlist;
-        }
-
-        //Working with lists
-
         public void SaveList(string path)
         {
-            System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Create, System.IO.FileAccess.Write);
+            FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write);
             IFormatter bf = new BinaryFormatter();
 
             bf.Serialize(fs, dict);
@@ -218,7 +198,7 @@ namespace ItemList
 
         public Dictionary<int, Item> LoadList(string path)
         {
-            System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+            FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
             IFormatter bf = new BinaryFormatter();
             dict = (Dictionary<int, Item>)bf.Deserialize(fs);
             fs.Close();
@@ -245,48 +225,23 @@ namespace ItemList
             return currentid;
         }
 
-
-        //Working with Strings /Lists
-        public void SaveString(string text, string path)
+        //Generate paths for all list
+        public string GeneratePaths(string input, bool createDefault)
         {
-            File.WriteAllText(path, text);
-        }
+            folder = Path.Combine("Data\\ListData", input);
+            Directory.CreateDirectory(folder);
+            Console.WriteLine("folder created");
 
-        public string ReadString(string path)
-        {
-            var text = File.ReadAllText(path);
-            return text;
-        }
-
-        public void SaveStringLists(List<string> list, string path)
-        {
-            using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write))
-            using (StreamWriter sw = new StreamWriter(fs))
+            pathList = Path.Combine(folder + "\\_Data.txt");
+            pathId = Path.Combine(folder + "\\_IdFile.txt");
+            pathPassword = Path.Combine(folder + "\\_Password.txt");
+            if (createDefault == true)
             {
-                foreach (var item in list)
-                {
-                    sw.WriteLine(item);
-                }
+                pathDefaultlist = Path.Combine(folder + "\\_default.txt");
             }
-        }
-
-        public List<string> ReadingStringLists(string path)
-        {
-            if (!File.Exists(path))
-            {
-                File.WriteAllText(path, "");
-            }
-            var stringArr = File.ReadAllLines(path);
-            var stringList = stringArr.ToList();
-            return stringList;
-        }
-
-        public void DisplayListnames(List<string> inputnames)
-        {
-            foreach (var item in inputnames)
-            {
-                Console.WriteLine(item);
-            }
+            currentidStr = "1";
+            currentid = 1;
+            return pathDefaultlist;
         }
     }
 }

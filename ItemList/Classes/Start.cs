@@ -62,7 +62,7 @@ namespace ItemList
 
         public static void Exit(Data data)
         {
-            data.SaveList(data.path);
+            data.SaveList(data.pathList);
             data.SaveId(data.pathId, data.currentid);
             Environment.Exit(1);
         }

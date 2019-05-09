@@ -85,7 +85,7 @@ namespace ItemList.Classes
                     Console.Clear();
                     item.isfinished = true;
                     Console.WriteLine("Set is finsihed"); //--> Evtl eigene Methode
-                    data.SaveList(data.path);
+                    data.SaveList(data.pathList);
                     break;
 
                 case "e":

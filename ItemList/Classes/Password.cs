@@ -20,12 +20,12 @@ namespace ItemList.Classes
             Console.WriteLine("Password set");
 
             password = AES.CryptMenu(password, 'e');
-            data.SaveString(password, data.pathPassword);
+            DefaultFunctions.SaveString(password, data.pathPassword);
         }
 
         public void EnterPassword(Data data)
         {
-            var password = data.ReadString(data.pathPassword);
+            var password = DefaultFunctions.ReadString(data.pathPassword);
             password = AES.CryptMenu(password, 'd');
 
             if (password == null || password == "")
@@ -53,7 +53,7 @@ namespace ItemList.Classes
             if (deleteOrChange == 'd')
             {
                 var password = "";
-                data.SaveString(password, data.pathPassword);
+                DefaultFunctions.SaveString(password, data.pathPassword);
             }
 
             else
@@ -62,7 +62,7 @@ namespace ItemList.Classes
                 Console.WriteLine("enter current password");
                 Console.ForegroundColor = ConsoleColor.Black;
                 var inputPasswordCurrent = Console.ReadLine();
-                var password = data.ReadString(data.pathPassword);
+                var password = DefaultFunctions.ReadString(data.pathPassword);
                 password = AES.CryptMenu(password, 'd');
                 Console.ForegroundColor = ConsoleColor.White;
 
@@ -80,7 +80,7 @@ namespace ItemList.Classes
                 Console.ForegroundColor = ConsoleColor.Black;
                 password = Console.ReadLine();
                 password = AES.CryptMenu(password, 'e');
-                data.SaveString(password, data.pathPassword);
+                DefaultFunctions.SaveString(password, data.pathPassword);
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("Password has successfully changed");
             }
@@ -92,7 +92,7 @@ namespace ItemList.Classes
             Console.WriteLine("Password settings");
             Console.WriteLine();
 
-            var password = data.ReadString(data.pathPassword);
+            var password = DefaultFunctions.ReadString(data.pathPassword);
             password = AES.CryptMenu(password, 'd');
 
             if (password == null || password == "")
