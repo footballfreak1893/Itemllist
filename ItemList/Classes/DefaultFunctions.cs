@@ -1,18 +1,12 @@
 ﻿using ItemList.Classes;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ItemList
 {
     public class DefaultFunctions
     {
         Data data = new Data();
-
-        // --> Checking
         public static char SetPriority()
         {
             Console.WriteLine("Enter Priority");
@@ -49,39 +43,24 @@ namespace ItemList
         }
 
         public static DateTime SetDateValue()
-        { //Checking here
+        { 
             Console.WriteLine("Enter Day");
-            var pday = Console.ReadLine();
-            int day = CheckingNumbers.CheckingValuesINT(pday);
+            var inputDay = Console.ReadLine();
+            int day = CheckingNumbers.CheckingValuesINT(inputDay);
             day = CheckingNumbers.CheckingRangeINT(1, 31, day);
 
             Console.WriteLine("Enter Month");
-            var pmonth = Console.ReadLine();
-            int month = CheckingNumbers.CheckingValuesINT(pmonth);
+            var inputMonth = Console.ReadLine();
+            int month = CheckingNumbers.CheckingValuesINT(inputMonth);
             month = CheckingNumbers.CheckingRangeINT(1, 12, month);
 
             Console.WriteLine("Enter Year");
-            var pyear = Console.ReadLine();
-            int year = CheckingNumbers.CheckingValuesINT(pyear);
+            var inputYear = Console.ReadLine();
+            int year = CheckingNumbers.CheckingValuesINT(inputYear);
             year = CheckingNumbers.CheckingRangeINT(2019, 3000, year);
 
             var date = new DateTime(year, month, day);
             return date;
-        }
-
-        public static string NotDefind()
-        {
-            string notDefind = "Not Defind";
-            return notDefind;
-        }
-
-        public static string RenameList(string listname)
-        {
-            Console.WriteLine("Enter new Name");
-            var newName = Console.ReadLine();
-            listname = newName;
-            Console.WriteLine("New Name " +newName);
-            return newName;
         }
 
         
@@ -91,7 +70,5 @@ namespace ItemList
             di.Create();
             Console.WriteLine("Folder created");
         }
-
-      
     }
 }
