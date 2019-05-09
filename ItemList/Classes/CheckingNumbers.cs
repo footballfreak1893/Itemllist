@@ -8,12 +8,12 @@ namespace ItemList.Classes
 {
     public class CheckingNumbers
     {
-        public static int CheckingRangeINT(int x, int y, int inputvalINT)
+        public static int CheckingRangeINT(int rangeStart, int rangeEnd, int inputvalINT)
         {
-            while (inputvalINT < x || inputvalINT > y)
+            while (inputvalINT < rangeStart || inputvalINT > rangeEnd)
             {
                 Console.WriteLine("Invalid Range");
-                Console.WriteLine("Input a value between " + x + " and " + y);
+                Console.WriteLine("Input a value between " + rangeStart + " and " + rangeEnd);
                 string inputvalue = Console.ReadLine();
                 inputvalINT = CheckingValuesINT(inputvalue);
             }
