@@ -8,9 +8,7 @@ namespace ItemList.Classes
 {
     class Display
     {
-        Start start = new Start();
-
-        public void DisplayAllItems(Data data)
+        public void DisplayListItems(Data data)
         {
             Start.ListContainsEntries(data);
 
@@ -28,20 +26,17 @@ namespace ItemList.Classes
             }
         }
 
-        public void ShowDetails(Data data, bool deactivateDisplayAllItem, Dictionary<int, Item> dict)
+        public void ShowEntryDetails(Data data, Dictionary<int, Item> dict)
         {
-            if (deactivateDisplayAllItem == false)
-            {
-                DisplayAllItems(data);
-            }
+            Start.ListContainsEntries(data);
+            DisplayListItems(data);
 
             Console.WriteLine("Enter ID to display details [number]");
             string inputid;
             inputid = Console.ReadLine();
+
             if (inputid == "" || inputid == null)
             {
-                
-               // Console.Clear();
                 return;
             }
             int id = CheckingNumbers.CheckingValuesINT(inputid);
@@ -49,7 +44,7 @@ namespace ItemList.Classes
             while (!data.dict.ContainsKey(id))
             {
                 Console.WriteLine("ID does not exist, try again");
-                DisplayAllItems(data);
+                DisplayListItems(data);
 
                 Console.WriteLine("Enter ID to display details [number]");
                 inputid = Console.ReadLine();
