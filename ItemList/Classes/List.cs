@@ -41,7 +41,7 @@ namespace ItemList.Classes
                 Console.WriteLine();
                 Console.WriteLine("No lists avaible!");
                 var input = AddList(data, longNamesList);
-                data.GeneratePaths(input, true);
+                data.GeneratePathsForeachList(input, true);
                 File.WriteAllText(data.pathDefaultlist, "");
             }
 
@@ -139,7 +139,7 @@ namespace ItemList.Classes
 
         public void OpenList(Data data, string shortNameInput, bool openEntrysDirectly)
         {
-            data.GeneratePaths(shortNameInput, false);
+            data.GeneratePathsForeachList(shortNameInput, false);
             data.FolderExists();
             Console.WriteLine("Open List");
             Console.Clear();
@@ -279,7 +279,7 @@ namespace ItemList.Classes
             Console.WriteLine("Set a password? [y/n]");
             var setPassword = Console.ReadLine();
 
-            data.GeneratePaths(shortName, true);
+            data.GeneratePathsForeachList(shortName, true);
             data.FolderExists();
             Console.WriteLine();
             Console.WriteLine("List created");

@@ -34,16 +34,18 @@ namespace ItemList
         {
             if (Directory.Exists(folder))
             {
-                FileExists();
+                LoadListData();
             }
             else
             {
                 DefaultFunctions.CreateFolder(folder);
-                FileExists();
+                LoadListData();
             }
         }
 
-        public void FileExists()
+        //Neuer Name: lade pfad data für die aktuelle Liste
+        //old name: FilesExists
+        public void LoadListData()
         {
             if (File.Exists(pathList))
             {
@@ -225,17 +227,17 @@ namespace ItemList
             return currentid;
         }
 
-        //Generate paths for all list
-        public string GeneratePaths(string input, bool createDefault)
+        //Generate paths, for each list --> pfad variablen in data mit dem pfad überschrieben
+        public string GeneratePathsForeachList(string inputListName, bool createDefaultDataFile)
         {
-            folder = Path.Combine("Data\\ListData", input);
+            folder = Path.Combine("Data\\ListData", inputListName);
             Directory.CreateDirectory(folder);
             Console.WriteLine("folder created");
 
             pathList = Path.Combine(folder + "\\_Data.txt");
             pathId = Path.Combine(folder + "\\_IdFile.txt");
             pathPassword = Path.Combine(folder + "\\_Password.txt");
-            if (createDefault == true)
+            if (createDefaultDataFile == true)
             {
                 pathDefaultlist = Path.Combine(folder + "\\_default.txt");
             }
