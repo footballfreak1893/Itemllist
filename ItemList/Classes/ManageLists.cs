@@ -10,30 +10,26 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ItemList.Classes
 {
-   public  class List
+   public  class ManageLists
     {
          public List<string> longNamesList = new List<string>();
          public List<string> shortNamesList = new List<string>();
 
-        //paths --> In Data
-        //public string ListFullNamesPath = @"Data/fullnames.txt";
-        //public string ListShortNamesPath = @"Data/shortnames.txt";
-
         UserSettings us = new UserSettings();
 
-        public List(Data data)
+        public ManageLists(ManageListItems data)
         {
-            DefaultFunctions.CreateFolder("Data");
+            FolderWorking.CreateFolder("Data");
             us.LoadUserSettings();
         }
         Password password = new Password();
 
-        public List()
+        public ManageLists()
         {
 
         }
 
-        public void ListOverview(Data data)
+        public void ListOverview(ManageListItems data)
         {
             if (!File.Exists(data.ListShortNamesPath))
             {
@@ -47,8 +43,8 @@ namespace ItemList.Classes
 
             while (true)
             {
-                longNamesList = DefaultFunctions.ReadingStringLists(data.ListFullNamesPath);
-                shortNamesList = DefaultFunctions.ReadingStringLists(data.ListShortNamesPath);
+                longNamesList = StringWorking.ReadingStringLists(data.ListFullNamesPath);
+                shortNamesList = StringWorking.ReadingStringLists(data.ListShortNamesPath);
 
                 Console.WriteLine("--> Checklist <--");
                 Console.WriteLine();
@@ -57,7 +53,7 @@ namespace ItemList.Classes
                 Console.WriteLine("Sub Overview");
                 Console.WriteLine("Avaible lists");
                 Console.WriteLine();
-                DefaultFunctions.DisplayListnames(longNamesList);
+                Display.DisplayListnames(longNamesList);
                 Console.WriteLine();
                 Console.WriteLine("Create new list [n]");
                 Console.WriteLine("Open  default list [o]");
@@ -117,7 +113,7 @@ namespace ItemList.Classes
             }
         }
 
-        public void OpenDefaultList(Data data)
+        public void OpenDefaultList(ManageListItems data)
         {
             var dirName = "";
             string[] defaultArr = Directory.GetFiles(data.pathSubFolder, "_default.txt", SearchOption.AllDirectories);
@@ -128,7 +124,7 @@ namespace ItemList.Classes
             OpenList(data, dirName, true);
         }
 
-        public void SetAsDefaultList(Data data, string shortname)
+        public void SetAsDefaultList(ManageListItems data, string shortname)
         {
             var newPath = data.folder + "//_default.txt";
             string[] defaultArr = Directory.GetFiles(data.pathSubFolder, "_default.txt", SearchOption.AllDirectories);
@@ -137,7 +133,7 @@ namespace ItemList.Classes
             File.Move(oldPath, newPath);
         }
 
-        public void OpenList(Data data, string shortNameInput, bool openEntrysDirectly)
+        public void OpenList(ManageListItems data, string shortNameInput, bool openEntrysDirectly)
         {
             data.GeneratePathsForeachList(shortNameInput, false);
             data.FolderExists();
@@ -146,7 +142,7 @@ namespace ItemList.Classes
             ListMenu(data, shortNameInput, openEntrysDirectly);
         }
 
-        public void ListMenu(Data data, string listname, bool openEntrysDirectly)
+        public void ListMenu(ManageListItems data, string listname, bool openEntrysDirectly)
         {
             Display display = new Display();
             Filter filter = new Filter();
@@ -242,9 +238,9 @@ namespace ItemList.Classes
         }
 
         //Working with Lists
-        public string AddList(Data data, List<string> listCollection)
+        public string AddList(ManageListItems data, List<string> listCollection)
         {
-            shortNamesList = DefaultFunctions.ReadingStringLists(data.ListShortNamesPath);
+            shortNamesList = StringWorking.ReadingStringLists(data.ListShortNamesPath);
             Console.WriteLine("Create new List");
             Console.WriteLine();
             Console.WriteLine("Enter Name");
@@ -273,8 +269,8 @@ namespace ItemList.Classes
 
             longNamesList.Add(listname);
             shortNamesList.Add(shortName);
-            DefaultFunctions.SaveStringLists(longNamesList, data.ListFullNamesPath);
-            DefaultFunctions.SaveStringLists(shortNamesList, data.ListShortNamesPath);
+            StringWorking.SaveStringLists(longNamesList, data.ListFullNamesPath);
+            StringWorking.SaveStringLists(shortNamesList, data.ListShortNamesPath);
 
             Console.WriteLine("Set a password? [y/n]");
             var setPassword = Console.ReadLine();
@@ -291,7 +287,7 @@ namespace ItemList.Classes
                     break;
 
                 default:
-                    DefaultFunctions.SaveString("", data.pathPassword);
+                    StringWorking.SaveString("", data.pathPassword);
                     break;
             }
 
@@ -299,9 +295,9 @@ namespace ItemList.Classes
             return shortName;
         }
 
-        public void DeleteList(Data data)
+        public void DeleteList(ManageListItems data)
         {
-            var shortnameList = DefaultFunctions.ReadingStringLists(data.ListShortNamesPath);
+            var shortnameList = StringWorking.ReadingStringLists(data.ListShortNamesPath);
             Console.WriteLine("Enter short");
             var shortname = Console.ReadLine();
 
@@ -316,15 +312,15 @@ namespace ItemList.Classes
 
             SearchString(data, longNamesList, indexOfname);
             shortnameList.Remove(shortname);
-            DefaultFunctions.SaveStringLists(shortnameList, data.ListShortNamesPath);
+            StringWorking.SaveStringLists(shortnameList, data.ListShortNamesPath);
         }
 
 
         //Methots for listnames
-        public void SearchString(Data data, List<string> list, int index) // Benahmung
+        public void SearchString(ManageListItems data, List<string> list, int index) // Benahmung
         {
             list.RemoveAt(index);
-            DefaultFunctions.SaveStringLists(list, data.ListFullNamesPath);
+            StringWorking.SaveStringLists(list, data.ListFullNamesPath);
         }
 
         public string GenerateShortname( string listname, List<string> shortlist) //Nur erlaubte Zeichen für Ordner -->Googeln

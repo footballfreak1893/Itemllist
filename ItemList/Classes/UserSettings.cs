@@ -37,7 +37,7 @@ namespace ItemList.Classes
                 userBackground = FontColorEqualsBackgroundColor(userBackground, 1);
             }
 
-            var backgroundNumber = CheckingNumbers.CheckingValuesINT(userBackground);
+            var backgroundNumber = CheckingValues.CheckingValuesINT(userBackground);
 
 
             switch (backgroundNumber)
@@ -105,7 +105,7 @@ namespace ItemList.Classes
                 userFont = Console.ReadLine();
                 userFont = FontColorEqualsBackgroundColor(userFont, 0);
             }
-            var fontNumber = CheckingNumbers.CheckingValuesINT(userFont);
+            var fontNumber = CheckingValues.CheckingValuesINT(userFont);
             
 
             switch (fontNumber)
@@ -175,14 +175,6 @@ namespace ItemList.Classes
             arrUserSettings = File.ReadAllLines(pathUserSettings);
             return arrUserSettings[1];
         }
-
-        //public void SetPasswortColor(string old )
-        //{
-        //    var userbackground = GetBackgroundColor();
-        //    var userfont = GetFontColor();
-
-        //}
-
 
         public void SettingsMenu()
         {
@@ -279,8 +271,8 @@ namespace ItemList.Classes
 
             if (arrUserSettings[2] == "1")
             {
-                List list = new List();
-                Data data = new Data();
+                ManageLists list = new ManageLists();
+                ManageListItems data = new ManageListItems();
                 list.OpenDefaultList(data);
             }
         }
@@ -312,7 +304,7 @@ namespace ItemList.Classes
 
         public void ResetProgramm()
         {
-            Data data = new Data();
+            ManageListItems data = new ManageListItems();
             Directory.Delete("Data", true);
             Environment.Exit(0);
         }

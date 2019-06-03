@@ -8,7 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ItemList
 {
-    public class Data
+    public class ManageListItems
     {
         // Default Parameters
         public string folder = @"Data";
@@ -24,7 +24,7 @@ namespace ItemList
 
         public int currentid = 1;
 
-        public Data()
+        public ManageListItems()
         {
 
         }
@@ -38,7 +38,7 @@ namespace ItemList
             }
             else
             {
-                DefaultFunctions.CreateFolder(folder);
+                FolderWorking.CreateFolder(folder);
                 LoadListData();
             }
         }
@@ -244,6 +244,42 @@ namespace ItemList
             currentidStr = "1";
             currentid = 1;
             return pathDefaultlist;
+        }
+
+        public static void ListContainsEntries(ManageListItems data)
+        {
+            var counterentries = data.dict.Count;
+
+            if (counterentries != 0)
+            {
+                return;
+            }
+
+            else
+            {
+                Console.WriteLine("The list does not contain any entries");
+                Console.WriteLine("New entry [n]");
+                Console.WriteLine("Exit Programm [e]");
+
+                string inputvalue = Console.ReadLine();
+
+                switch (inputvalue)
+                {
+                    case "n":
+                        data.AddItem();
+                        Console.Clear();
+                        break;
+
+                    case "e":
+                        Console.Clear();
+                        Start.Exit(data);
+                        break;
+
+                    default:
+                        Console.Clear();
+                        return;
+                }
+            }
         }
     }
 }

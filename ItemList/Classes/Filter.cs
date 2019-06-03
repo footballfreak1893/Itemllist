@@ -8,7 +8,7 @@ namespace ItemList.Classes
 {
     class Filter
     {
-        public void FilterMenu(Data data)
+        public void FilterMenu(ManageListItems data)
         {
             Console.WriteLine("Filter attributes");
             Console.WriteLine();
@@ -36,7 +36,7 @@ namespace ItemList.Classes
             shortList(data, inputvalue);
         }
 
-        public void shortList(Data data, string sortattribute)
+        public void shortList(ManageListItems data, string sortattribute)
         {
             bool endate = false;
             bool isfinished = false;
@@ -127,13 +127,13 @@ namespace ItemList.Classes
 
         }
 
-        public Dictionary<int, Item> EntriesSetFinished(Data data)
+        public Dictionary<int, Item> EntriesSetFinished(ManageListItems data)
         {
             data.dict = data.dict.Where(x => (x.Value.isfinished == true)).ToDictionary(x => x.Key, i => i.Value);
             return data.dict;
         }
 
-        public Dictionary<int, Item> SortEnddate(Data data, char sorter)
+        public Dictionary<int, Item> SortEnddate(ManageListItems data, char sorter)
         {
             if (sorter == '>')
             {
@@ -157,7 +157,7 @@ namespace ItemList.Classes
             return data.dict;
         }
 
-        public Dictionary<int, Item> SortPriority(Data data, char sorter)
+        public Dictionary<int, Item> SortPriority(ManageListItems data, char sorter)
         {
             if (sorter == 'a')
             {
@@ -179,7 +179,7 @@ namespace ItemList.Classes
             return data.dict;
         }
 
-        public void DictContainsValues(Data data, Dictionary<int, Item> dict)
+        public void DictContainsValues(ManageListItems data, Dictionary<int, Item> dict)
         {
             if (data.dict.Count == 0)
             {

@@ -34,7 +34,7 @@ namespace ItemList
 
             if (inputvalue != "")
             {
-                priority = CheckingNumbers.CheckingValuesChar(inputvalue);
+                priority = CheckingValues.CheckingValuesChar(inputvalue);
 
                 switch (priority)
                 {
@@ -62,18 +62,18 @@ namespace ItemList
         {
             Console.WriteLine("Enter Day");
             var inputDay = Console.ReadLine();
-            int day = CheckingNumbers.CheckingValuesINT(inputDay);
-            day = CheckingNumbers.CheckingRangeINT(1, 31, day);
+            int day = CheckingValues.CheckingValuesINT(inputDay);
+            day = CheckingValues.CheckingRangeINT(1, 31, day);
 
             Console.WriteLine("Enter Month");
             var inputMonth = Console.ReadLine();
-            int month = CheckingNumbers.CheckingValuesINT(inputMonth);
-            month = CheckingNumbers.CheckingRangeINT(1, 12, month);
+            int month = CheckingValues.CheckingValuesINT(inputMonth);
+            month = CheckingValues.CheckingRangeINT(1, 12, month);
 
             Console.WriteLine("Enter Year");
             var inputYear = Console.ReadLine();
-            int year = CheckingNumbers.CheckingValuesINT(inputYear);
-            year = CheckingNumbers.CheckingRangeINT(2019, 3000, year);
+            int year = CheckingValues.CheckingValuesINT(inputYear);
+            year = CheckingValues.CheckingRangeINT(2019, 3000, year);
 
             var date = new DateTime(year, month, day);
             return date;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ItemList.Classes
 {
-    public class CheckingNumbers
+    public class CheckingValues
     {
         public static int CheckingRangeINT(int rangeStart, int rangeEnd, int inputvalINT)
         {

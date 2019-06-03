@@ -11,7 +11,7 @@ namespace ItemList.Classes
         //--> Hier könnte man noch Passwortrichtlinien erstellen
         //Bug: wenn passwort eingegen wird, das passwort kopiert ist, wird es sichtbar!!!!!
 
-        public void SetPassword(Data data)
+        public void SetPassword(ManageListItems data)
         {
             Console.WriteLine("Enter password");
             Console.ForegroundColor = ConsoleColor.Black;
@@ -20,12 +20,12 @@ namespace ItemList.Classes
             Console.WriteLine("Password set");
 
             password = AES.CryptMenu(password, 'e');
-            DefaultFunctions.SaveString(password, data.pathPassword);
+            StringWorking.SaveString(password, data.pathPassword);
         }
 
-        public void EnterPassword(Data data)
+        public void EnterPassword(ManageListItems data)
         {
-            var password = DefaultFunctions.ReadString(data.pathPassword);
+            var password = StringWorking.ReadString(data.pathPassword);
             password = AES.CryptMenu(password, 'd');
 
             if (password == null || password == "")
@@ -48,12 +48,12 @@ namespace ItemList.Classes
         }
 
 
-        public void Change_Or_SetNull_Password(Data data, char deleteOrChange)
+        public void Change_Or_SetNull_Password(ManageListItems data, char deleteOrChange)
         {
             if (deleteOrChange == 'd')
             {
                 var password = "";
-                DefaultFunctions.SaveString(password, data.pathPassword);
+                StringWorking.SaveString(password, data.pathPassword);
             }
 
             else
@@ -62,7 +62,7 @@ namespace ItemList.Classes
                 Console.WriteLine("enter current password");
                 Console.ForegroundColor = ConsoleColor.Black;
                 var inputPasswordCurrent = Console.ReadLine();
-                var password = DefaultFunctions.ReadString(data.pathPassword);
+                var password = StringWorking.ReadString(data.pathPassword);
                 password = AES.CryptMenu(password, 'd');
                 Console.ForegroundColor = ConsoleColor.White;
 
@@ -80,19 +80,19 @@ namespace ItemList.Classes
                 Console.ForegroundColor = ConsoleColor.Black;
                 password = Console.ReadLine();
                 password = AES.CryptMenu(password, 'e');
-                DefaultFunctions.SaveString(password, data.pathPassword);
+                StringWorking.SaveString(password, data.pathPassword);
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("Password has successfully changed");
             }
         }
 
-        public void PasswortSettings(Data data)
+        public void PasswortSettings(ManageListItems data)
         {
             //--> BUG: Wenn Feature Farbe ändern eingebaut wird muss andere Lösung her als vordergrundfarbe zu ändern (Idee -->..)
             Console.WriteLine("Password settings");
             Console.WriteLine();
 
-            var password = DefaultFunctions.ReadString(data.pathPassword);
+            var password = StringWorking.ReadString(data.pathPassword);
             password = AES.CryptMenu(password, 'd');
 
             if (password == null || password == "")

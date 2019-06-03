@@ -8,9 +8,9 @@ namespace ItemList.Classes
 {
     class Display
     {
-        public void DisplayListItems(Data data)
+        public void DisplayListItems(ManageListItems data)
         {
-            Start.ListContainsEntries(data);
+            ManageListItems.ListContainsEntries(data);
 
             foreach (KeyValuePair<int, Item> entries in data.dict)
             {
@@ -26,9 +26,9 @@ namespace ItemList.Classes
             }
         }
 
-        public void ShowEntryDetails(Data data, Dictionary<int, Item> dict)
+        public void ShowEntryDetails(ManageListItems data, Dictionary<int, Item> dict)
         {
-            Start.ListContainsEntries(data);
+            ManageListItems.ListContainsEntries(data);
             DisplayListItems(data);
 
             Console.WriteLine("Enter ID to display details [number]");
@@ -39,7 +39,7 @@ namespace ItemList.Classes
             {
                 return;
             }
-            int id = CheckingNumbers.CheckingValuesINT(inputid);
+            int id = CheckingValues.CheckingValuesINT(inputid);
 
             while (!data.dict.ContainsKey(id))
             {
@@ -48,7 +48,7 @@ namespace ItemList.Classes
 
                 Console.WriteLine("Enter ID to display details [number]");
                 inputid = Console.ReadLine();
-                id = CheckingNumbers.CheckingValuesINT(inputid);
+                id = CheckingValues.CheckingValuesINT(inputid);
                 Console.Clear();
             }
 
@@ -96,6 +96,14 @@ namespace ItemList.Classes
                 default:
                     Console.Clear();
                     return;
+            }
+        }
+
+        public static void DisplayListnames(List<string> inputnames)
+        {
+            foreach (var item in inputnames)
+            {
+                Console.WriteLine(item);
             }
         }
     }

@@ -64,15 +64,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\AES.cs" />
-    <Compile Include="Classes\CheckingNumbers.cs" />
-    <Compile Include="Classes\Data.cs" />
-    <Compile Include="Classes\DefaultFunctions.cs" />
+    <Compile Include="Classes\CheckingValues.cs" />
+    <Compile Include="Classes\ManageListItems.cs" />
+    <Compile Include="Classes\FolderWorking.cs" />
     <Compile Include="Classes\Display.cs" />
     <Compile Include="Classes\Filter.cs" />
     <Compile Include="Classes\Item.cs" />
     <Compile Include="Classes\Password.cs" />
     <Compile Include="Classes\Start.cs" />
-    <Compile Include="Classes\List.cs" />
+    <Compile Include="Classes\ManageLists.cs" />
+    <Compile Include="Classes\StringWorking.cs" />
     <Compile Include="Classes\UserSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -10,13 +10,13 @@ namespace ItemList
     {
         static void Main(string[] args)
         {
-            Data data = new Data();
+            ManageListItems data = new ManageListItems();
             StartProgramm(data);
         }
 
-        public static void StartProgramm(Data data)
+        public static void StartProgramm(ManageListItems data)
         {
-            List sublist = new List(data);
+            ManageLists sublist = new ManageLists(data);
 
             //string version = "v 2.0";
             Display display = new Display();
@@ -24,43 +24,7 @@ namespace ItemList
             sublist.ListOverview(data);
         }
 
-        public static void ListContainsEntries(Data data)
-        {
-            var counterentries = data.dict.Count;
-
-            if (counterentries != 0)
-            {
-                return;
-            }
-
-            else
-            {
-                Console.WriteLine("The list does not contain any entries");
-                Console.WriteLine("New entry [n]");
-                Console.WriteLine("Exit Programm [e]");
-
-                string inputvalue = Console.ReadLine();
-
-                switch (inputvalue)
-                {
-                    case "n":
-                        data.AddItem();
-                        Console.Clear();
-                        break;
-
-                    case "e":
-                        Console.Clear();
-                        Exit(data);
-                        break;
-
-                    default:
-                        Console.Clear();
-                        return;
-                }
-            }
-        }
-
-        public static void Exit(Data data)
+        public static void Exit(ManageListItems data)
         {
             data.SaveList(data.pathList);
             data.SaveId(data.pathId, data.currentid);
